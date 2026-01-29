@@ -1,0 +1,8 @@
+// Debug configuration for CreativityHub
+// Uses development App Group for testing
+
+#include "Base.xcconfig"
+
+BUILD_ENVIRONMENT = dev
+APP_GROUP_IDENTIFIER = group.dev.mgorbatyuk.CreativityHub.dev
+SHARE_EXTENSION_BUNDLE_ID = dev.mgorbatyuk.CreativityHub.dev.ShareExtension

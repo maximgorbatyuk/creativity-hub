@@ -40,7 +40,7 @@ fi
 
 # Generate the plist
 # TODO: Update BUNDLE_ID, PROJECT_ID, STORAGE_BUCKET with your Firebase project values
-PLIST_PATH="./CreativeHub/GoogleService-Info.plist"
+PLIST_PATH="./CreativityHub/GoogleService-Info.plist"
 
 cat > "$PLIST_PATH" << EOF
 <?xml version="1.0" encoding="UTF-8"?>
@@ -54,7 +54,7 @@ cat > "$PLIST_PATH" << EOF
     <key>PLIST_VERSION</key>
     <string>1</string>
     <key>BUNDLE_ID</key>
-    <string>dev.mgorbatyuk.CreativeHub</string>
+    <string>dev.mgorbatyuk.CreativityHub</string>
     <key>PROJECT_ID</key>
     <string>creativehub-firebase</string>
     <key>STORAGE_BUCKET</key>

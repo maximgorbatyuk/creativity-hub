@@ -1,6 +1,6 @@
 //
-//  CreativeHubApp.swift
-//  CreativeHub
+//  CreativityHubApp.swift
+//  CreativityHub
 //
 //  Created by Maxim Gorbatyuk on 25.01.2026.
 //
@@ -13,7 +13,7 @@ import FirebaseCore
 #endif
 
 @main
-struct CreativeHubApp: App {
+struct CreativityHubApp: App {
 
   @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 

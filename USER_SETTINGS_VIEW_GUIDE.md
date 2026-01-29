@@ -1,6 +1,6 @@
 # USER_SETTINGS_VIEW_GUIDE.md - User Settings Screen Implementation Guide
 
-This guide provides detailed instructions for implementing a User Settings screen in CreativeHub, following the pattern from Journey Wallet.
+This guide provides detailed instructions for implementing a User Settings screen in CreativityHub, following the pattern from Journey Wallet.
 
 ## Overview
 

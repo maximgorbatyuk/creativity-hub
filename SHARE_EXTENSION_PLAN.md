@@ -1,6 +1,6 @@
 # SHARE_EXTENSION_PLAN.md - Share Extension Implementation Plan
 
-This document provides a phased implementation plan for adding a Share Extension to CreativeHub, following the pattern from Journey Wallet. This plan should be executed **after** BASE_FUNCTIONALITY_PLAN.md is complete.
+This document provides a phased implementation plan for adding a Share Extension to CreativityHub, following the pattern from Journey Wallet. This plan should be executed **after** BASE_FUNCTIONALITY_PLAN.md is complete.
 
 ## Prerequisites
 
@@ -14,7 +14,7 @@ Before starting this plan, ensure:
 
 ## Overview
 
-The Share Extension allows users to share files (PDFs, images) and content (text, URLs) from other apps directly into CreativeHub.
+The Share Extension allows users to share files (PDFs, images) and content (text, URLs) from other apps directly into CreativityHub.
 
 ### Supported Content Types
 
@@ -42,7 +42,7 @@ The Share Extension allows users to share files (PDFs, images) and content (text
 3. Configure:
    - Product Name: `ShareExtension`
    - Language: Swift
-   - Embed in Application: CreativeHub
+   - Embed in Application: CreativityHub
 
 ### 1.2 Configure Target Build Settings
 
@@ -80,14 +80,14 @@ ShareExtension/
 
 ### 2.1 Update xcconfig Files
 
-**CreativeHub/Config/Base.xcconfig** (add these lines):
+**CreativityHub/Config/Base.xcconfig** (add these lines):
 ```
-SHARE_EXTENSION_BUNDLE_ID = dev.mgorbatyuk.CreativeHub.ShareExtension
+SHARE_EXTENSION_BUNDLE_ID = dev.mgorbatyuk.CreativityHub.ShareExtension
 ```
 
-**CreativeHub/Config/Debug.xcconfig** (add these lines):
+**CreativityHub/Config/Debug.xcconfig** (add these lines):
 ```
-SHARE_EXTENSION_BUNDLE_ID = dev.mgorbatyuk.CreativeHub.dev.ShareExtension
+SHARE_EXTENSION_BUNDLE_ID = dev.mgorbatyuk.CreativityHub.dev.ShareExtension
 ```
 
 ### 2.2 Create ShareExtension/Info.plist
@@ -100,7 +100,7 @@ SHARE_EXTENSION_BUNDLE_ID = dev.mgorbatyuk.CreativeHub.dev.ShareExtension
     <key>AppGroupIdentifier</key>
     <string>$(APP_GROUP_IDENTIFIER)</string>
     <key>CFBundleDisplayName</key>
-    <string>CreativeHub</string>
+    <string>CreativityHub</string>
     <key>CFBundleShortVersionString</key>
     <string>$(MARKETING_VERSION)</string>
     <key>CFBundleVersion</key>
@@ -154,7 +154,7 @@ SHARE_EXTENSION_BUNDLE_ID = dev.mgorbatyuk.CreativeHub.dev.ShareExtension
 <dict>
     <key>com.apple.security.application-groups</key>
     <array>
-        <string>group.dev.mgorbatyuk.creativehub.dev</string>
+        <string>group.dev.mgorbatyuk.creativityhub.dev</string>
     </array>
 </dict>
 </plist>
@@ -226,17 +226,17 @@ enum SharedContentType {
 }
 ```
 
-### 3.2 ShareEntityType (Simplified for CreativeHub)
+### 3.2 ShareEntityType (Simplified for CreativityHub)
 
 **File:** `ShareExtension/Models/ShareEntityType.swift`
 
-Since CreativeHub is a stub app without domain-specific entities, create a simplified version:
+Since CreativityHub is a stub app without domain-specific entities, create a simplified version:
 
 ```swift
 import Foundation
 
 /// Entity types that can be created from shared content.
-/// NOTE: Expand this enum when adding domain features to CreativeHub.
+/// NOTE: Expand this enum when adding domain features to CreativityHub.
 enum ShareEntityType: String, CaseIterable, Identifiable {
     case note
     case bookmark
@@ -494,7 +494,7 @@ import Combine
 import os
 
 /// ViewModel for the Share Extension.
-/// NOTE: This is a simplified version for CreativeHub stub app.
+/// NOTE: This is a simplified version for CreativityHub stub app.
 /// Expand when adding domain-specific features.
 @MainActor
 class ShareViewModel: ObservableObject {
@@ -815,7 +815,7 @@ Add to all localization files (`en.lproj/Localizable.strings`, `ru.lproj/Localiz
 **English:**
 ```
 /* Share Extension */
-"share.title" = "Save to CreativeHub";
+"share.title" = "Save to CreativityHub";
 "share.file_section" = "File";
 "share.content_preview" = "Content";
 "share.document_name" = "Document name";
@@ -835,7 +835,7 @@ Add to all localization files (`en.lproj/Localizable.strings`, `ru.lproj/Localiz
 **Russian:**
 ```
 /* Share Extension */
-"share.title" = "Сохранить в CreativeHub";
+"share.title" = "Сохранить в CreativityHub";
 "share.file_section" = "Файл";
 "share.content_preview" = "Содержимое";
 "share.document_name" = "Название документа";
@@ -855,7 +855,7 @@ Add to all localization files (`en.lproj/Localizable.strings`, `ru.lproj/Localiz
 **Kazakh:**
 ```
 /* Share Extension */
-"share.title" = "CreativeHub-қа сақтау";
+"share.title" = "CreativityHub-қа сақтау";
 "share.file_section" = "Файл";
 "share.content_preview" = "Мазмұны";
 "share.document_name" = "Құжат атауы";
@@ -911,7 +911,7 @@ Do NOT add to ShareExtension target:
 
 ### 7.1 Add to Main App Target
 
-1. Select CreativeHub target
+1. Select CreativityHub target
 2. Go to General → Frameworks, Libraries, and Embedded Content
 3. Click + and add ShareExtension.appex
 4. Set Embed to "Embed Without Signing"
@@ -927,14 +927,14 @@ In Build Phases, ensure "Embed App Extensions" contains ShareExtension.
 ### 8.1 Build Verification
 
 ```bash
-xcodebuild -project CreativeHub.xcodeproj -scheme CreativeHub \
+xcodebuild -project CreativityHub.xcodeproj -scheme CreativityHub \
   -destination 'platform=iOS Simulator,name=iPhone 16 Pro' build
 ```
 
 ### 8.2 Test Checklist
 
 **Basic Functionality:**
-- [ ] Extension appears in Share sheet as "CreativeHub"
+- [ ] Extension appears in Share sheet as "CreativityHub"
 - [ ] Can share PDF from Files app
 - [ ] Can share image from Photos app
 - [ ] Can share URL from Safari
@@ -980,7 +980,7 @@ xcodebuild -project CreativeHub.xcodeproj -scheme CreativeHub \
 
 ## Future Enhancements
 
-When domain features are added to CreativeHub, expand the Share Extension:
+When domain features are added to CreativityHub, expand the Share Extension:
 
 1. **Add domain entity types** to `ShareEntityType`
 2. **Implement saving logic** in `ShareViewModel.save()`

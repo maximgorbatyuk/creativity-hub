@@ -1,15 +1,19 @@
 import FirebaseAnalytics
 import Foundation
 import os
+import UIKit
 
 /// Service for tracking analytics events using Firebase Analytics.
 /// Analytics are only active in Release builds - DEBUG builds log locally only.
-class AnalyticsService: ObservableObject {
+final class AnalyticsService: Sendable {
 
   static let shared = AnalyticsService()
 
-  private var _globalProps: [String: Any]? = nil
-  private var _sessionId = UUID().uuidString
+  /// Cached global properties - using nonisolated(unsafe) for singleton pattern with Swift 6 concurrency
+  nonisolated(unsafe) private var _globalProps: [String: Any]? = nil
+
+  /// Session identifier - immutable after initialization
+  private let _sessionId = UUID().uuidString
 
   let logger: Logger
 

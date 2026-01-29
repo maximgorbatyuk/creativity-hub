@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  CreativeHub
+//  CreativityHub
 //
 //  Created by Maxim Gorbatyuk on 25.01.2026.
 //

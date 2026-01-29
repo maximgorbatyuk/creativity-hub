@@ -2,22 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <!-- App Group for sharing data with Share Extension (Development) -->
+    <!-- App Group for sharing data with Share Extension (Production) -->
     <key>com.apple.security.application-groups</key>
     <array>
-        <string>group.dev.mgorbatyuk.creativehub.dev</string>
+        <string>group.dev.mgorbatyuk.creativehub</string>
     </array>
 
-    <!-- iCloud for CloudKit backup (Development) -->
+    <!-- iCloud for CloudKit backup -->
     <key>com.apple.developer.icloud-container-identifiers</key>
     <array>
-        <string>iCloud.dev.mgorbatyuk.CreativeHub.dev</string>
+        <string>iCloud.dev.mgorbatyuk.CreativityHub</string>
     </array>
     <key>com.apple.developer.icloud-services</key>
     <array>
         <string>CloudKit</string>
     </array>
     <key>com.apple.developer.ubiquity-kvstore-identifier</key>
-    <string>$(TeamIdentifierPrefix)dev.mgorbatyuk.CreativeHub.dev</string>
+    <string>$(TeamIdentifierPrefix)dev.mgorbatyuk.CreativityHub</string>
 </dict>
 </plist>

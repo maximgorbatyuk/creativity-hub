@@ -1,4 +1,4 @@
-# CreativeHub
+# CreativityHub
 
 ## iOS App Feature Specification
 
@@ -8,7 +8,7 @@
 
 ## Executive Summary
 
-CreativeHub is an all-in-one iOS application designed for creative project planning. It combines task management, inspiration collection, budget tracking, and note-taking into a unified experience with powerful search capabilities. The app addresses a gap in the market where existing solutions require users to juggle multiple apps for different aspects of creative project planning.
+CreativityHub is an all-in-one iOS application designed for creative project planning. It combines task management, inspiration collection, budget tracking, and note-taking into a unified experience with powerful search capabilities. The app addresses a gap in the market where existing solutions require users to juggle multiple apps for different aspects of creative project planning.
 
 ---
 

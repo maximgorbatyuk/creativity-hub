@@ -1,6 +1,6 @@
-# GA_GUIDE.md - Google Analytics Implementation Guide for CreativeHub
+# GA_GUIDE.md - Google Analytics Implementation Guide for CreativityHub
 
-This guide provides instructions for implementing Google Analytics (Firebase Analytics) in CreativeHub, following the same approach used in Journey Wallet.
+This guide provides instructions for implementing Google Analytics (Firebase Analytics) in CreativityHub, following the same approach used in Journey Wallet.
 
 ## Overview
 
@@ -12,7 +12,7 @@ The implementation uses Firebase Analytics with a secure credential management a
 ## Prerequisites
 
 1. Create a Firebase project at https://console.firebase.google.com
-2. Add an iOS app to the project with bundle ID: `dev.mgorbatyuk.CreativeHub` (or your actual bundle ID)
+2. Add an iOS app to the project with bundle ID: `dev.mgorbatyuk.CreativityHub` (or your actual bundle ID)
 3. Note down these values from Firebase Console > Project Settings > Your iOS app:
    - `FIREBASE_API_KEY`
    - `FIREBASE_GCM_SENDER_ID`
@@ -97,7 +97,7 @@ fi
 
 # Generate the plist
 # UPDATE: Change path to match your app target folder name
-PLIST_PATH="./CreativeHub/GoogleService-Info.plist"
+PLIST_PATH="./CreativityHub/GoogleService-Info.plist"
 
 cat > "$PLIST_PATH" << EOF
 <?xml version="1.0" encoding="UTF-8"?>
@@ -111,7 +111,7 @@ cat > "$PLIST_PATH" << EOF
     <key>PLIST_VERSION</key>
     <string>1</string>
     <key>BUNDLE_ID</key>
-    <string>dev.mgorbatyuk.CreativeHub</string>
+    <string>dev.mgorbatyuk.CreativityHub</string>
     <key>PROJECT_ID</key>
     <string>creativehub-firebase</string>
     <key>STORAGE_BUCKET</key>
@@ -185,8 +185,8 @@ if [ -z "$FIREBASE_API_KEY" ] || [ -z "$FIREBASE_GCM_SENDER_ID" ] || [ -z "$FIRE
 fi
 
 # Define the path where the plist should be created
-# UPDATE: Change "CreativeHub" to match your app target folder name
-PLIST_PATH="$CI_PRIMARY_REPOSITORY_PATH/CreativeHub/GoogleService-Info.plist"
+# UPDATE: Change "CreativityHub" to match your app target folder name
+PLIST_PATH="$CI_PRIMARY_REPOSITORY_PATH/CreativityHub/GoogleService-Info.plist"
 
 # Create the GoogleService-Info.plist file
 cat > "$PLIST_PATH" << EOF
@@ -201,7 +201,7 @@ cat > "$PLIST_PATH" << EOF
     <key>PLIST_VERSION</key>
     <string>1</string>
     <key>BUNDLE_ID</key>
-    <string>dev.mgorbatyuk.CreativeHub</string>
+    <string>dev.mgorbatyuk.CreativityHub</string>
     <key>PROJECT_ID</key>
     <string>creativehub-firebase</string>
     <key>STORAGE_BUCKET</key>
@@ -284,7 +284,7 @@ echo ""
 echo "🔧 Step 2: Generating GoogleService-Info.plist..."
 
 # UPDATE: Change path to match your app target folder name
-PLIST_PATH="./CreativeHub/GoogleService-Info.plist"
+PLIST_PATH="./CreativityHub/GoogleService-Info.plist"
 
 cat > "$PLIST_PATH" << EOF
 <?xml version="1.0" encoding="UTF-8"?>
@@ -298,7 +298,7 @@ cat > "$PLIST_PATH" << EOF
     <key>PLIST_VERSION</key>
     <string>1</string>
     <key>BUNDLE_ID</key>
-    <string>dev.mgorbatyuk.CreativeHub</string>
+    <string>dev.mgorbatyuk.CreativityHub</string>
     <key>PROJECT_ID</key>
     <string>creativehub-firebase</string>
     <key>STORAGE_BUCKET</key>
@@ -332,7 +332,7 @@ echo ""
 # ============================================================================
 echo "📦 Step 3: Building app locally to verify configuration..."
 
-SCHEME="CreativeHub"
+SCHEME="CreativityHub"
 ARCHIVE_PATH="./build/${SCHEME}.xcarchive"
 
 # Clean build directory
@@ -435,7 +435,7 @@ chmod +x scripts/build_and_distribute.sh
 
 ### Step 8: Create AnalyticsService.swift
 
-Create `CreativeHub/Services/AnalyticsService.swift`:
+Create `CreativityHub/Services/AnalyticsService.swift`:
 
 ```swift
 import FirebaseAnalytics
@@ -531,14 +531,14 @@ class AnalyticsService: ObservableObject {
 
 ### Step 9: Initialize Firebase in App Entry Point
 
-Update `CreativeHubApp.swift`:
+Update `CreativityHubApp.swift`:
 
 ```swift
 import SwiftUI
 import FirebaseCore
 
 @main
-struct CreativeHubApp: App {
+struct CreativityHubApp: App {
 
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     private var analytics = AnalyticsService.shared
@@ -572,7 +572,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 ### Step 10: Add GoogleService-Info.plist to Xcode Project
 
 1. Run `./scripts/generate_firebase_plist.sh` to create the plist locally
-2. In Xcode, right-click on the CreativeHub folder > Add Files to "CreativeHub"
+2. In Xcode, right-click on the CreativityHub folder > Add Files to "CreativityHub"
 3. Select `GoogleService-Info.plist`
 4. Ensure "Copy items if needed" is unchecked (file is generated, not copied)
 5. The file reference will be added but the actual file is git-ignored

@@ -6,14 +6,32 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		87C34EBC2F2B67D8006D0F2C /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 87PKG0001SQLITE00 /* SQLite */; };
+		87C34EBD2F2B67D8006D0F2C /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 87PKG0002FIREAN0 /* FirebaseAnalytics */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
-		879DCD872F26625400394B67 /* CreativeHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CreativeHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		879DCD872F26625400394B67 /* CreativityHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CreativityHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		87EXCEPT0001INFO0 /* Exceptions for "CreativityHub" folder in "CreativityHub" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 879DCD862F26625400394B67 /* CreativityHub */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		879DCD892F26625400394B67 /* CreativeHub */ = {
+		879DCD892F26625400394B67 /* CreativityHub */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = CreativeHub;
+			exceptions = (
+				87EXCEPT0001INFO0 /* Exceptions for "CreativityHub" folder in "CreativityHub" target */,
+			);
+			path = CreativityHub;
 			sourceTree = "<group>";
 		};
 		87BL000012345678 /* BusinessLogic */ = {
@@ -28,6 +46,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87C34EBD2F2B67D8006D0F2C /* FirebaseAnalytics in Frameworks */,
+				87C34EBC2F2B67D8006D0F2C /* SQLite in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -37,7 +57,7 @@
 		879DCD7E2F26625400394B67 = {
 			isa = PBXGroup;
 			children = (
-				879DCD892F26625400394B67 /* CreativeHub */,
+				879DCD892F26625400394B67 /* CreativityHub */,
 				87BL000012345678 /* BusinessLogic */,
 				879DCD882F26625400394B67 /* Products */,
 			);
@@ -46,7 +66,7 @@
 		879DCD882F26625400394B67 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				879DCD872F26625400394B67 /* CreativeHub.app */,
+				879DCD872F26625400394B67 /* CreativityHub.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -54,9 +74,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		879DCD862F26625400394B67 /* CreativeHub */ = {
+		879DCD862F26625400394B67 /* CreativityHub */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 879DCD922F26625500394B67 /* Build configuration list for PBXNativeTarget "CreativeHub" */;
+			buildConfigurationList = 879DCD922F26625500394B67 /* Build configuration list for PBXNativeTarget "CreativityHub" */;
 			buildPhases = (
 				879DCD832F26625400394B67 /* Sources */,
 				879DCD842F26625400394B67 /* Frameworks */,
@@ -67,16 +87,16 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				879DCD892F26625400394B67 /* CreativeHub */,
+				879DCD892F26625400394B67 /* CreativityHub */,
 				87BL000012345678 /* BusinessLogic */,
 			);
-			name = CreativeHub;
+			name = CreativityHub;
 			packageProductDependencies = (
 				87PKG0001SQLITE00 /* SQLite */,
 				87PKG0002FIREAN0 /* FirebaseAnalytics */,
 			);
-			productName = CreativeHub;
-			productReference = 879DCD872F26625400394B67 /* CreativeHub.app */;
+			productName = CreativityHub;
+			productReference = 879DCD872F26625400394B67 /* CreativityHub.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -94,7 +114,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 879DCD822F26625400394B67 /* Build configuration list for PBXProject "CreativeHub" */;
+			buildConfigurationList = 879DCD822F26625400394B67 /* Build configuration list for PBXProject "CreativityHub" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -106,7 +126,7 @@
 			mainGroup = 879DCD7E2F26625400394B67;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				87PKG0000SQLITE00 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
+				87PKG0000SQLITE00 /* XCRemoteSwiftPackageReference "SQLite" */,
 				87PKG0000FIREBS00 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -114,7 +134,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				879DCD862F26625400394B67 /* CreativeHub */,
+				879DCD862F26625400394B67 /* CreativityHub */,
 			);
 		};
 /* End PBXProject section */
@@ -266,33 +286,34 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = CreativeHub/CreativeHubDebug.entitlements;
+				CODE_SIGN_ENTITLEMENTS = CreativityHub/CreativityHubDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = EKKL63HDHJ;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = CreativeHub/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Creativity Hub";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = CreativityHub/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CreativityHub;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2026.1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.mgorbatyuk.CreativeHub;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.mgorbatyuk.CreativityHub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -301,40 +322,41 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = CreativeHub/CreativeHub.entitlements;
+				CODE_SIGN_ENTITLEMENTS = CreativityHub/CreativityHub.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = EKKL63HDHJ;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = CreativeHub/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Creativity Hub";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = CreativityHub/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CreativityHub;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2026.1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.mgorbatyuk.CreativeHub;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.mgorbatyuk.CreativityHub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		879DCD822F26625400394B67 /* Build configuration list for PBXProject "CreativeHub" */ = {
+		879DCD822F26625400394B67 /* Build configuration list for PBXProject "CreativityHub" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				879DCD902F26625500394B67 /* Debug */,
@@ -343,7 +365,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		879DCD922F26625500394B67 /* Build configuration list for PBXNativeTarget "CreativeHub" */ = {
+		879DCD922F26625500394B67 /* Build configuration list for PBXNativeTarget "CreativityHub" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				879DCD932F26625500394B67 /* Debug */,
@@ -355,14 +377,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		87PKG0000SQLITE00 /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/stephencelis/SQLite.swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.15.0;
-			};
-		};
 		87PKG0000FIREBS00 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -371,12 +385,20 @@
 				minimumVersion = 11.0.0;
 			};
 		};
+		87PKG0000SQLITE00 /* XCRemoteSwiftPackageReference "SQLite" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.15.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		87PKG0001SQLITE00 /* SQLite */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 87PKG0000SQLITE00 /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			package = 87PKG0000SQLITE00 /* XCRemoteSwiftPackageReference "SQLite" */;
 			productName = SQLite;
 		};
 		87PKG0002FIREAN0 /* FirebaseAnalytics */ = {

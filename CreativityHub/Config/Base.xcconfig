@@ -1,0 +1,10 @@
+// Base configuration shared by Debug and Release
+// CreativityHub - Base xcconfig
+
+GITHUB_REPO_URL = github.com/maximgorbatyuk/creativity-hub
+DEVELOPER_TELEGRAM_LINK = t.me/maximgorbatyuk
+APP_STORE_ID = YOUR_APP_STORE_ID
+DEVELOPER_NAME = Maxim Gorbatyuk
+BUILD_ENVIRONMENT = release
+APP_GROUP_IDENTIFIER = group.dev.mgorbatyuk.CreativityHub
+SHARE_EXTENSION_BUNDLE_ID = dev.mgorbatyuk.CreativityHub.ShareExtension

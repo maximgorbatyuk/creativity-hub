@@ -1,0 +1,7 @@
+// Release configuration for CreativityHub
+// Uses production App Group
+
+#include "Base.xcconfig"
+
+BUILD_ENVIRONMENT = release
+APP_GROUP_IDENTIFIER = group.dev.mgorbatyuk.CreativityHub

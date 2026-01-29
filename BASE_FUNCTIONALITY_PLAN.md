@@ -1,18 +1,18 @@
-# BASE_FUNCTIONALITY_PLAN.md - CreativeHub Implementation Plan
+# BASE_FUNCTIONALITY_PLAN.md - CreativityHub Implementation Plan
 
-This document provides a phased implementation plan for building CreativeHub with base functionality copied from Journey Wallet.
+This document provides a phased implementation plan for building CreativityHub with base functionality copied from Journey Wallet.
 
 ## Target App Structure
 
 ```
-CreativeHub/
-├── CreativeHub/                      # Main app target
-│   ├── CreativeHubApp.swift          # App entry point
+CreativityHub/
+├── CreativityHub/                      # Main app target
+│   ├── CreativityHubApp.swift          # App entry point
 │   ├── MainTabView.swift             # Tab navigation (4 tabs)
 │   ├── Assets.xcassets/              # App icons and images
 │   ├── Info.plist                    # App configuration
-│   ├── CreativeHub.entitlements      # Release entitlements (App Group)
-│   ├── CreativeHubDebug.entitlements # Debug entitlements (App Group)
+│   ├── CreativityHub.entitlements      # Release entitlements (App Group)
+│   ├── CreativityHubDebug.entitlements # Debug entitlements (App Group)
 │   ├── en.lproj/Localizable.strings  # English localization
 │   ├── ru.lproj/Localizable.strings  # Russian localization
 │   ├── kk.lproj/Localizable.strings  # Kazakh localization
@@ -83,7 +83,7 @@ CreativeHub/
 │
 ├── scripts/                          # Development scripts
 ├── ci_scripts/                       # CI/CD scripts
-└── CreativeHub.xcodeproj/
+└── CreativityHub.xcodeproj/
 ```
 
 ---
@@ -94,15 +94,15 @@ CreativeHub/
 
 **Tasks:**
 1. Create new iOS App project in Xcode
-   - Product Name: `CreativeHub`
-   - Bundle ID: `dev.mgorbatyuk.CreativeHub`
+   - Product Name: `CreativityHub`
+   - Bundle ID: `dev.mgorbatyuk.CreativityHub`
    - Interface: SwiftUI
    - Language: Swift
    - Minimum iOS: 18.0
 
 2. Create folder structure:
    ```
-   CreativeHub/
+   CreativityHub/
    ├── Features/
    ├── UserSettings/
    ├── Onboarding/
@@ -130,30 +130,30 @@ CreativeHub/
 
 Create configuration files for build-time variables. This enables Share Extension support later without migration.
 
-**Create folder:** `CreativeHub/Config/`
+**Create folder:** `CreativityHub/Config/`
 
-**File:** `CreativeHub/Config/Base.xcconfig`
+**File:** `CreativityHub/Config/Base.xcconfig`
 ```
 // Base configuration shared by Debug and Release
-GITHUB_REPO_URL = github.com/maximgorbatyuk/creativehub
+GITHUB_REPO_URL = github.com/maximgorbatyuk/creativity-hub
 DEVELOPER_TELEGRAM_LINK = t.me/maximgorbatyuk
 APP_STORE_ID = YOUR_APP_STORE_ID
 DEVELOPER_NAME = Maxim Gorbatyuk
 BUILD_ENVIRONMENT = release
 APP_GROUP_IDENTIFIER = group.dev.mgorbatyuk.creativehub
-SHARE_EXTENSION_BUNDLE_ID = dev.mgorbatyuk.CreativeHub.ShareExtension
+SHARE_EXTENSION_BUNDLE_ID = dev.mgorbatyuk.CreativityHub.ShareExtension
 ```
 
-**File:** `CreativeHub/Config/Debug.xcconfig`
+**File:** `CreativityHub/Config/Debug.xcconfig`
 ```
 #include "Base.xcconfig"
 
 BUILD_ENVIRONMENT = dev
-APP_GROUP_IDENTIFIER = group.dev.mgorbatyuk.creativehub.dev
-SHARE_EXTENSION_BUNDLE_ID = dev.mgorbatyuk.CreativeHub.dev.ShareExtension
+APP_GROUP_IDENTIFIER = group.dev.mgorbatyuk.creativityhub.dev
+SHARE_EXTENSION_BUNDLE_ID = dev.mgorbatyuk.CreativityHub.dev.ShareExtension
 ```
 
-**File:** `CreativeHub/Config/Release.xcconfig`
+**File:** `CreativityHub/Config/Release.xcconfig`
 ```
 #include "Base.xcconfig"
 
@@ -187,7 +187,7 @@ Add these keys to Info.plist (use xcconfig variables where applicable):
 
 ### 1.5 Create Entitlements Files (Required for App Group)
 
-**File:** `CreativeHub/CreativeHub.entitlements` (Release)
+**File:** `CreativityHub/CreativityHub.entitlements` (Release)
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -201,7 +201,7 @@ Add these keys to Info.plist (use xcconfig variables where applicable):
 </plist>
 ```
 
-**File:** `CreativeHub/CreativeHubDebug.entitlements` (Debug)
+**File:** `CreativityHub/CreativityHubDebug.entitlements` (Debug)
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -209,7 +209,7 @@ Add these keys to Info.plist (use xcconfig variables where applicable):
 <dict>
     <key>com.apple.security.application-groups</key>
     <array>
-        <string>group.dev.mgorbatyuk.creativehub.dev</string>
+        <string>group.dev.mgorbatyuk.creativityhub.dev</string>
     </array>
 </dict>
 </plist>
@@ -218,8 +218,8 @@ Add these keys to Info.plist (use xcconfig variables where applicable):
 **Configure Xcode build settings:**
 | Configuration | Code Signing Entitlements |
 |---------------|---------------------------|
-| Debug | `CreativeHub/CreativeHubDebug.entitlements` |
-| Release | `CreativeHub/CreativeHub.entitlements` |
+| Debug | `CreativityHub/CreativityHubDebug.entitlements` |
+| Release | `CreativityHub/CreativityHub.entitlements` |
 
 ### 1.6 Register App Groups in Apple Developer Portal
 
@@ -227,13 +227,13 @@ Add these keys to Info.plist (use xcconfig variables where applicable):
 2. Navigate to Certificates, Identifiers & Profiles → Identifiers
 3. Click + and select "App Groups"
 4. Register two App Groups:
-   - `group.dev.mgorbatyuk.creativehub` (Production)
-   - `group.dev.mgorbatyuk.creativehub.dev` (Development)
+   - `group.dev.mgorbatyuk.creativityhub` (Production)
+   - `group.dev.mgorbatyuk.creativityhub.dev` (Development)
 5. Add these App Groups to your App ID's capabilities
 
 ### 1.7 Create .gitignore
 
-Copy from existing `.gitignore` in CreativeHub (already created).
+Copy from existing `.gitignore` in CreativityHub (already created).
 
 ---
 
@@ -608,7 +608,7 @@ Copy from Journey Wallet. Provides:
 
 ### 5.2 EnvironmentService
 
-**File:** `CreativeHub/Services/EnvironmentService.swift`
+**File:** `CreativityHub/Services/EnvironmentService.swift`
 
 Copy from Journey Wallet. Provides:
 - App version info
@@ -619,7 +619,7 @@ Copy from Journey Wallet. Provides:
 
 ### 5.3 DeveloperModeManager
 
-**File:** `CreativeHub/Services/DeveloperModeManager.swift`
+**File:** `CreativityHub/Services/DeveloperModeManager.swift`
 
 Copy from Journey Wallet. Provides:
 - Hidden developer mode (15 taps on version)
@@ -629,7 +629,7 @@ Copy from Journey Wallet. Provides:
 
 ### 5.4 NotificationManager
 
-**File:** `CreativeHub/Services/NotificationManager.swift`
+**File:** `CreativityHub/Services/NotificationManager.swift`
 
 Copy from Journey Wallet. Provides:
 - Permission handling
@@ -638,7 +638,7 @@ Copy from Journey Wallet. Provides:
 
 ### 5.5 NetworkMonitor
 
-**File:** `CreativeHub/Services/NetworkMonitor.swift`
+**File:** `CreativityHub/Services/NetworkMonitor.swift`
 
 Copy from Journey Wallet. Provides:
 - `isConnected` property
@@ -647,7 +647,7 @@ Copy from Journey Wallet. Provides:
 
 ### 5.6 ColorSchemeManager
 
-**File:** `CreativeHub/Services/ColorSchemeManager.swift`
+**File:** `CreativityHub/Services/ColorSchemeManager.swift`
 
 Copy from Journey Wallet. Provides:
 - `currentScheme` property
@@ -656,7 +656,7 @@ Copy from Journey Wallet. Provides:
 
 ### 5.7 AnalyticsService
 
-**File:** `CreativeHub/Services/AnalyticsService.swift`
+**File:** `CreativityHub/Services/AnalyticsService.swift`
 
 Copy from Journey Wallet (see GA_GUIDE.md). Provides:
 - `trackEvent()`
@@ -666,7 +666,7 @@ Copy from Journey Wallet (see GA_GUIDE.md). Provides:
 
 ### 5.8 BackupService
 
-**File:** `CreativeHub/Services/BackupService.swift`
+**File:** `CreativityHub/Services/BackupService.swift`
 
 Copy from Journey Wallet. Provides:
 - `isiCloudAvailable() -> Bool`
@@ -678,7 +678,7 @@ Copy from Journey Wallet. Provides:
 
 ### 5.9 BackgroundTaskManager
 
-**File:** `CreativeHub/Services/BackgroundTaskManager.swift`
+**File:** `CreativityHub/Services/BackgroundTaskManager.swift`
 
 Copy from Journey Wallet. Provides:
 - Automatic backup scheduling
@@ -687,14 +687,14 @@ Copy from Journey Wallet. Provides:
 
 ### 5.10 AppVersionChecker
 
-**File:** `CreativeHub/Services/AppVersionChecker.swift`
+**File:** `CreativityHub/Services/AppVersionChecker.swift`
 
 Copy from Journey Wallet. Provides:
 - `checkAppStoreVersion() async -> Bool?`
 
 ### 5.11 ConfirmationData
 
-**File:** `CreativeHub/Services/ConfirmationData.swift`
+**File:** `CreativityHub/Services/ConfirmationData.swift`
 
 Copy from Journey Wallet. Helper for confirmation dialogs.
 
@@ -704,7 +704,7 @@ Copy from Journey Wallet. Helper for confirmation dialogs.
 
 ### 6.1 ShareSheet
 
-**File:** `CreativeHub/Shared/ShareSheet.swift`
+**File:** `CreativityHub/Shared/ShareSheet.swift`
 
 Copy from Journey Wallet. UIActivityViewController wrapper.
 
@@ -716,7 +716,7 @@ Copy from Journey Wallet. UIActivityViewController wrapper.
 
 **Structure:**
 ```
-CreativeHub/
+CreativityHub/
 ├── en.lproj/Localizable.strings
 ├── ru.lproj/Localizable.strings
 └── kk.lproj/Localizable.strings
@@ -839,7 +839,7 @@ Create translations for all keys above.
 
 ### 8.1 OnboardingPageViewModelItem
 
-**File:** `CreativeHub/Onboarding/OnboardingPageViewModelItem.swift`
+**File:** `CreativityHub/Onboarding/OnboardingPageViewModelItem.swift`
 
 ```swift
 import Foundation
@@ -856,7 +856,7 @@ struct OnboardingPageViewModelItem: Identifiable {
 
 ### 8.2 OnboardingViewModel
 
-**File:** `CreativeHub/Onboarding/OnboardingViewModel.swift`
+**File:** `CreativityHub/Onboarding/OnboardingViewModel.swift`
 
 ```swift
 import Foundation
@@ -906,19 +906,19 @@ class OnboardingViewModel: ObservableObject {
 
 ### 8.3 OnboardingPageView
 
-**File:** `CreativeHub/Onboarding/OnboardingPageView.swift`
+**File:** `CreativityHub/Onboarding/OnboardingPageView.swift`
 
 Copy from Journey Wallet. Displays single onboarding page with icon, title, description.
 
 ### 8.4 OnboardingLanguageSelectionView
 
-**File:** `CreativeHub/Onboarding/OnboardingLanguageSelectionView.swift`
+**File:** `CreativityHub/Onboarding/OnboardingLanguageSelectionView.swift`
 
-Copy from Journey Wallet, change app name to "CreativeHub".
+Copy from Journey Wallet, change app name to "CreativityHub".
 
 ### 8.5 OnboardingView
 
-**File:** `CreativeHub/Onboarding/OnboardingView.swift`
+**File:** `CreativityHub/Onboarding/OnboardingView.swift`
 
 Copy from Journey Wallet. Main onboarding container with:
 - Language selection page
@@ -932,7 +932,7 @@ Copy from Journey Wallet. Main onboarding container with:
 
 ### 9.1 UserSettingsViewModel
 
-**File:** `CreativeHub/UserSettings/UserSettingsViewModel.swift`
+**File:** `CreativityHub/UserSettings/UserSettingsViewModel.swift`
 
 Copy from Journey Wallet with all functionality:
 - Language management
@@ -944,7 +944,7 @@ Copy from Journey Wallet with all functionality:
 
 ### 9.2 UserSettingsView
 
-**File:** `CreativeHub/UserSettings/UserSettingsView.swift`
+**File:** `CreativityHub/UserSettings/UserSettingsView.swift`
 
 Copy from Journey Wallet with all sections:
 1. App Update Banner (conditional)
@@ -957,13 +957,13 @@ Copy from Journey Wallet with all sections:
 
 ### 9.3 AboutAppSubView
 
-**File:** `CreativeHub/UserSettings/AboutAppSubView.swift`
+**File:** `CreativityHub/UserSettings/AboutAppSubView.swift`
 
 Copy from Journey Wallet, change app name and description.
 
 ### 9.4 EditDefaultCurrencyView
 
-**File:** `CreativeHub/UserSettings/EditDefaultCurrencyView.swift`
+**File:** `CreativityHub/UserSettings/EditDefaultCurrencyView.swift`
 
 Create currency selection modal:
 
@@ -1018,7 +1018,7 @@ struct EditDefaultCurrencyView: View {
 
 ### 9.5 iCloudBackupListView
 
-**File:** `CreativeHub/UserSettings/iCloudBackupListView.swift`
+**File:** `CreativityHub/UserSettings/iCloudBackupListView.swift`
 
 Create backup history list view showing all iCloud backups with restore/delete options.
 
@@ -1028,7 +1028,7 @@ Create backup history list view showing all iCloud backups with restore/delete o
 
 ### 10.1 PlaceholderTabView
 
-**File:** `CreativeHub/Features/PlaceholderTabView.swift`
+**File:** `CreativityHub/Features/PlaceholderTabView.swift`
 
 ```swift
 import SwiftUI
@@ -1060,7 +1060,7 @@ struct PlaceholderTabView: View {
 
 ### 10.2 Feature Views
 
-**File:** `CreativeHub/Features/FirstFeatureView.swift`
+**File:** `CreativityHub/Features/FirstFeatureView.swift`
 ```swift
 struct FirstFeatureView: View {
     var body: some View {
@@ -1069,7 +1069,7 @@ struct FirstFeatureView: View {
 }
 ```
 
-**File:** `CreativeHub/Features/SecondFeatureView.swift`
+**File:** `CreativityHub/Features/SecondFeatureView.swift`
 ```swift
 struct SecondFeatureView: View {
     var body: some View {
@@ -1078,7 +1078,7 @@ struct SecondFeatureView: View {
 }
 ```
 
-**File:** `CreativeHub/Features/ThirdFeatureView.swift`
+**File:** `CreativityHub/Features/ThirdFeatureView.swift`
 ```swift
 struct ThirdFeatureView: View {
     var body: some View {
@@ -1089,7 +1089,7 @@ struct ThirdFeatureView: View {
 
 ### 10.3 MainTabView
 
-**File:** `CreativeHub/MainTabView.swift`
+**File:** `CreativityHub/MainTabView.swift`
 
 ```swift
 import SwiftUI
@@ -1148,7 +1148,7 @@ struct MainTabView: View {
 
 ### 10.4 MainTabViewModel
 
-**File:** `CreativeHub/MainTabViewModel.swift`
+**File:** `CreativityHub/MainTabViewModel.swift`
 
 ```swift
 import Foundation
@@ -1170,9 +1170,9 @@ class MainTabViewModel {
 
 ## Phase 11: App Entry Point
 
-### 11.1 CreativeHubApp
+### 11.1 CreativityHubApp
 
-**File:** `CreativeHub/CreativeHubApp.swift`
+**File:** `CreativityHub/CreativityHubApp.swift`
 
 ```swift
 import SwiftUI
@@ -1180,7 +1180,7 @@ import UserNotifications
 import FirebaseCore
 
 @main
-struct CreativeHubApp: App {
+struct CreativityHubApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @AppStorage(UserSettingsViewModel.onboardingCompletedKey) private var isOnboardingComplete = false
 
@@ -1270,8 +1270,8 @@ export FIREBASE_APP_ID="your-app-id"
 ### 13.1 Build Verification
 
 ```bash
-cd /Users/maximgorbatyuk/projects/ios/CreativeHub
-xcodebuild -project CreativeHub.xcodeproj -scheme CreativeHub \
+cd /Users/maximgorbatyuk/projects/ios/CreativityHub
+xcodebuild -project CreativityHub.xcodeproj -scheme CreativityHub \
   -destination 'platform=iOS Simulator,name=iPhone 16 Pro' build
 ```
 
@@ -1317,8 +1317,8 @@ xcodebuild -project CreativeHub.xcodeproj -scheme CreativeHub \
 ## Notes for Implementation
 
 1. **Copy files in order** - Later phases depend on earlier phases
-2. **Adapt namespaces** - Change "JourneyWallet" references to "CreativeHub"
-3. **Update bundle IDs** - Use `dev.mgorbatyuk.CreativeHub`
+2. **Adapt namespaces** - Change "JourneyWallet" references to "CreativityHub"
+3. **Update bundle IDs** - Use `dev.mgorbatyuk.CreativityHub`
 4. **Test incrementally** - Build after each phase to catch errors early
 5. **Use existing guides** - Reference GA_GUIDE.md and USER_SETTINGS_VIEW_GUIDE.md for details
 6. **App Group is pre-configured** - Phase 1 sets up App Group for future Share Extension support
@@ -1422,7 +1422,7 @@ SHARE_EXTENSION_PLAN.md
 **If skipping Firebase Analytics:**
 - Remove `AnalyticsService.swift` from Phase 5.7
 - Remove Firebase SDK from dependencies (Phase 1.2)
-- Remove Firebase initialization from `CreativeHubApp.swift` (Phase 11)
+- Remove Firebase initialization from `CreativityHubApp.swift` (Phase 11)
 - Remove `scripts/generate_firebase_plist.sh` usage
 - Analytics calls in code will need to be stubbed or removed
 
