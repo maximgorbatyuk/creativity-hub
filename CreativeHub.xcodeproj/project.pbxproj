@@ -16,6 +16,11 @@
 			path = CreativeHub;
 			sourceTree = "<group>";
 		};
+		87BL000012345678 /* BusinessLogic */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = BusinessLogic;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +38,7 @@
 			isa = PBXGroup;
 			children = (
 				879DCD892F26625400394B67 /* CreativeHub */,
+				87BL000012345678 /* BusinessLogic */,
 				879DCD882F26625400394B67 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -62,9 +68,12 @@
 			);
 			fileSystemSynchronizedGroups = (
 				879DCD892F26625400394B67 /* CreativeHub */,
+				87BL000012345678 /* BusinessLogic */,
 			);
 			name = CreativeHub;
 			packageProductDependencies = (
+				87PKG0001SQLITE00 /* SQLite */,
+				87PKG0002FIREAN0 /* FirebaseAnalytics */,
 			);
 			productName = CreativeHub;
 			productReference = 879DCD872F26625400394B67 /* CreativeHub.app */;
@@ -91,9 +100,15 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
+				kk,
 			);
 			mainGroup = 879DCD7E2F26625400394B67;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				87PKG0000SQLITE00 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
+				87PKG0000FIREBS00 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 879DCD882F26625400394B67 /* Products */;
 			projectDirPath = "";
@@ -178,7 +193,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -236,7 +251,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -251,11 +266,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CreativeHub/CreativeHubDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = EKKL63HDHJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CreativeHub/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Creativity Hub";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -267,7 +284,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2026.1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = mgorbatyuk.dev.CreativeHub;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.mgorbatyuk.CreativeHub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -284,11 +301,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CreativeHub/CreativeHub.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = EKKL63HDHJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CreativeHub/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Creativity Hub";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -300,7 +319,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2026.1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = mgorbatyuk.dev.CreativeHub;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.mgorbatyuk.CreativeHub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -334,6 +353,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		87PKG0000SQLITE00 /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.15.0;
+			};
+		};
+		87PKG0000FIREBS00 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		87PKG0001SQLITE00 /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 87PKG0000SQLITE00 /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			productName = SQLite;
+		};
+		87PKG0002FIREAN0 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 87PKG0000FIREBS00 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 879DCD7F2F26625400394B67 /* Project object */;
 }

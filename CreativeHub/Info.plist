@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- App Group Identifier (from xcconfig) -->
+    <key>AppGroupIdentifier</key>
+    <string>$(APP_GROUP_IDENTIFIER)</string>
+
+    <!-- App Store ID (from xcconfig) -->
+    <key>AppStoreId</key>
+    <string>$(APP_STORE_ID)</string>
+
+    <!-- Developer Name (from xcconfig) -->
+    <key>DeveloperName</key>
+    <string>$(DEVELOPER_NAME)</string>
+
+    <!-- Developer Telegram Link (from xcconfig) -->
+    <key>DeveloperTelegramLink</key>
+    <string>$(DEVELOPER_TELEGRAM_LINK)</string>
+
+    <!-- Build Environment: dev or release (from xcconfig) -->
+    <key>BuildEnvironment</key>
+    <string>$(BUILD_ENVIRONMENT)</string>
+
+    <!-- GitHub Repository URL (from xcconfig) -->
+    <key>GithubRepoUrl</key>
+    <string>$(GITHUB_REPO_URL)</string>
+
+    <!-- Supported interface orientations -->
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+    </array>
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationPortraitUpsideDown</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+
+    <!-- Background modes for background tasks -->
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>fetch</string>
+        <string>processing</string>
+    </array>
+
+    <!-- Background task identifiers -->
+    <key>BGTaskSchedulerPermittedIdentifiers</key>
+    <array>
+        <string>dev.mgorbatyuk.CreativeHub.backup</string>
+    </array>
+</dict>
+</plist>

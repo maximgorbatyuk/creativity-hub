@@ -1,0 +1,121 @@
+import FirebaseAnalytics
+import Foundation
+import os
+
+/// Service for tracking analytics events using Firebase Analytics.
+/// Analytics are only active in Release builds - DEBUG builds log locally only.
+class AnalyticsService: ObservableObject {
+
+  static let shared = AnalyticsService()
+
+  private var _globalProps: [String: Any]? = nil
+  private var _sessionId = UUID().uuidString
+
+  let logger: Logger
+
+  init() {
+    self.logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "-", category: "Analytics")
+  }
+
+  /// Track a custom event with optional properties.
+  /// - Parameters:
+  ///   - name: The event name (e.g., "button_tapped", "feature_used")
+  ///   - properties: Optional dictionary of event properties
+  func trackEvent(_ name: String, properties: [String: Any]? = nil) {
+    let mergedParams = mergeProperties(properties)
+
+    #if DEBUG
+    logger.info("Analytics Event: \(name), properties: \(String(describing: mergedParams))")
+    #else
+    Analytics.logEvent(name, parameters: mergedParams)
+    #endif
+  }
+
+  /// Identify the current user for analytics tracking.
+  /// - Parameters:
+  ///   - userId: Unique user identifier
+  ///   - properties: Optional user properties to set
+  func identifyUser(_ userId: String, properties: [String: Any]? = nil) {
+    #if DEBUG
+    logger.info("Analytics Identify User: \(userId), properties: \(String(describing: properties))")
+    #else
+    Analytics.setUserID(userId)
+    properties?.forEach { key, value in
+      Analytics.setUserProperty(String(describing: value), forName: key)
+    }
+    #endif
+  }
+
+  /// Track a screen view event.
+  /// - Parameters:
+  ///   - screenName: The name of the screen being viewed
+  ///   - properties: Optional additional properties
+  func trackScreen(_ screenName: String, properties: [String: Any]? = nil) {
+    var mergedParams = mergeProperties(properties)
+    mergedParams[AnalyticsParameterScreenName] = screenName
+    mergedParams[AnalyticsParameterScreenClass] = screenName
+
+    #if DEBUG
+    logger.info("Analytics Screen View: \(screenName), properties: \(String(describing: mergedParams))")
+    #else
+    Analytics.logEvent(AnalyticsEventScreenView, parameters: mergedParams)
+    #endif
+  }
+
+  /// Track a button tap event with screen context.
+  /// - Parameters:
+  ///   - buttonName: The name/identifier of the button
+  ///   - screen: The screen where the button was tapped
+  ///   - additionalParams: Optional additional properties
+  func trackButtonTap(_ buttonName: String, screen: String, additionalParams: [String: Any]? = nil) {
+    var params: [String: Any] = [
+      "button_name": buttonName,
+      "screen": screen
+    ]
+
+    params.merge(additionalParams ?? [:]) { _, new in new }
+
+    trackEvent("button_tapped", properties: params)
+  }
+
+  /// Track an error event.
+  /// - Parameters:
+  ///   - error: The error that occurred
+  ///   - context: Additional context about where the error occurred
+  func trackError(_ error: Error, context: String) {
+    trackEvent("error_occurred", properties: [
+      "error_message": error.localizedDescription,
+      "error_context": context
+    ])
+  }
+
+  // MARK: - Private
+
+  private func mergeProperties(_ parameters: [String: Any]?) -> [String: Any] {
+    var merged = getGlobalProperties()
+
+    if let params = parameters {
+      merged.merge(params) { _, new in new }
+    }
+
+    return merged
+  }
+
+  private func getGlobalProperties() -> [String: Any] {
+    if let props = _globalProps {
+      return props
+    }
+
+    let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown"
+    let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "unknown"
+
+    _globalProps = [
+      "session_id": _sessionId,
+      "app_version": "\(version) (\(build))",
+      "platform": "iOS",
+      "os_version": UIDevice.current.systemVersion
+    ]
+
+    return _globalProps!
+  }
+}
