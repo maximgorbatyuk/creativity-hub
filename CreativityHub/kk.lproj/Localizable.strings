@@ -1,0 +1,117 @@
+/* Kazakh localization for CreativityHub */
+
+/* Common */
+"loading" = "Жүктелуде...";
+"button.cancel" = "Болдырмау";
+"button.save" = "Сақтау";
+"button.delete" = "Жою";
+"button.edit" = "Өзгерту";
+"button.done" = "Дайын";
+"button.add" = "Қосу";
+"button.close" = "Жабу";
+
+/* Project Status */
+"project.status.active" = "Белсенді";
+"project.status.completed" = "Аяқталған";
+"project.status.archived" = "Мұрағатта";
+
+/* Priority */
+"priority.none" = "Жоқ";
+"priority.low" = "Төмен";
+"priority.medium" = "Орташа";
+"priority.high" = "Жоғары";
+
+/* Idea Source */
+"idea.source.website" = "Веб-сайт";
+"idea.source.other" = "Басқа";
+
+/* Expense Status */
+"expense.status.planned" = "Жоспарланған";
+"expense.status.paid" = "Төленген";
+"expense.status.refunded" = "Қайтарылған";
+
+/* Currency */
+"currency.usd" = "АҚШ доллары";
+"currency.eur" = "Еуро";
+"currency.gbp" = "Британ фунты";
+"currency.kzt" = "Қазақстан теңгесі";
+"currency.rub" = "Ресей рублі";
+"currency.uah" = "Украина гривнасы";
+"currency.trl" = "Түрік лирасы";
+"currency.aed" = "БАЭ дирхамы";
+"currency.sar" = "Сауд риялы";
+"currency.jpy" = "Жапон иенасы";
+"currency.byn" = "Беларусь рублі";
+
+/* Color Scheme */
+"settings.color_scheme.system" = "Жүйелік";
+"settings.color_scheme.light" = "Жарық";
+"settings.color_scheme.dark" = "Қараңғы";
+
+/* Empty States */
+"empty.projects.title" = "Жобалар жоқ";
+"empty.projects.message" = "Жоспарлауды бастау үшін алғашқы жобаңызды жасаңыз";
+"empty.checklists.title" = "Тізімдер жоқ";
+"empty.checklists.message" = "Тапсырмаларды ұйымдастыру үшін тізім қосыңыз";
+"empty.checklist_items.title" = "Элементтер жоқ";
+"empty.checklist_items.message" = "Барысты қадағалау үшін элементтер қосыңыз";
+"empty.ideas.title" = "Идеялар жоқ";
+"empty.ideas.message" = "Жобаңыз үшін сілтемелер мен шабыт сақтаңыз";
+"empty.expenses.title" = "Шығыстар жоқ";
+"empty.expenses.message" = "Жоба шығыстарын осында қадағалаңыз";
+"empty.notes.title" = "Жазбалар жоқ";
+"empty.notes.message" = "Ойларыңыз бен мәліметтерді жазып алыңыз";
+"empty.search.title" = "Нәтижелер жоқ";
+"empty.search.message" = "Басқа іздеу сөзін қолданып көріңіз";
+
+/* Error States */
+"error.retry" = "Қайталау";
+"error.network.title" = "Байланыс қатесі";
+"error.network.message" = "Интернет байланысын тексеріп, қайта көріңіз";
+"error.database.title" = "Деректер қатесі";
+"error.database.message" = "Жергілікті қоймада қате орын алды";
+"error.not_found.title" = "Табылмады";
+"error.not_found.message" = "Сұралған элемент табылмады";
+"error.generic.title" = "Бірдеңе дұрыс болмады";
+"error.generic.message" = "Күтпеген қате орын алды. Қайта көріңіз";
+
+/* Onboarding */
+"onboarding.skip" = "Өткізу";
+"onboarding.next" = "Келесі";
+"onboarding.get_started" = "Бастау";
+"onboarding.language.title" = "Тіліңізді таңдаңыз";
+"onboarding.language.description" = "Мұны кейінірек Баптауларда өзгерте аласыз";
+"onboarding.welcome.title" = "CreativityHub-қа қош келдіңіз";
+"onboarding.welcome.description" = "Шығармашылық жобаларыңызды бір жерде жоспарлаңыз";
+"onboarding.projects.title" = "Жобаларды ұйымдастырыңыз";
+"onboarding.projects.description" = "Әр жоба үшін тізімдерді, идеяларды және бюджетті басқарыңыз";
+"onboarding.ideas.title" = "Шабытты жинаңыз";
+"onboarding.ideas.description" = "Instagram, Pinterest, YouTube және басқа сілтемелерді сақтаңыз";
+"onboarding.budget.title" = "Бюджетті бақылаңыз";
+"onboarding.budget.description" = "Санаттар бойынша шығыстарды бақылаңыз";
+
+/* Settings */
+"settings.title" = "Баптаулар";
+"settings.section.preferences" = "Теңшелімдер";
+"settings.section.appearance" = "Сыртқы көрініс";
+"settings.section.about" = "Қолданба туралы";
+"settings.currency" = "Валюта";
+"settings.language" = "Тіл";
+"settings.color_scheme" = "Түс тақырыбы";
+"settings.version" = "Нұсқа";
+"settings.developer" = "Әзірлеуші";
+
+/* Tabs */
+"tab.today" = "Бүгін";
+"tab.projects" = "Жобалар";
+"tab.search" = "Іздеу";
+"tab.settings" = "Баптаулар";
+
+/* Today */
+"today.create_project" = "Жоба жасау";
+
+/* Projects */
+"projects.new" = "Жаңа жоба";
+
+/* Search */
+"search.placeholder" = "Жобаларды, тапсырмаларды, идеяларды іздеу...";

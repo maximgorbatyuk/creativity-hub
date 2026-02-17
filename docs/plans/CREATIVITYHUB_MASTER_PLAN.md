@@ -135,18 +135,18 @@ Status legend: completed, partial, pending.
 | Phase | Description | Status |
 |---|---|---|
 | 1 | Project foundation (project setup, dependencies, configs, entitlements) | completed |
-| 2 | Domain models | pending |
-| 3 | Error handling and logging | pending |
-| 4 | Database layer (repositories, migrations, manager) | pending |
-| 5 | Core services | partial (analytics service done) |
-| 6 | Shared UI components | pending |
-| 7 | Localization setup (en/ru/kk) | pending |
-| 8 | Onboarding flow | pending |
-| 9 | Settings module | pending |
-| 10 | Tab navigation and feature stubs | pending |
-| 11 | App entry point wiring | partial |
+| 2 | Domain models | done ✅ |
+| 3 | Error handling and logging | done ✅ |
+| 4 | Database layer (repositories, migrations, manager) | done ✅ |
+| 5 | Core services | done ✅ |
+| 6 | Shared UI components | done ✅ |
+| 7 | Localization setup (en/ru/kk) | done ✅ |
+| 8 | Onboarding flow | done ✅ |
+| 9 | Settings module | done ✅ |
+| 10 | Tab navigation and feature stubs | done ✅ |
+| 11 | App entry point wiring | done ✅ |
 | 12 | Firebase scripts/setup | completed |
-| 13 | Testing and validation | pending |
+| 13 | Testing and validation | done ✅ |
 
 ## 9) Feature-to-Phase Mapping
 

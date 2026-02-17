@@ -1,0 +1,117 @@
+/* Russian localization for CreativityHub */
+
+/* Common */
+"loading" = "Загрузка...";
+"button.cancel" = "Отмена";
+"button.save" = "Сохранить";
+"button.delete" = "Удалить";
+"button.edit" = "Изменить";
+"button.done" = "Готово";
+"button.add" = "Добавить";
+"button.close" = "Закрыть";
+
+/* Project Status */
+"project.status.active" = "Активный";
+"project.status.completed" = "Завершён";
+"project.status.archived" = "В архиве";
+
+/* Priority */
+"priority.none" = "Нет";
+"priority.low" = "Низкий";
+"priority.medium" = "Средний";
+"priority.high" = "Высокий";
+
+/* Idea Source */
+"idea.source.website" = "Сайт";
+"idea.source.other" = "Другое";
+
+/* Expense Status */
+"expense.status.planned" = "Запланировано";
+"expense.status.paid" = "Оплачено";
+"expense.status.refunded" = "Возврат";
+
+/* Currency */
+"currency.usd" = "Доллар США";
+"currency.eur" = "Евро";
+"currency.gbp" = "Британский фунт";
+"currency.kzt" = "Казахстанский тенге";
+"currency.rub" = "Российский рубль";
+"currency.uah" = "Украинская гривна";
+"currency.trl" = "Турецкая лира";
+"currency.aed" = "Дирхам ОАЭ";
+"currency.sar" = "Саудовский риял";
+"currency.jpy" = "Японская иена";
+"currency.byn" = "Белорусский рубль";
+
+/* Color Scheme */
+"settings.color_scheme.system" = "Системная";
+"settings.color_scheme.light" = "Светлая";
+"settings.color_scheme.dark" = "Тёмная";
+
+/* Empty States */
+"empty.projects.title" = "Нет проектов";
+"empty.projects.message" = "Создайте первый проект для начала планирования";
+"empty.checklists.title" = "Нет чеклистов";
+"empty.checklists.message" = "Добавьте чеклист для организации задач";
+"empty.checklist_items.title" = "Нет элементов";
+"empty.checklist_items.message" = "Добавьте элементы для отслеживания прогресса";
+"empty.ideas.title" = "Нет идей";
+"empty.ideas.message" = "Сохраняйте ссылки и вдохновение для проекта";
+"empty.expenses.title" = "Нет расходов";
+"empty.expenses.message" = "Отслеживайте расходы по проекту здесь";
+"empty.notes.title" = "Нет заметок";
+"empty.notes.message" = "Записывайте мысли и детали";
+"empty.search.title" = "Ничего не найдено";
+"empty.search.message" = "Попробуйте другой запрос";
+
+/* Error States */
+"error.retry" = "Повторить";
+"error.network.title" = "Ошибка соединения";
+"error.network.message" = "Проверьте подключение к интернету и попробуйте снова";
+"error.database.title" = "Ошибка данных";
+"error.database.message" = "Произошла ошибка в локальном хранилище";
+"error.not_found.title" = "Не найдено";
+"error.not_found.message" = "Запрашиваемый элемент не найден";
+"error.generic.title" = "Что-то пошло не так";
+"error.generic.message" = "Произошла непредвиденная ошибка. Попробуйте снова";
+
+/* Onboarding */
+"onboarding.skip" = "Пропустить";
+"onboarding.next" = "Далее";
+"onboarding.get_started" = "Начать";
+"onboarding.language.title" = "Выберите язык";
+"onboarding.language.description" = "Вы можете изменить это позже в Настройках";
+"onboarding.welcome.title" = "Добро пожаловать в CreativityHub";
+"onboarding.welcome.description" = "Планируйте творческие проекты в одном месте";
+"onboarding.projects.title" = "Организуйте проекты";
+"onboarding.projects.description" = "Управляйте чеклистами, идеями и бюджетами для каждого проекта";
+"onboarding.ideas.title" = "Собирайте вдохновение";
+"onboarding.ideas.description" = "Сохраняйте ссылки из Instagram, Pinterest, YouTube и других";
+"onboarding.budget.title" = "Контролируйте бюджет";
+"onboarding.budget.description" = "Следите за расходами с разбивкой по категориям";
+
+/* Settings */
+"settings.title" = "Настройки";
+"settings.section.preferences" = "Предпочтения";
+"settings.section.appearance" = "Внешний вид";
+"settings.section.about" = "О приложении";
+"settings.currency" = "Валюта";
+"settings.language" = "Язык";
+"settings.color_scheme" = "Тема оформления";
+"settings.version" = "Версия";
+"settings.developer" = "Разработчик";
+
+/* Tabs */
+"tab.today" = "Сегодня";
+"tab.projects" = "Проекты";
+"tab.search" = "Поиск";
+"tab.settings" = "Настройки";
+
+/* Today */
+"today.create_project" = "Создать проект";
+
+/* Projects */
+"projects.new" = "Новый проект";
+
+/* Search */
+"search.placeholder" = "Поиск проектов, задач, идей...";

@@ -1,0 +1,117 @@
+/* English localization for CreativityHub */
+
+/* Common */
+"loading" = "Loading...";
+"button.cancel" = "Cancel";
+"button.save" = "Save";
+"button.delete" = "Delete";
+"button.edit" = "Edit";
+"button.done" = "Done";
+"button.add" = "Add";
+"button.close" = "Close";
+
+/* Project Status */
+"project.status.active" = "Active";
+"project.status.completed" = "Completed";
+"project.status.archived" = "Archived";
+
+/* Priority */
+"priority.none" = "None";
+"priority.low" = "Low";
+"priority.medium" = "Medium";
+"priority.high" = "High";
+
+/* Idea Source */
+"idea.source.website" = "Website";
+"idea.source.other" = "Other";
+
+/* Expense Status */
+"expense.status.planned" = "Planned";
+"expense.status.paid" = "Paid";
+"expense.status.refunded" = "Refunded";
+
+/* Currency */
+"currency.usd" = "US Dollar";
+"currency.eur" = "Euro";
+"currency.gbp" = "British Pound";
+"currency.kzt" = "Kazakhstani Tenge";
+"currency.rub" = "Russian Ruble";
+"currency.uah" = "Ukrainian Hryvnia";
+"currency.trl" = "Turkish Lira";
+"currency.aed" = "UAE Dirham";
+"currency.sar" = "Saudi Riyal";
+"currency.jpy" = "Japanese Yen";
+"currency.byn" = "Belarusian Ruble";
+
+/* Color Scheme */
+"settings.color_scheme.system" = "System";
+"settings.color_scheme.light" = "Light";
+"settings.color_scheme.dark" = "Dark";
+
+/* Empty States */
+"empty.projects.title" = "No Projects";
+"empty.projects.message" = "Create your first project to start planning";
+"empty.checklists.title" = "No Checklists";
+"empty.checklists.message" = "Add a checklist to organize your tasks";
+"empty.checklist_items.title" = "No Items";
+"empty.checklist_items.message" = "Add items to track your progress";
+"empty.ideas.title" = "No Ideas";
+"empty.ideas.message" = "Save links and inspiration for your project";
+"empty.expenses.title" = "No Expenses";
+"empty.expenses.message" = "Track your project spending here";
+"empty.notes.title" = "No Notes";
+"empty.notes.message" = "Jot down thoughts and details";
+"empty.search.title" = "No Results";
+"empty.search.message" = "Try a different search term";
+
+/* Error States */
+"error.retry" = "Retry";
+"error.network.title" = "Connection Error";
+"error.network.message" = "Check your internet connection and try again";
+"error.database.title" = "Data Error";
+"error.database.message" = "Something went wrong with local storage";
+"error.not_found.title" = "Not Found";
+"error.not_found.message" = "The requested item could not be found";
+"error.generic.title" = "Something Went Wrong";
+"error.generic.message" = "An unexpected error occurred. Please try again";
+
+/* Onboarding */
+"onboarding.skip" = "Skip";
+"onboarding.next" = "Next";
+"onboarding.get_started" = "Get Started";
+"onboarding.language.title" = "Choose Your Language";
+"onboarding.language.description" = "You can change this later in Settings";
+"onboarding.welcome.title" = "Welcome to CreativityHub";
+"onboarding.welcome.description" = "Plan your creative projects in one place";
+"onboarding.projects.title" = "Organize Projects";
+"onboarding.projects.description" = "Manage checklists, ideas, and budgets for each project";
+"onboarding.ideas.title" = "Capture Inspiration";
+"onboarding.ideas.description" = "Save links from Instagram, Pinterest, YouTube and more";
+"onboarding.budget.title" = "Track Your Budget";
+"onboarding.budget.description" = "Keep expenses under control with category breakdowns";
+
+/* Settings */
+"settings.title" = "Settings";
+"settings.section.preferences" = "Preferences";
+"settings.section.appearance" = "Appearance";
+"settings.section.about" = "About";
+"settings.currency" = "Currency";
+"settings.language" = "Language";
+"settings.color_scheme" = "Color Scheme";
+"settings.version" = "Version";
+"settings.developer" = "Developer";
+
+/* Tabs */
+"tab.today" = "Today";
+"tab.projects" = "Projects";
+"tab.search" = "Search";
+"tab.settings" = "Settings";
+
+/* Today */
+"today.create_project" = "Create Project";
+
+/* Projects */
+"projects.new" = "New Project";
+
+/* Search */
+"search.placeholder" = "Search projects, tasks, ideas...";

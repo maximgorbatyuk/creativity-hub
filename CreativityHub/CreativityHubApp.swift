@@ -1,12 +1,6 @@
-//
-//  CreativityHubApp.swift
-//  CreativityHub
-//
-//  Created by Maxim Gorbatyuk on 25.01.2026.
-//
-
 import SwiftUI
 import UserNotifications
+import os
 
 #if !DEBUG
 import FirebaseCore
@@ -14,64 +8,57 @@ import FirebaseCore
 
 @main
 struct CreativityHubApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @State private var colorScheme: AppColorScheme = .system
 
-  @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    private var analytics = AnalyticsService.shared
 
-  private var analytics = AnalyticsService.shared
-
-  var body: some Scene {
-    WindowGroup {
-      ContentView()
-        .onAppear {
-          analytics.trackEvent("app_opened")
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .preferredColorScheme(colorScheme.colorScheme)
+                .onAppear {
+                    analytics.trackEvent("app_opened")
+                    colorScheme = DatabaseManager.shared.userSettingsRepository?.fetchColorScheme() ?? .system
+                }
         }
     }
-  }
 }
 
-/// App delegate for handling application lifecycle events and Firebase initialization.
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+    private let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier ?? "-",
+        category: "AppDelegate"
+    )
 
-  func application(
-    _ application: UIApplication,
-    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
-  ) -> Bool {
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+    ) -> Bool {
+        UNUserNotificationCenter.current().delegate = self
 
-    // Set up notification delegate
-    UNUserNotificationCenter.current().delegate = self
+        #if DEBUG
+        logger.info("DEBUG: Firebase configuration skipped")
+        #else
+        FirebaseApp.configure()
+        #endif
 
-    // Only configure Firebase in Release builds
-    // DEBUG builds skip Firebase to avoid requiring GoogleService-Info.plist during development
-    #if DEBUG
-    // Skip Firebase in debug
-    print("DEBUG: Firebase configuration skipped")
-    #else
-    FirebaseApp.configure()
-    #endif
+        return true
+    }
 
-    return true
-  }
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completion: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        completion([.banner, .list, .sound])
+    }
 
-  // MARK: - UNUserNotificationCenterDelegate
-
-  /// Handle notifications when app is in foreground
-  func userNotificationCenter(
-    _ center: UNUserNotificationCenter,
-    willPresent notification: UNNotification,
-    withCompletionHandler completion: @escaping (UNNotificationPresentationOptions) -> Void
-  ) {
-    // Show banner, list, and play sound even when app is in foreground
-    completion([.banner, .list, .sound])
-  }
-
-  /// Handle notification response (user tapped on notification)
-  func userNotificationCenter(
-    _ center: UNUserNotificationCenter,
-    didReceive response: UNNotificationResponse,
-    withCompletionHandler completion: @escaping () -> Void
-  ) {
-    // Handle notification tap here
-    // TODO: Add deep linking or navigation based on notification content
-    completion()
-  }
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completion: @escaping () -> Void
+    ) {
+        completion()
+    }
 }
