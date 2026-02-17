@@ -120,6 +120,7 @@ final class AnalyticsService: Sendable {
       "os_version": UIDevice.current.systemVersion
     ]
 
-    return _globalProps!
+    guard let props = _globalProps else { return [:] }
+    return props
   }
 }

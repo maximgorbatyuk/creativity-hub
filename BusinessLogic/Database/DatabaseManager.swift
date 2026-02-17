@@ -64,6 +64,11 @@ class DatabaseManager {
 
         let currentVersion = migrationRepository?.getLatestMigrationVersion() ?? 0
 
+        if currentVersion > latestVersion {
+            logger.warning("Database version \(currentVersion) is ahead of expected \(self.latestVersion)")
+            return
+        }
+
         if currentVersion == latestVersion {
             logger.info("Database is up to date (version \(currentVersion))")
             return
@@ -72,16 +77,28 @@ class DatabaseManager {
         logger.info("Migrating database from version \(currentVersion) to \(self.latestVersion)")
 
         for version in (Int(currentVersion) + 1) ... latestVersion {
-            switch version {
-            case 1:
-                userSettingsRepository?.createTable()
-                _ = userSettingsRepository?.upsertCurrency(Currency.usd.rawValue)
-            case 2:
-                Migration_20260217_InitialSchema(db: db).execute()
-            default:
-                logger.warning("Unknown migration version: \(version)")
+            do {
+                switch version {
+                case 1:
+                    guard let userSettingsRepository else {
+                        throw RuntimeError("UserSettingsRepository is unavailable")
+                    }
+                    userSettingsRepository.createTable()
+
+                    guard userSettingsRepository.upsertCurrency(Currency.usd.rawValue) else {
+                        throw RuntimeError("Failed to seed default currency")
+                    }
+                case 2:
+                    try Migration_20260217_InitialSchema(db: db).execute()
+                default:
+                    throw RuntimeError("Unknown migration version: \(version)")
+                }
+
+                migrationRepository?.addMigrationVersion()
+            } catch {
+                logger.error("Database migration failed at version \(version): \(error.localizedDescription)")
+                return
             }
-            migrationRepository?.addMigrationVersion()
         }
 
         logger.info("Database migration completed to version \(self.latestVersion)")

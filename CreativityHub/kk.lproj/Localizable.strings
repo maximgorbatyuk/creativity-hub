@@ -1,6 +1,7 @@
 /* Kazakh localization for CreativityHub */
 
 /* Common */
+"app.name" = "CreativityHub";
 "loading" = "Жүктелуде...";
 "button.cancel" = "Болдырмау";
 "button.save" = "Сақтау";

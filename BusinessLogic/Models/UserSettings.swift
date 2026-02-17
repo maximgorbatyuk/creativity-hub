@@ -13,6 +13,7 @@ enum AppLanguage: String, CaseIterable, Codable {
     case ru
     case kk
 
+    // Displayed in native language so users can identify their language regardless of current app locale.
     var displayName: String {
         switch self {
         case .en: return "English"

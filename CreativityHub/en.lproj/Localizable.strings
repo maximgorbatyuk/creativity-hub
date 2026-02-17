@@ -1,6 +1,7 @@
 /* English localization for CreativityHub */
 
 /* Common */
+"app.name" = "CreativityHub";
 "loading" = "Loading...";
 "button.cancel" = "Cancel";
 "button.save" = "Save";

@@ -43,5 +43,11 @@ final class UserSettingsViewModel {
     func saveColorScheme(_ scheme: AppColorScheme) {
         selectedColorScheme = scheme
         userSettingsRepository?.upsertColorScheme(scheme)
+
+        NotificationCenter.default.post(
+            name: .appColorSchemeDidChange,
+            object: nil,
+            userInfo: ["colorScheme": scheme.rawValue]
+        )
     }
 }

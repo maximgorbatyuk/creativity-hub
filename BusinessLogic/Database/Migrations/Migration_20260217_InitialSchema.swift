@@ -10,26 +10,22 @@ class Migration_20260217_InitialSchema {
         self.db = db
     }
 
-    func execute() {
+    func execute() throws {
         let logger = Logger(
             subsystem: "dev.mgorbatyuk.CreativityHub.migrations",
             category: migrationName
         )
 
-        do {
-            try createProjectsTable(logger: logger)
-            try createChecklistsTable(logger: logger)
-            try createChecklistItemsTable(logger: logger)
-            try createIdeasTable(logger: logger)
-            try createTagsTable(logger: logger)
-            try createIdeaTagsTable(logger: logger)
-            try createExpenseCategoriesTable(logger: logger)
-            try createExpensesTable(logger: logger)
-            try createNotesTable(logger: logger)
-            logger.debug("Migration \(self.migrationName) executed successfully")
-        } catch {
-            logger.error("Unable to execute migration \(self.migrationName): \(error)")
-        }
+        try createProjectsTable(logger: logger)
+        try createChecklistsTable(logger: logger)
+        try createChecklistItemsTable(logger: logger)
+        try createIdeasTable(logger: logger)
+        try createTagsTable(logger: logger)
+        try createIdeaTagsTable(logger: logger)
+        try createExpenseCategoriesTable(logger: logger)
+        try createExpensesTable(logger: logger)
+        try createNotesTable(logger: logger)
+        logger.debug("Migration \(self.migrationName) executed successfully")
     }
 
     // MARK: - Table Creation

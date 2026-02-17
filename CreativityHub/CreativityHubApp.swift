@@ -9,6 +9,7 @@ import FirebaseCore
 @main
 struct CreativityHubApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @StateObject private var localizationManager = LocalizationManager.shared
     @State private var colorScheme: AppColorScheme = .system
 
     private var analytics = AnalyticsService.shared
@@ -16,10 +17,22 @@ struct CreativityHubApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(localizationManager)
+                .environment(\.locale, Locale(identifier: localizationManager.currentLanguage.rawValue))
                 .preferredColorScheme(colorScheme.colorScheme)
                 .onAppear {
                     analytics.trackEvent("app_opened")
                     colorScheme = DatabaseManager.shared.userSettingsRepository?.fetchColorScheme() ?? .system
+                }
+                .onReceive(NotificationCenter.default.publisher(for: .appColorSchemeDidChange)) { notification in
+                    guard
+                        let rawValue = notification.userInfo?["colorScheme"] as? String,
+                        let scheme = AppColorScheme(rawValue: rawValue)
+                    else {
+                        return
+                    }
+
+                    colorScheme = scheme
                 }
         }
     }

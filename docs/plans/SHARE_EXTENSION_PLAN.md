@@ -1,14 +1,15 @@
 # SHARE_EXTENSION_PLAN.md - Share Extension Implementation Plan
 
-This document provides a phased implementation plan for adding a Share Extension to CreativityHub, following the pattern from Journey Wallet. This plan should be executed **after** BASE_FUNCTIONALITY_PLAN.md is complete.
+This document provides a phased implementation plan for adding a Share Extension to CreativityHub, following the pattern from Journey Wallet. This plan should be executed **after** `CREATIVITYHUB_MASTER_PLAN.md` base phases are complete.
 
 ## Prerequisites
 
 Before starting this plan, ensure:
-- BASE_FUNCTIONALITY_PLAN.md is fully implemented
-- App Group is configured (included in BASE_FUNCTIONALITY_PLAN.md Phase 1.4)
-- xcconfig files are set up (included in BASE_FUNCTIONALITY_PLAN.md Phase 1.3)
-- Main app uses AppGroupContainer for database (included in BASE_FUNCTIONALITY_PLAN.md Phase 4.1)
+- `CREATIVITYHUB_MASTER_PLAN.md` core phases are fully implemented
+- App Group is configured (from Project Foundation phase)
+- Release App Group identifier is `group.dev.mgorbatyuk.creativityhub`
+- xcconfig files are set up (from Project Foundation phase)
+- Main app uses AppGroupContainer for database (from Database Layer phase)
 
 ---
 
@@ -140,7 +141,7 @@ SHARE_EXTENSION_BUNDLE_ID = dev.mgorbatyuk.CreativityHub.dev.ShareExtension
 <dict>
     <key>com.apple.security.application-groups</key>
     <array>
-        <string>group.dev.mgorbatyuk.creativehub</string>
+        <string>group.dev.mgorbatyuk.creativityhub</string>
     </array>
 </dict>
 </plist>
@@ -154,7 +155,7 @@ SHARE_EXTENSION_BUNDLE_ID = dev.mgorbatyuk.CreativityHub.dev.ShareExtension
 <dict>
     <key>com.apple.security.application-groups</key>
     <array>
-        <string>group.dev.mgorbatyuk.creativityhub.dev</string>
+        <string>group.dev.mgorbatyuk.creativityhu.dev</string>
     </array>
 </dict>
 </plist>

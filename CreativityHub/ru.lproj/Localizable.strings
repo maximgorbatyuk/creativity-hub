@@ -1,6 +1,7 @@
 /* Russian localization for CreativityHub */
 
 /* Common */
+"app.name" = "CreativityHub";
 "loading" = "Загрузка...";
 "button.cancel" = "Отмена";
 "button.save" = "Сохранить";

@@ -2,9 +2,12 @@ import SwiftUI
 
 struct ContentView: View {
     @AppStorage(OnboardingViewModel.onboardingCompletedKey) private var isOnboardingComplete = false
+    @EnvironmentObject private var localizationManager: LocalizationManager
     @State private var isAppReady = false
 
     var body: some View {
+        let _ = localizationManager.currentLanguage
+
         Group {
             if !isAppReady {
                 launchScreen
@@ -35,7 +38,7 @@ struct ContentView: View {
                 Image(systemName: "sparkles")
                     .font(.system(size: 64))
                     .foregroundStyle(.tint)
-                Text("CreativityHub")
+                Text(L("app.name"))
                     .font(.title)
                     .fontWeight(.bold)
             }
@@ -45,4 +48,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .environmentObject(LocalizationManager.shared)
 }

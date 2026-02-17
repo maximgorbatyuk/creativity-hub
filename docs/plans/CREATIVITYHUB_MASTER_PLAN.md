@@ -77,6 +77,7 @@ CreativityHub is an iOS app for planning creative projects in one place. It comb
 - Language/UI: Swift 5.9+, SwiftUI, NavigationStack
 - Architecture: MVVM with Observable state patterns
 - Storage: SQLite via SQLite.swift (App Group container)
+- App Group identifier (Release): `group.dev.mgorbatyuk.creativityhub`
 - Cloud/backup: iCloud backup support (sync can evolve later)
 - Analytics: Firebase Analytics in Release builds only
 - Localization: all user-facing strings via `L()` function
@@ -166,6 +167,7 @@ Status legend: completed, partial, pending.
 
 Important dependency notes:
 - App Group setup is already included in foundation for future extension support
+- Use `group.dev.mgorbatyuk.creativityhub` as the canonical Release App Group identifier in all plans/docs
 - If Firebase is skipped, remove analytics service wiring and Firebase init paths
 
 ## 11) Quality Gates and Acceptance Criteria

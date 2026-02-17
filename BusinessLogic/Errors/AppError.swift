@@ -8,6 +8,7 @@ enum AppError: LocalizedError {
     case network(String)
     case unexpected(String)
 
+    // Developer/logging-facing only. User-facing errors go through ErrorType/ErrorStateView.
     var errorDescription: String? {
         switch self {
         case let .database(message): return "Database error: \(message)"

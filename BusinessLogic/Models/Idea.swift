@@ -13,6 +13,7 @@ enum IdeaSourceType: String, Codable, CaseIterable, Identifiable {
 
     var id: String { rawValue }
 
+    // Brand names are not wrapped in L() — they are universal and not localized.
     var displayName: String {
         switch self {
         case .instagram: return "Instagram"
