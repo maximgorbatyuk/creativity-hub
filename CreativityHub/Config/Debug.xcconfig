@@ -4,5 +4,5 @@
 #include "Base.xcconfig"
 
 BUILD_ENVIRONMENT = dev
-APP_GROUP_IDENTIFIER = group.dev.mgorbatyuk.creativityhu.dev
+APP_GROUP_IDENTIFIER = group.dev.mgorbatyuk.creativityhub.dev
 SHARE_EXTENSION_BUNDLE_ID = dev.mgorbatyuk.CreativityHub.dev.ShareExtension
