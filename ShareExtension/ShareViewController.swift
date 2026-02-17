@@ -1,53 +1,91 @@
 import os
+import SwiftUI
 import UIKit
 
 /// Entry point for the CreativityHub Share Extension.
-/// Receives shared content from other apps and allows saving it as an idea or note.
+/// Parses shared content and presents the share form.
 class ShareViewController: UIViewController {
 
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "-", category: "ShareExtension")
+    private let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier ?? "-",
+        category: "ShareExtension"
+    )
+    private let inputParser = InputParser()
+    private var viewModel: ShareFormViewModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
 
         logger.info("ShareExtension launched")
-        setupPlaceholderUI()
+        parseAndPresent()
     }
 
-    private func setupPlaceholderUI() {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.spacing = 16
-        stack.alignment = .center
-        stack.translatesAutoresizingMaskIntoConstraints = false
+    private func parseAndPresent() {
+        guard let extensionContext,
+              let inputItems = extensionContext.inputItems as? [NSExtensionItem],
+              !inputItems.isEmpty
+        else {
+            dismiss(error: L("share.error.unsupported"))
+            return
+        }
 
-        let label = UILabel()
-        label.text = "CreativityHub"
-        label.font = .preferredFont(forTextStyle: .headline)
-        label.textColor = .label
+        Task { [weak self] in
+            guard let self else { return }
 
-        let subtitle = UILabel()
-        subtitle.text = "Share extension coming soon"
-        subtitle.font = .preferredFont(forTextStyle: .subheadline)
-        subtitle.textColor = .secondaryLabel
+            guard let input = await inputParser.parse(inputItems: inputItems) else {
+                await MainActor.run {
+                    self.dismiss(error: L("share.error.unsupported"))
+                }
+                return
+            }
 
-        let doneButton = UIButton(type: .system)
-        doneButton.setTitle("Done", for: .normal)
-        doneButton.addTarget(self, action: #selector(didTapDone), for: .touchUpInside)
+            let projects = DatabaseManager.shared.projectRepository?.fetchAll() ?? []
 
-        stack.addArrangedSubview(label)
-        stack.addArrangedSubview(subtitle)
-        stack.addArrangedSubview(doneButton)
+            await MainActor.run {
+                let vm = ShareFormViewModel()
+                vm.configure(input: input, projects: projects)
+                vm.onComplete = { [weak self] in
+                    self?.extensionContext?.completeRequest(returningItems: nil)
+                }
+                vm.onCancel = { [weak self] in
+                    self?.extensionContext?.cancelRequest(withError: NSError(
+                        domain: "ShareExtension",
+                        code: 0,
+                        userInfo: [NSLocalizedDescriptionKey: L("share.error.cancelled")]
+                    ))
+                }
 
-        view.addSubview(stack)
+                self.viewModel = vm
+                self.presentForm(viewModel: vm)
+            }
+        }
+    }
+
+    private func presentForm(viewModel: ShareFormViewModel) {
+        let formView = ShareFormView(viewModel: viewModel)
+        let hostingController = UIHostingController(rootView: formView)
+
+        addChild(hostingController)
+        view.addSubview(hostingController.view)
+
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            stack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stack.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            hostingController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
+
+        hostingController.didMove(toParent: self)
     }
 
-    @objc private func didTapDone() {
-        extensionContext?.completeRequest(returningItems: nil)
+    private func dismiss(error message: String) {
+        logger.warning("ShareExtension dismissed: \(message)")
+        extensionContext?.cancelRequest(withError: NSError(
+            domain: "ShareExtension",
+            code: 1,
+            userInfo: [NSLocalizedDescriptionKey: message]
+        ))
     }
 }

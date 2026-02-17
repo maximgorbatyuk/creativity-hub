@@ -116,3 +116,31 @@
 
 /* Search */
 "search.placeholder" = "Поиск проектов, задач, идей...";
+
+/* Share Extension */
+"share.title" = "Сохранить в CreativityHub";
+"share.section.content" = "Содержимое";
+"share.section.project" = "Проект";
+"share.section.type" = "Сохранить как";
+"share.section.details" = "Детали";
+"share.field.project" = "Проект";
+"share.field.type" = "Тип";
+"share.field.name" = "Название";
+"share.field.note_text" = "Текст";
+"share.field.note_description" = "Описание";
+"share.placeholder.select_project" = "Выберите проект";
+"share.placeholder.select_type" = "Выберите тип";
+"share.placeholder.name" = "Введите название";
+"share.placeholder.note_description" = "Введите описание";
+"share.optional" = "Необязательно";
+"share.type.idea" = "Идея";
+"share.type.document" = "Документ";
+"share.type.note" = "Заметка";
+"share.kind.link" = "Ссылка";
+"share.kind.text" = "Текст";
+"share.kind.image" = "Изображение";
+"share.error.save_failed" = "Не удалось сохранить. Попробуйте снова.";
+"share.error.cancelled" = "Пользователь отменил действие.";
+"share.error.unsupported" = "Этот тип контента не поддерживается.";
+"share.error.no_projects" = "Проекты не найдены";
+"share.error.no_projects_hint" = "Сначала создайте проект в CreativityHub, затем делитесь контентом.";
