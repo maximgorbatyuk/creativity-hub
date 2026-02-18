@@ -2,22 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <!-- App Group for sharing data with Share Extension (Development) -->
-    <key>com.apple.security.application-groups</key>
-    <array>
-        <string>group.dev.mgorbatyuk.creativityhub.dev</string>
-    </array>
-
-    <!-- iCloud for CloudKit backup (Development) -->
-    <key>com.apple.developer.icloud-container-identifiers</key>
-    <array>
-        <string>iCloud.dev.mgorbatyuk.CreativityHub.dev</string>
-    </array>
-    <key>com.apple.developer.icloud-services</key>
-    <array>
-        <string>CloudKit</string>
-    </array>
-    <key>com.apple.developer.ubiquity-kvstore-identifier</key>
-    <string>$(TeamIdentifierPrefix)dev.mgorbatyuk.CreativityHub.dev</string>
+	<key>aps-environment</key>
+	<string>development</string>
+	<key>com.apple.developer.icloud-container-identifiers</key>
+	<array>
+		<string>iCloud.dev.mgorbatyuk.CreativityHub.dev</string>
+	</array>
+	<key>com.apple.developer.icloud-services</key>
+	<array>
+		<string>CloudKit</string>
+	</array>
+	<key>com.apple.developer.ubiquity-kvstore-identifier</key>
+	<string>$(TeamIdentifierPrefix)dev.mgorbatyuk.CreativityHub.dev</string>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.dev.mgorbatyuk.creativityhub.dev</string>
+	</array>
 </dict>
 </plist>

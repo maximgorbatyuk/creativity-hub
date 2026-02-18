@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import UserNotifications
 import os
 
 @MainActor
@@ -211,6 +212,69 @@ final class UserSettingsViewModel {
 
         db.deleteAllData()
         logger.info("All data deleted via developer mode")
+    }
+
+    // MARK: - Notifications
+
+    func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+            if let error {
+                self.logger.error("Notification permission error: \(error.localizedDescription)")
+            } else {
+                self.logger.info("Notification permission granted: \(granted)")
+            }
+        }
+    }
+
+    func sendTestNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = "CreativityHub"
+        content.body = "Test notification"
+        content.sound = .default
+
+        let request = UNNotificationRequest(
+            identifier: UUID().uuidString,
+            content: content,
+            trigger: nil
+        )
+
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error {
+                self.logger.error("Failed to send test notification: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    func scheduleTestNotification(afterSeconds seconds: TimeInterval) {
+        let content = UNMutableNotificationContent()
+        content.title = "CreativityHub"
+        content.body = "Scheduled test notification (\(Int(seconds))s)"
+        content.sound = .default
+
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: seconds, repeats: false)
+        let request = UNNotificationRequest(
+            identifier: UUID().uuidString,
+            content: content,
+            trigger: trigger
+        )
+
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error {
+                self.logger.error("Failed to schedule test notification: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    // MARK: - Migration Reset
+
+    func resetDatabaseMigrations() {
+        guard isDevelopmentMode else {
+            logger.warning("Attempt to reset migrations in non-development mode. Operation aborted.")
+            return
+        }
+
+        db.migrationRepository?.resetMigrations()
+        logger.info("Database migrations reset via developer mode")
     }
 
     // MARK: - Private

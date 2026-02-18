@@ -103,6 +103,7 @@
 "settings.color_scheme" = "Түс тақырыбы";
 "settings.version" = "Нұсқа";
 "settings.developer" = "Әзірлеуші";
+"settings.contact_telegram" = "Telegram арқылы әзірлеушімен байланысу";
 
 /* Tabs */
 "tab.today" = "Бүгін";
@@ -440,6 +441,39 @@
 "settings.developer.no_projects_message" = "Алдымен жоба жасаңыз, содан кейін ол үшін тестілік деректер жасаңыз.";
 "settings.developer.schema_version" = "Деректер қоры нұсқасы";
 "settings.developer.footer" = "Бұл құралдар тек әзірлеу мен тестілеу үшін арналған.";
+"settings.developer.request_permission" = "Хабарлама рұқсатын сұрау";
+"settings.developer.send_notification" = "Тестілік хабарлама жіберу";
+"settings.developer.schedule_notification" = "Хабарлама жоспарлау (5с)";
+"settings.developer.view_settings_table" = "user_settings кестесі";
+"settings.developer.no_settings" = "Баптаулар табылмады";
+"settings.developer.reset_migration" = "ДҚ миграцияларын қалпына келтіру";
+"settings.developer.reset_migration_title" = "Миграцияларды қалпына келтіру?";
+"settings.developer.reset_migration_confirm" = "Қалпына келтіру";
+"settings.developer.reset_migration_warning" = "Барлық миграция жазбалары жойылады. Қолданба келесі іске қосылғанда миграцияларды қайта орындайды. Сақтықпен қолданыңыз.";
+
+/* Document Storage Browser */
+"developer.document_storage.button" = "Құжат қоймасын шолу";
+"developer.document_storage.title" = "Құжат қоймасы";
+"developer.document_storage.folders" = "Қалталар";
+"developer.document_storage.root_files" = "Түбірлік файлдар";
+"developer.document_storage.no_files" = "Файлдар жоқ";
+"developer.document_storage.stats.title" = "Қойма";
+"developer.document_storage.stats.files_folders" = "%d файл %d қалтада";
+"developer.document_storage.stats.files" = "файл";
+"developer.document_storage.file_info" = "Файл ақпараты";
+"developer.document_storage.type" = "Түрі";
+"developer.document_storage.size" = "Өлшемі";
+"developer.document_storage.created" = "Жасалған";
+"developer.document_storage.modified" = "Өзгертілген";
+"developer.document_storage.path" = "Жол";
+"developer.document_storage.quick_look" = "Жылдам қарау";
+"developer.document_storage.share" = "Бөлісу";
+"developer.document_storage.delete" = "Жою";
+"developer.document_storage.delete_confirm.title" = "Файлды жою?";
+"developer.document_storage.delete_confirm.message" = "Бұл файл біржола жойылады. Бұл әрекетті кері қайтару мүмкін емес.";
+
+/* Launch Screen Preview */
+"developer.launch_screen.button" = "Іске қосу экраны";
 
 /* Share Extension */
 "share.title" = "CreativityHub-қа сақтау";

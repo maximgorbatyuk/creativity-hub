@@ -13,7 +13,12 @@ struct UserSettingsView: View {
     @State private var selectedProjectForRandomData: Project?
     @State private var showRandomDataConfirmation = false
     @State private var showDeleteAllDataConfirmation = false
+    @State private var showUserSettingsTable = false
+    @State private var showDocumentStorageBrowser = false
+    @State private var showResetMigrationConfirmation = false
+    @State private var showLaunchScreen = false
 
+    @Environment(\.openURL) private var openURL
     private let analytics = AnalyticsService.shared
 
     var body: some View {
@@ -22,7 +27,7 @@ struct UserSettingsView: View {
                 preferencesSection
                 appearanceSection
                 backupSection
-                if viewModel.isDevelopmentMode {
+                if viewModel.isDevModeEnabled {
                     developerSection
                 }
                 aboutSection
@@ -41,6 +46,15 @@ struct UserSettingsView: View {
             }
             .sheet(isPresented: $showProjectPickerForRandomData) {
                 projectPickerForRandomData
+            }
+            .sheet(isPresented: $showUserSettingsTable) {
+                UserSettingsTableView()
+            }
+            .sheet(isPresented: $showDocumentStorageBrowser) {
+                DocumentStorageBrowserView()
+            }
+            .sheet(isPresented: $showLaunchScreen) {
+                LaunchScreenPreviewView()
             }
             .fileImporter(
                 isPresented: $showImportPicker,
@@ -62,7 +76,7 @@ struct UserSettingsView: View {
                     break
                 }
             }
-            .alert(L("backup.error.title"), isPresented: .constant(viewModel.backupError != nil)) {
+            .alert(L("backup.error.title"), isPresented: isBackupErrorPresented) {
                 Button(L("button.done")) {
                     viewModel.backupError = nil
                 }
@@ -107,6 +121,17 @@ struct UserSettingsView: View {
                 }
             } message: {
                 Text(L("settings.developer.delete_all_confirm_message"))
+            }
+            .alert(
+                L("settings.developer.reset_migration_title"),
+                isPresented: $showResetMigrationConfirmation
+            ) {
+                Button(L("button.cancel"), role: .cancel) {}
+                Button(L("settings.developer.reset_migration_confirm"), role: .destructive) {
+                    viewModel.resetDatabaseMigrations()
+                }
+            } message: {
+                Text(L("settings.developer.reset_migration_warning"))
             }
         }
     }
@@ -201,6 +226,7 @@ struct UserSettingsView: View {
                 .disabled(viewModel.isCreatingiCloudBackup)
 
                 Button {
+                    viewModel.backupError = nil
                     showiCloudBackups = true
                 } label: {
                     Label(L("backup.icloud.manage"), systemImage: "icloud")
@@ -215,6 +241,69 @@ struct UserSettingsView: View {
 
     private var developerSection: some View {
         Section {
+            // Notification testing
+            Button {
+                viewModel.requestNotificationPermission()
+            } label: {
+                HStack {
+                    Image(systemName: "bell.badge")
+                        .foregroundStyle(.blue)
+                    Text(L("settings.developer.request_permission"))
+                        .foregroundStyle(.primary)
+                }
+            }
+            .buttonStyle(.plain)
+
+            Button {
+                viewModel.sendTestNotification()
+            } label: {
+                HStack {
+                    Image(systemName: "bell.fill")
+                        .foregroundStyle(.green)
+                    Text(L("settings.developer.send_notification"))
+                        .foregroundStyle(.primary)
+                }
+            }
+            .buttonStyle(.plain)
+
+            Button {
+                viewModel.scheduleTestNotification(afterSeconds: 5)
+            } label: {
+                HStack {
+                    Image(systemName: "bell.and.waves.left.and.right")
+                        .foregroundStyle(.orange)
+                    Text(L("settings.developer.schedule_notification"))
+                        .foregroundStyle(.primary)
+                }
+            }
+            .buttonStyle(.plain)
+
+            // View user_settings table
+            Button {
+                showUserSettingsTable = true
+            } label: {
+                HStack {
+                    Image(systemName: "tablecells")
+                        .foregroundStyle(.indigo)
+                    Text(L("settings.developer.view_settings_table"))
+                        .foregroundStyle(.primary)
+                }
+            }
+            .buttonStyle(.plain)
+
+            // Document Storage Browser
+            Button {
+                showDocumentStorageBrowser = true
+            } label: {
+                HStack {
+                    Image(systemName: "folder.badge.gearshape")
+                        .foregroundStyle(.cyan)
+                    Text(L("developer.document_storage.button"))
+                        .foregroundStyle(.primary)
+                }
+            }
+            .buttonStyle(.plain)
+
             // Delete all data
             Button {
                 showDeleteAllDataConfirmation = true
@@ -245,6 +334,32 @@ struct UserSettingsView: View {
             }
             .buttonStyle(.plain)
 
+            // Reset Database Migrations
+            Button {
+                showResetMigrationConfirmation = true
+            } label: {
+                HStack {
+                    Image(systemName: "arrow.counterclockwise.circle.fill")
+                        .foregroundStyle(.red)
+                    Text(L("settings.developer.reset_migration"))
+                        .foregroundStyle(.primary)
+                }
+            }
+            .buttonStyle(.plain)
+
+            // View Launch Screen
+            Button {
+                showLaunchScreen = true
+            } label: {
+                HStack {
+                    Image(systemName: "sparkles.rectangle.stack")
+                        .foregroundStyle(.yellow)
+                    Text(L("developer.launch_screen.button"))
+                        .foregroundStyle(.primary)
+                }
+            }
+            .buttonStyle(.plain)
+
             // Database schema version
             HStack {
                 Text(L("settings.developer.schema_version"))
@@ -257,6 +372,19 @@ struct UserSettingsView: View {
         } footer: {
             Text(L("settings.developer.footer"))
         }
+    }
+
+    private var isBackupErrorPresented: Binding<Bool> {
+        Binding(
+            get: {
+                !showiCloudBackups && viewModel.backupError != nil
+            },
+            set: { isPresented in
+                if !isPresented {
+                    viewModel.backupError = nil
+                }
+            }
+        )
     }
 
     private var aboutSection: some View {
@@ -300,6 +428,26 @@ struct UserSettingsView: View {
                     Text(viewModel.developerName)
                         .foregroundStyle(.secondary)
                 }
+            }
+
+            if !viewModel.telegramLink.isEmpty {
+                Button {
+                    analytics.trackEvent("developer_tg_button_clicked", properties: [
+                        "screen": "user_settings_screen",
+                        "button_name": "developer_telegram_link"
+                    ])
+                    if let url = URL(string: "https://\(viewModel.telegramLink)") {
+                        openURL(url)
+                    }
+                } label: {
+                    HStack {
+                        Image(systemName: "ellipsis.bubble.fill")
+                            .foregroundStyle(.blue)
+                        Text(L("settings.contact_telegram"))
+                            .foregroundStyle(.primary)
+                    }
+                }
+                .buttonStyle(.plain)
             }
         }
     }

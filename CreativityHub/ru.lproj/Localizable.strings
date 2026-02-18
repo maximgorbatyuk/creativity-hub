@@ -103,6 +103,7 @@
 "settings.color_scheme" = "Тема оформления";
 "settings.version" = "Версия";
 "settings.developer" = "Разработчик";
+"settings.contact_telegram" = "Связаться с разработчиком в Telegram";
 
 /* Tabs */
 "tab.today" = "Сегодня";
@@ -440,6 +441,39 @@
 "settings.developer.no_projects_message" = "Сначала создайте проект, затем генерируйте для него тестовые данные.";
 "settings.developer.schema_version" = "Версия схемы БД";
 "settings.developer.footer" = "Эти инструменты предназначены только для разработки и тестирования.";
+"settings.developer.request_permission" = "Запросить разрешение на уведомления";
+"settings.developer.send_notification" = "Отправить тестовое уведомление";
+"settings.developer.schedule_notification" = "Запланировать уведомление (5с)";
+"settings.developer.view_settings_table" = "Таблица user_settings";
+"settings.developer.no_settings" = "Настройки не найдены";
+"settings.developer.reset_migration" = "Сбросить миграции БД";
+"settings.developer.reset_migration_title" = "Сбросить миграции?";
+"settings.developer.reset_migration_confirm" = "Сбросить";
+"settings.developer.reset_migration_warning" = "Все записи миграций будут удалены. Приложение повторно выполнит миграции при следующем запуске. Используйте с осторожностью.";
+
+/* Document Storage Browser */
+"developer.document_storage.button" = "Обозреватель хранилища";
+"developer.document_storage.title" = "Хранилище документов";
+"developer.document_storage.folders" = "Папки";
+"developer.document_storage.root_files" = "Корневые файлы";
+"developer.document_storage.no_files" = "Нет файлов";
+"developer.document_storage.stats.title" = "Хранилище";
+"developer.document_storage.stats.files_folders" = "%d файлов в %d папках";
+"developer.document_storage.stats.files" = "файлов";
+"developer.document_storage.file_info" = "Информация о файле";
+"developer.document_storage.type" = "Тип";
+"developer.document_storage.size" = "Размер";
+"developer.document_storage.created" = "Создан";
+"developer.document_storage.modified" = "Изменён";
+"developer.document_storage.path" = "Путь";
+"developer.document_storage.quick_look" = "Быстрый просмотр";
+"developer.document_storage.share" = "Поделиться";
+"developer.document_storage.delete" = "Удалить";
+"developer.document_storage.delete_confirm.title" = "Удалить файл?";
+"developer.document_storage.delete_confirm.message" = "Этот файл будет удалён навсегда. Это действие нельзя отменить.";
+
+/* Launch Screen Preview */
+"developer.launch_screen.button" = "Экран запуска";
 
 /* Share Extension */
 "share.title" = "Сохранить в CreativityHub";

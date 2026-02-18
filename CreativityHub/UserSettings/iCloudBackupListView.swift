@@ -86,7 +86,7 @@ struct iCloudBackupListView: View {
             } message: {
                 Text(L("backup.delete_all.message"))
             }
-            .alert(L("backup.error.title"), isPresented: .constant(viewModel.backupError != nil)) {
+            .alert(L("backup.error.title"), isPresented: isBackupErrorPresented) {
                 Button(L("button.done")) {
                     viewModel.backupError = nil
                 }
@@ -102,6 +102,19 @@ struct iCloudBackupListView: View {
     }
 
     // MARK: - Empty State
+
+    private var isBackupErrorPresented: Binding<Bool> {
+        Binding(
+            get: {
+                viewModel.backupError != nil
+            },
+            set: { isPresented in
+                if !isPresented {
+                    viewModel.backupError = nil
+                }
+            }
+        )
+    }
 
     private var emptyState: some View {
         VStack(spacing: 20) {
