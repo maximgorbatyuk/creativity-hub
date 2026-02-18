@@ -64,6 +64,7 @@ func createTestChecklist(
     sortOrder: Int = 0
 ) -> Checklist {
     Checklist(
+        id: id,
         projectId: projectId,
         name: name,
         sortOrder: sortOrder
