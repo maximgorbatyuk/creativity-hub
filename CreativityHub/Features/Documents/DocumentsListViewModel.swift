@@ -121,12 +121,17 @@ final class DocumentsListViewModel {
     }
 
     func deleteDocument(_ document: Document) {
-        _ = documentService.deleteDocument(fileName: document.fileName, projectId: projectId)
-
         guard documentRepository?.delete(id: document.id) == true else {
             logger.error("Failed to delete document \(document.id)")
             return
         }
+
+        guard documentService.deleteDocument(fileName: document.fileName, projectId: projectId) else {
+            logger.error("Deleted document record \(document.id) but failed to delete file \(document.fileName)")
+            loadData()
+            return
+        }
+
         projectRepository?.touchUpdatedAt(id: projectId)
         logger.info("Deleted document \(document.id)")
         loadData()

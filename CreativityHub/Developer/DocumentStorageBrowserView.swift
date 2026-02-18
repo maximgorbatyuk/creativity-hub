@@ -55,7 +55,7 @@ struct DocumentStorageBrowserView: View {
                         }
                     }
                     .refreshable {
-                        loadData()
+                        await loadData()
                     }
                 }
             }
@@ -67,22 +67,50 @@ struct DocumentStorageBrowserView: View {
                 }
             }
             .onAppear {
-                loadData()
+                Task {
+                    await loadData()
+                }
             }
         }
     }
 
-    private func loadData() {
+    @MainActor
+    private func loadData() async {
         isLoading = true
-        storageStats = service.getStorageStats()
-        let items = service.getContents(of: service.rootDirectory)
-        folders = items.filter { $0.isDirectory }
-        rootFiles = items.filter { !$0.isDirectory }
+
+        await Task.yield()
+
+        let result = await fetchStorageData()
+        storageStats = result.stats
+        folders = result.folders
+        rootFiles = result.rootFiles
         isLoading = false
     }
 
     private func deleteFile(_ file: StorageItem) {
-        _ = service.deleteItem(at: file.url)
-        loadData()
+        Task {
+            _ = await deleteItemAsync(at: file.url)
+            await loadData()
+        }
+    }
+
+    private func fetchStorageData() async -> (stats: StorageStats, folders: [StorageItem], rootFiles: [StorageItem]) {
+        await withCheckedContinuation { continuation in
+            DispatchQueue.global(qos: .userInitiated).async {
+                let stats = service.getStorageStats()
+                let items = service.getContents(of: service.rootDirectory)
+                let folders = items.filter { $0.isDirectory }
+                let rootFiles = items.filter { !$0.isDirectory }
+                continuation.resume(returning: (stats: stats, folders: folders, rootFiles: rootFiles))
+            }
+        }
+    }
+
+    private func deleteItemAsync(at url: URL) async -> Bool {
+        await withCheckedContinuation { continuation in
+            DispatchQueue.global(qos: .userInitiated).async {
+                continuation.resume(returning: service.deleteItem(at: url))
+            }
+        }
     }
 }

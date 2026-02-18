@@ -155,7 +155,7 @@ final class BackupService {
 
         do {
             wipeAllData()
-            importExportData(exportData)
+            try importExportData(exportData)
             cleanupOldSafetyBackups()
         } catch {
             logger.error("Import failed: \(error.localizedDescription). Restoring from safety backup.")
@@ -221,7 +221,7 @@ final class BackupService {
 
         let exportData = try parseExportFile(backupURL)
         wipeAllData()
-        importExportData(exportData)
+        try importExportData(exportData)
 
         logger.info("Successfully restored from safety backup")
     }
@@ -256,22 +256,36 @@ final class BackupService {
         logger.info("All data wiped from database")
     }
 
-    private func importExportData(_ exportData: ExportData) {
+    private func importExportData(_ exportData: ExportData) throws {
         // Import user settings
         if let currency = Currency.allCases.first(where: { $0.rawValue == exportData.userSettings.preferredCurrency }) {
-            _ = settingsRepository?.upsertCurrency(currency.rawValue)
+            try requireSuccessfulImportOperation(
+                settingsRepository?.upsertCurrency(currency.rawValue),
+                operation: "upsert preferred currency"
+            )
         }
+
         if let language = AppLanguage.allCases.first(where: { $0.rawValue == exportData.userSettings.preferredLanguage }) {
-            _ = settingsRepository?.upsertLanguage(language)
+            try requireSuccessfulImportOperation(
+                settingsRepository?.upsertLanguage(language),
+                operation: "upsert preferred language"
+            )
         }
+
         if let colorScheme = AppColorScheme.allCases.first(where: { $0.rawValue == exportData.userSettings.preferredColorScheme }) {
-            _ = settingsRepository?.upsertColorScheme(colorScheme)
+            try requireSuccessfulImportOperation(
+                settingsRepository?.upsertColorScheme(colorScheme),
+                operation: "upsert preferred color scheme"
+            )
         }
 
         // Import projects first (parent entities)
         if let projects = exportData.projects {
             for project in projects {
-                _ = projectRepository?.insert(project)
+                try requireSuccessfulImportOperation(
+                    projectRepository?.insert(project),
+                    operation: "insert project \(project.id)"
+                )
             }
             logger.info("Imported \(projects.count) projects")
         }
@@ -279,7 +293,10 @@ final class BackupService {
         // Import checklists (before items)
         if let checklists = exportData.checklists {
             for checklist in checklists {
-                _ = checklistRepository?.insert(checklist)
+                try requireSuccessfulImportOperation(
+                    checklistRepository?.insert(checklist),
+                    operation: "insert checklist \(checklist.id)"
+                )
             }
             logger.info("Imported \(checklists.count) checklists")
         }
@@ -287,7 +304,10 @@ final class BackupService {
         // Import checklist items
         if let checklistItems = exportData.checklistItems {
             for item in checklistItems {
-                _ = checklistItemRepository?.insert(item)
+                try requireSuccessfulImportOperation(
+                    checklistItemRepository?.insert(item),
+                    operation: "insert checklist item \(item.id)"
+                )
             }
             logger.info("Imported \(checklistItems.count) checklist items")
         }
@@ -295,7 +315,10 @@ final class BackupService {
         // Import tags (before idea-tag links)
         if let tags = exportData.tags {
             for tag in tags {
-                _ = tagRepository?.insert(tag)
+                try requireSuccessfulImportOperation(
+                    tagRepository?.insert(tag),
+                    operation: "insert tag \(tag.id)"
+                )
             }
             logger.info("Imported \(tags.count) tags")
         }
@@ -303,7 +326,10 @@ final class BackupService {
         // Import ideas
         if let ideas = exportData.ideas {
             for idea in ideas {
-                _ = ideaRepository?.insert(idea)
+                try requireSuccessfulImportOperation(
+                    ideaRepository?.insert(idea),
+                    operation: "insert idea \(idea.id)"
+                )
             }
             logger.info("Imported \(ideas.count) ideas")
         }
@@ -311,7 +337,10 @@ final class BackupService {
         // Import idea-tag links
         if let ideaTagLinks = exportData.ideaTagLinks {
             for link in ideaTagLinks {
-                _ = tagRepository?.linkTagToIdea(tagId: link.tagId, ideaId: link.ideaId)
+                try requireSuccessfulImportOperation(
+                    tagRepository?.linkTagToIdea(tagId: link.tagId, ideaId: link.ideaId),
+                    operation: "link tag \(link.tagId) to idea \(link.ideaId)"
+                )
             }
             logger.info("Imported \(ideaTagLinks.count) idea-tag links")
         }
@@ -319,7 +348,10 @@ final class BackupService {
         // Import expense categories (before expenses)
         if let categories = exportData.expenseCategories {
             for category in categories {
-                _ = expenseCategoryRepository?.insert(category)
+                try requireSuccessfulImportOperation(
+                    expenseCategoryRepository?.insert(category),
+                    operation: "insert expense category \(category.id)"
+                )
             }
             logger.info("Imported \(categories.count) expense categories")
         }
@@ -327,7 +359,10 @@ final class BackupService {
         // Import expenses
         if let expenses = exportData.expenses {
             for expense in expenses {
-                _ = expenseRepository?.insert(expense)
+                try requireSuccessfulImportOperation(
+                    expenseRepository?.insert(expense),
+                    operation: "insert expense \(expense.id)"
+                )
             }
             logger.info("Imported \(expenses.count) expenses")
         }
@@ -335,7 +370,10 @@ final class BackupService {
         // Import notes
         if let notes = exportData.notes {
             for note in notes {
-                _ = noteRepository?.insert(note)
+                try requireSuccessfulImportOperation(
+                    noteRepository?.insert(note),
+                    operation: "insert note \(note.id)"
+                )
             }
             logger.info("Imported \(notes.count) notes")
         }
@@ -343,7 +381,10 @@ final class BackupService {
         // Import documents (metadata only)
         if let documents = exportData.documents {
             for document in documents {
-                _ = documentRepository?.insert(document)
+                try requireSuccessfulImportOperation(
+                    documentRepository?.insert(document),
+                    operation: "insert document \(document.id)"
+                )
             }
             logger.info("Imported \(documents.count) documents")
         }
@@ -351,12 +392,27 @@ final class BackupService {
         // Import reminders
         if let reminders = exportData.reminders {
             for reminder in reminders {
-                _ = reminderRepository?.insert(reminder)
+                try requireSuccessfulImportOperation(
+                    reminderRepository?.insert(reminder),
+                    operation: "insert reminder \(reminder.id)"
+                )
             }
             logger.info("Imported \(reminders.count) reminders")
         }
 
         logger.info("Successfully imported all data")
+    }
+
+    private func requireSuccessfulImportOperation(_ result: Bool?, operation: String) throws {
+        guard let result else {
+            logger.error("Import failed: repository unavailable for \(operation)")
+            throw ExportValidationError.corruptedData
+        }
+
+        guard result else {
+            logger.error("Import failed: \(operation)")
+            throw ExportValidationError.corruptedData
+        }
     }
 
     // MARK: - Helper Methods
@@ -571,7 +627,7 @@ final class BackupService {
 
             try validateExportData(exportData)
             wipeAllData()
-            importExportData(exportData)
+            try importExportData(exportData)
 
             logger.info("Successfully restored from iCloud backup: \(backupInfo.fileName)")
         } catch {

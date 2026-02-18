@@ -186,6 +186,15 @@ class ExpenseRepository {
         return total
     }
 
+    func countByProjectId(projectId: UUID) -> Int {
+        do {
+            return try db.scalar(table.filter(projectIdColumn == projectId.uuidString).count)
+        } catch {
+            logger.error("Failed to count expenses: \(error)")
+            return 0
+        }
+    }
+
     func search(query searchQuery: String) -> [Expense] {
         var expenses: [Expense] = []
         let pattern = "%\(searchQuery)%"

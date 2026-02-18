@@ -8,6 +8,7 @@ struct FolderContentsView: View {
     @State private var projectName: String?
     @State private var selectedFile: StorageItem?
     @State private var showDeleteConfirmation = false
+    @State private var showDeleteError = false
     @State private var fileToDelete: StorageItem?
     @State private var isLoading = true
 
@@ -60,7 +61,12 @@ struct FolderContentsView: View {
         .navigationTitle(String(folder.name.prefix(12)) + (folder.name.count > 12 ? "..." : ""))
         .navigationBarTitleDisplayMode(.inline)
         .sheet(item: $selectedFile) { file in
-            FileDetailView(file: file)
+            FileDetailView(
+                file: file,
+                onDelete: {
+                    files.removeAll { $0.url == file.url }
+                }
+            )
         }
         .alert(L("developer.document_storage.delete_confirm.title"), isPresented: $showDeleteConfirmation) {
             Button(L("button.cancel"), role: .cancel) {}
@@ -71,6 +77,11 @@ struct FolderContentsView: View {
             }
         } message: {
             Text(L("developer.document_storage.delete_confirm.message"))
+        }
+        .alert(L("error.generic.title"), isPresented: $showDeleteError) {
+            Button(L("button.done")) {}
+        } message: {
+            Text(L("error.generic.message"))
         }
         .onAppear {
             loadData()
@@ -92,7 +103,13 @@ struct FolderContentsView: View {
     }
 
     private func deleteFile(_ file: StorageItem) {
-        _ = service.deleteItem(at: file.url)
-        files.removeAll { $0.id == file.id }
+        let didDelete = service.deleteItem(at: file.url)
+
+        if didDelete {
+            files.removeAll { $0.id == file.id }
+        } else {
+            loadData()
+            showDeleteError = true
+        }
     }
 }

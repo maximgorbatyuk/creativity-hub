@@ -3,12 +3,14 @@ import QuickLook
 
 struct FileDetailView: View {
     let file: StorageItem
+    var onDelete: (() -> Void)? = nil
 
     @Environment(\.dismiss) private var dismiss
     @State private var attributes: FileAttributes?
     @State private var quickLookURL: URL?
     @State private var showShareSheet = false
     @State private var showDeleteConfirmation = false
+    @State private var showDeleteError = false
 
     private let service = DocumentStorageService.shared
 
@@ -78,10 +80,14 @@ struct FileDetailView: View {
                 Button(L("button.cancel"), role: .cancel) {}
                 Button(L("button.delete"), role: .destructive) {
                     deleteFile()
-                    dismiss()
                 }
             } message: {
                 Text(L("developer.document_storage.delete_confirm.message"))
+            }
+            .alert(L("error.generic.title"), isPresented: $showDeleteError) {
+                Button(L("button.done")) {}
+            } message: {
+                Text(L("error.generic.message"))
             }
             .onAppear {
                 attributes = service.getFileAttributes(at: file.url)
@@ -97,6 +103,13 @@ struct FileDetailView: View {
     }
 
     private func deleteFile() {
-        _ = service.deleteItem(at: file.url)
+        let didDelete = service.deleteItem(at: file.url)
+
+        if didDelete {
+            onDelete?()
+            dismiss()
+        } else {
+            showDeleteError = true
+        }
     }
 }

@@ -156,6 +156,8 @@ struct PDFViewerView: UIViewRepresentable {
 struct ImageViewerView: View {
     let url: URL
 
+    @State private var uiImage: UIImage?
+    @State private var isImageLoading = true
     @State private var scale: CGFloat = 1.0
     @State private var lastScale: CGFloat = 1.0
     @State private var offset: CGSize = .zero
@@ -163,7 +165,7 @@ struct ImageViewerView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            if let image = loadImage() {
+            if let image = uiImage {
                 Image(uiImage: image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -209,6 +211,9 @@ struct ImageViewerView: View {
                         }
                     }
                     .frame(width: geometry.size.width, height: geometry.size.height)
+            } else if isImageLoading {
+                ProgressView()
+                    .frame(width: geometry.size.width, height: geometry.size.height)
             } else {
                 VStack {
                     Image(systemName: "photo.fill")
@@ -221,11 +226,21 @@ struct ImageViewerView: View {
             }
         }
         .background(Color.black)
+        .task(id: url) {
+            isImageLoading = true
+            if let data = await loadImageData() {
+                uiImage = UIImage(data: data)
+            } else {
+                uiImage = nil
+            }
+            isImageLoading = false
+        }
     }
 
-    private func loadImage() -> UIImage? {
-        guard let data = try? Data(contentsOf: url) else { return nil }
-        return UIImage(data: data)
+    private func loadImageData() async -> Data? {
+        await Task.detached(priority: .userInitiated) {
+            try? Data(contentsOf: url)
+        }.value
     }
 }
 

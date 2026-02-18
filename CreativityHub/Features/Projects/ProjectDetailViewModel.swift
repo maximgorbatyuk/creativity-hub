@@ -113,7 +113,7 @@ final class ProjectDetailViewModel {
         sectionCounts.ideas = ideaRepository?.countByProjectId(projectId: projectId) ?? 0
         sectionCounts.notes = noteRepository?.countByProjectId(projectId: projectId) ?? 0
         sectionCounts.documents = documentRepository?.countByProjectId(projectId: projectId) ?? 0
-        sectionCounts.expenses = (expenseRepository?.fetchByProjectId(projectId: projectId) ?? []).count
+        sectionCounts.expenses = expenseRepository?.countByProjectId(projectId: projectId) ?? 0
         sectionCounts.reminders = reminderRepository?.countByProjectId(projectId: projectId) ?? 0
 
         loadChecklistProgress(projectId: projectId)
