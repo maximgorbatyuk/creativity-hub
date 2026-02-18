@@ -113,6 +113,82 @@
 
 /* Projects */
 "projects.new" = "Новый проект";
+"project.filter.all" = "Все";
+"project.action.pin" = "Закрепить";
+"project.action.unpin" = "Открепить";
+"project.action.set_status" = "Изменить статус";
+"project.delete.title" = "Удалить проект";
+"project.delete.message" = "Проект и всё его содержимое будут удалены навсегда. Это действие нельзя отменить.";
+
+/* Project Form */
+"project.form.add_title" = "Новый проект";
+"project.form.edit_title" = "Редактировать проект";
+"project.form.section.basic" = "Основная информация";
+"project.form.section.color" = "Цвет";
+"project.form.section.status" = "Статус";
+"project.form.section.dates" = "Даты";
+"project.form.section.budget" = "Бюджет";
+"project.form.name" = "Название проекта";
+"project.form.description" = "Описание";
+"project.form.status" = "Статус";
+"project.form.set_dates" = "Установить даты";
+"project.form.start_date" = "Дата начала";
+"project.form.target_date" = "Целевая дата";
+"project.form.set_budget" = "Установить бюджет";
+"project.form.budget_amount" = "Сумма";
+"project.form.error.name_required" = "Название проекта обязательно";
+"project.form.error.invalid_dates" = "Целевая дата должна быть позже даты начала";
+
+/* Project Detail */
+"project.detail.dates" = "Даты";
+"project.detail.start" = "Начало";
+"project.detail.target" = "Цель";
+"project.detail.progress" = "Прогресс";
+"project.detail.progress_percent" = "%d%% выполнено";
+"project.detail.budget" = "Бюджет";
+"project.detail.budget_total" = "Общий бюджет";
+"project.detail.spent" = "Потрачено";
+"project.section.checklists" = "Чеклисты";
+"project.section.ideas" = "Идеи";
+"project.section.notes" = "Заметки";
+"project.section.expenses" = "Расходы";
+
+/* Checklists */
+"checklist.list.title" = "Чеклисты";
+"checklist.list.add" = "Добавить чеклист";
+"checklist.progress" = "%d из %d";
+"checklist.filter.all" = "Все";
+"checklist.filter.pending" = "Активные";
+"checklist.filter.completed" = "Готовые";
+"checklist.filter.overdue" = "Просрочено";
+"checklist.detail.progress" = "Прогресс";
+"checklist.detail.add_item" = "Добавить пункт";
+
+/* Checklist Form */
+"checklist.form.add_title" = "Новый чеклист";
+"checklist.form.edit_title" = "Редактировать чеклист";
+"checklist.form.name" = "Название";
+"checklist.form.name_placeholder" = "Название чеклиста";
+
+/* Checklist Item Form */
+"checklist_item.form.add_title" = "Новый пункт";
+"checklist_item.form.edit_title" = "Редактировать пункт";
+"checklist_item.form.section.basic" = "Основная информация";
+"checklist_item.form.section.priority" = "Приоритет";
+"checklist_item.form.section.due_date" = "Срок";
+"checklist_item.form.section.cost" = "Ожидаемая стоимость";
+"checklist_item.form.section.notes" = "Заметки";
+"checklist_item.form.name" = "Название пункта";
+"checklist_item.form.priority" = "Приоритет";
+"checklist_item.form.set_due_date" = "Установить срок";
+"checklist_item.form.due_date" = "Срок";
+"checklist_item.form.set_cost" = "Добавить ожидаемую стоимость";
+"checklist_item.form.cost_amount" = "Сумма";
+"checklist_item.form.notes_placeholder" = "Дополнительные заметки";
+"checklist_item.form.error.name_required" = "Название пункта обязательно";
+
+/* Shared */
+"button.see_all" = "Все";
 
 /* Search */
 "search.placeholder" = "Поиск проектов, задач, идей...";

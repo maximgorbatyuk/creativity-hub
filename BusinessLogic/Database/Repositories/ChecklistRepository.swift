@@ -109,6 +109,37 @@ class ChecklistRepository {
         }
     }
 
+    func updateSortOrders(_ checklists: [Checklist]) -> Bool {
+        do {
+            try db.transaction {
+                for checklist in checklists {
+                    let record = table.filter(idColumn == checklist.id.uuidString)
+                    try db.run(record.update(
+                        sortOrderColumn <- checklist.sortOrder,
+                        updatedAtColumn <- Date()
+                    ))
+                }
+            }
+            logger.info("Updated sort orders for \(checklists.count) checklists")
+            return true
+        } catch {
+            logger.error("Failed to update checklist sort orders: \(error)")
+            return false
+        }
+    }
+
+    func nextSortOrder(projectId: UUID) -> Int {
+        do {
+            let maxOrder = try db.scalar(
+                table.filter(projectIdColumn == projectId.uuidString).select(sortOrderColumn.max)
+            )
+            return (maxOrder ?? 0) + 1
+        } catch {
+            logger.error("Failed to get next sort order: \(error)")
+        }
+        return 0
+    }
+
     func countByProjectId(projectId: UUID) -> Int {
         do {
             return try db.scalar(table.filter(projectIdColumn == projectId.uuidString).count)

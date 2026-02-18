@@ -113,6 +113,82 @@
 
 /* Projects */
 "projects.new" = "Жаңа жоба";
+"project.filter.all" = "Барлығы";
+"project.action.pin" = "Бекіту";
+"project.action.unpin" = "Босату";
+"project.action.set_status" = "Мәртебені өзгерту";
+"project.delete.title" = "Жобаны жою";
+"project.delete.message" = "Жоба және оның барлық мазмұны біржола жойылады. Бұл әрекетті кері қайтару мүмкін емес.";
+
+/* Project Form */
+"project.form.add_title" = "Жаңа жоба";
+"project.form.edit_title" = "Жобаны өзгерту";
+"project.form.section.basic" = "Негізгі ақпарат";
+"project.form.section.color" = "Түс";
+"project.form.section.status" = "Мәртебе";
+"project.form.section.dates" = "Күндер";
+"project.form.section.budget" = "Бюджет";
+"project.form.name" = "Жоба атауы";
+"project.form.description" = "Сипаттама";
+"project.form.status" = "Мәртебе";
+"project.form.set_dates" = "Күндерді белгілеу";
+"project.form.start_date" = "Басталу күні";
+"project.form.target_date" = "Мақсатты күн";
+"project.form.set_budget" = "Бюджетті белгілеу";
+"project.form.budget_amount" = "Сома";
+"project.form.error.name_required" = "Жоба атауы міндетті";
+"project.form.error.invalid_dates" = "Мақсатты күн басталу күнінен кейін болуы тиіс";
+
+/* Project Detail */
+"project.detail.dates" = "Күндер";
+"project.detail.start" = "Басталуы";
+"project.detail.target" = "Мақсат";
+"project.detail.progress" = "Барыс";
+"project.detail.progress_percent" = "%d%% аяқталды";
+"project.detail.budget" = "Бюджет";
+"project.detail.budget_total" = "Жалпы бюджет";
+"project.detail.spent" = "Жұмсалған";
+"project.section.checklists" = "Тізімдер";
+"project.section.ideas" = "Идеялар";
+"project.section.notes" = "Жазбалар";
+"project.section.expenses" = "Шығыстар";
+
+/* Checklists */
+"checklist.list.title" = "Тізімдер";
+"checklist.list.add" = "Тізім қосу";
+"checklist.progress" = "%d / %d";
+"checklist.filter.all" = "Барлығы";
+"checklist.filter.pending" = "Белсенді";
+"checklist.filter.completed" = "Дайын";
+"checklist.filter.overdue" = "Мерзімі өткен";
+"checklist.detail.progress" = "Барыс";
+"checklist.detail.add_item" = "Элемент қосу";
+
+/* Checklist Form */
+"checklist.form.add_title" = "Жаңа тізім";
+"checklist.form.edit_title" = "Тізімді өзгерту";
+"checklist.form.name" = "Атауы";
+"checklist.form.name_placeholder" = "Тізім атауы";
+
+/* Checklist Item Form */
+"checklist_item.form.add_title" = "Жаңа элемент";
+"checklist_item.form.edit_title" = "Элементті өзгерту";
+"checklist_item.form.section.basic" = "Негізгі ақпарат";
+"checklist_item.form.section.priority" = "Басымдық";
+"checklist_item.form.section.due_date" = "Мерзімі";
+"checklist_item.form.section.cost" = "Болжалды құны";
+"checklist_item.form.section.notes" = "Жазбалар";
+"checklist_item.form.name" = "Элемент атауы";
+"checklist_item.form.priority" = "Басымдық";
+"checklist_item.form.set_due_date" = "Мерзімді белгілеу";
+"checklist_item.form.due_date" = "Мерзімі";
+"checklist_item.form.set_cost" = "Болжалды құнын қосу";
+"checklist_item.form.cost_amount" = "Сома";
+"checklist_item.form.notes_placeholder" = "Қосымша жазбалар";
+"checklist_item.form.error.name_required" = "Элемент атауы міндетті";
+
+/* Shared */
+"button.see_all" = "Барлығы";
 
 /* Search */
 "search.placeholder" = "Жобаларды, тапсырмаларды, идеяларды іздеу...";

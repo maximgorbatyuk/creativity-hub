@@ -113,6 +113,82 @@
 
 /* Projects */
 "projects.new" = "New Project";
+"project.filter.all" = "All";
+"project.action.pin" = "Pin";
+"project.action.unpin" = "Unpin";
+"project.action.set_status" = "Set Status";
+"project.delete.title" = "Delete Project";
+"project.delete.message" = "This will permanently delete the project and all its contents. This action cannot be undone.";
+
+/* Project Form */
+"project.form.add_title" = "New Project";
+"project.form.edit_title" = "Edit Project";
+"project.form.section.basic" = "Basic Info";
+"project.form.section.color" = "Color";
+"project.form.section.status" = "Status";
+"project.form.section.dates" = "Dates";
+"project.form.section.budget" = "Budget";
+"project.form.name" = "Project Name";
+"project.form.description" = "Description";
+"project.form.status" = "Status";
+"project.form.set_dates" = "Set Dates";
+"project.form.start_date" = "Start Date";
+"project.form.target_date" = "Target Date";
+"project.form.set_budget" = "Set Budget";
+"project.form.budget_amount" = "Amount";
+"project.form.error.name_required" = "Project name is required";
+"project.form.error.invalid_dates" = "Target date must be after start date";
+
+/* Project Detail */
+"project.detail.dates" = "Dates";
+"project.detail.start" = "Start";
+"project.detail.target" = "Target";
+"project.detail.progress" = "Progress";
+"project.detail.progress_percent" = "%d%% complete";
+"project.detail.budget" = "Budget";
+"project.detail.budget_total" = "Total Budget";
+"project.detail.spent" = "Spent";
+"project.section.checklists" = "Checklists";
+"project.section.ideas" = "Ideas";
+"project.section.notes" = "Notes";
+"project.section.expenses" = "Expenses";
+
+/* Checklists */
+"checklist.list.title" = "Checklists";
+"checklist.list.add" = "Add Checklist";
+"checklist.progress" = "%d of %d";
+"checklist.filter.all" = "All";
+"checklist.filter.pending" = "Pending";
+"checklist.filter.completed" = "Done";
+"checklist.filter.overdue" = "Overdue";
+"checklist.detail.progress" = "Progress";
+"checklist.detail.add_item" = "Add Item";
+
+/* Checklist Form */
+"checklist.form.add_title" = "New Checklist";
+"checklist.form.edit_title" = "Edit Checklist";
+"checklist.form.name" = "Name";
+"checklist.form.name_placeholder" = "Checklist name";
+
+/* Checklist Item Form */
+"checklist_item.form.add_title" = "New Item";
+"checklist_item.form.edit_title" = "Edit Item";
+"checklist_item.form.section.basic" = "Basic Info";
+"checklist_item.form.section.priority" = "Priority";
+"checklist_item.form.section.due_date" = "Due Date";
+"checklist_item.form.section.cost" = "Estimated Cost";
+"checklist_item.form.section.notes" = "Notes";
+"checklist_item.form.name" = "Item Name";
+"checklist_item.form.priority" = "Priority";
+"checklist_item.form.set_due_date" = "Set Due Date";
+"checklist_item.form.due_date" = "Due Date";
+"checklist_item.form.set_cost" = "Add Estimated Cost";
+"checklist_item.form.cost_amount" = "Amount";
+"checklist_item.form.notes_placeholder" = "Additional notes";
+"checklist_item.form.error.name_required" = "Item name is required";
+
+/* Shared */
+"button.see_all" = "See All";
 
 /* Search */
 "search.placeholder" = "Search projects, tasks, ideas...";
