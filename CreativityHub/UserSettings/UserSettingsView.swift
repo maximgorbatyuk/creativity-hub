@@ -26,11 +26,11 @@ struct UserSettingsView: View {
             Form {
                 preferencesSection
                 appearanceSection
+                aboutSection
                 backupSection
                 if viewModel.isDevModeEnabled {
                     developerSection
                 }
-                aboutSection
             }
             .navigationTitle(L("settings.title"))
             .onAppear {
@@ -393,6 +393,8 @@ struct UserSettingsView: View {
                 viewModel.handleVersionTap()
             } label: {
                 HStack {
+                    Image(systemName: "info.circle")
+                        .foregroundStyle(.primary)
                     Text(L("settings.version"))
                         .foregroundStyle(.primary)
                     Spacer()
@@ -402,28 +404,12 @@ struct UserSettingsView: View {
             }
             .buttonStyle(.plain)
 
-            if viewModel.isDevModeEnabled {
-                Button {
-                    developerMode.disableDeveloperMode()
-                } label: {
-                    HStack {
-                        Label(
-                            L("settings.developer.mode"),
-                            systemImage: "hammer.fill"
-                        )
-                        .foregroundStyle(.orange)
-                        Spacer()
-                        Text(L("settings.developer.enabled"))
-                            .foregroundStyle(.orange)
-                            .fontWeight(.bold)
-                    }
-                }
-                .buttonStyle(.plain)
-            }
-
             if !viewModel.developerName.isEmpty {
                 HStack {
+                    Image(systemName: "person")
+                        .foregroundStyle(.primary)
                     Text(L("settings.developer"))
+                        .foregroundStyle(.primary)
                     Spacer()
                     Text(viewModel.developerName)
                         .foregroundStyle(.secondary)
@@ -445,6 +431,25 @@ struct UserSettingsView: View {
                             .foregroundStyle(.blue)
                         Text(L("settings.contact_telegram"))
                             .foregroundStyle(.primary)
+                    }
+                }
+                .buttonStyle(.plain)
+            }
+
+            if viewModel.isDevModeEnabled {
+                Button {
+                    developerMode.disableDeveloperMode()
+                } label: {
+                    HStack {
+                        Label(
+                            L("settings.developer.mode"),
+                            systemImage: "hammer.fill"
+                        )
+                        .foregroundStyle(.orange)
+                        Spacer()
+                        Text(L("settings.developer.enabled"))
+                            .foregroundStyle(.orange)
+                            .fontWeight(.bold)
                     }
                 }
                 .buttonStyle(.plain)

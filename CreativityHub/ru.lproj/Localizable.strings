@@ -502,3 +502,12 @@
 "share.error.unsupported" = "Этот тип контента не поддерживается.";
 "share.error.no_projects" = "Проекты не найдены";
 "share.error.no_projects_hint" = "Сначала создайте проект в CreativityHub, затем делитесь контентом.";
+
+// MARK: - Project Content
+"tab.projects_list" = "Список проектов";
+"project.selector.select_project" = "Выберите проект";
+"project.selector.create_new" = "Создать новый проект";
+"project.content.title" = "Проект";
+"project.content.empty.title" = "Пока нет проектов";
+"project.content.empty.subtitle" = "Создайте свой первый проект";
+"project.content.empty.add_button" = "Создать проект";

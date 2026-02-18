@@ -40,7 +40,9 @@ class ShareViewController: UIViewController {
                 return
             }
 
-            let projects = DatabaseManager.shared.projectRepository?.fetchAll() ?? []
+            let projects = await MainActor.run {
+                DatabaseManager.shared.projectRepository?.fetchAll() ?? []
+            }
 
             await MainActor.run {
                 let vm = ShareFormViewModel()

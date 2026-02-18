@@ -179,35 +179,88 @@ final class ShareFormViewModel: ObservableObject {
         return inserted
     }
 
-    /// Document is stored as a Note placeholder until a dedicated Document model is added.
     private func saveDocument(projectId: UUID) -> Bool {
-        guard let repo = DatabaseManager.shared.noteRepository else { return false }
+        guard let repo = DatabaseManager.shared.documentRepository else { return false }
         guard let input = sharedInput else { return false }
 
+        let documentService = DocumentService.shared
         let persistedImageURL = persistedImageURLIfNeeded(from: input)
         if input.kind == .image, persistedImageURL == nil {
             return false
         }
 
-        let content: String
+        let data: Data
+        let sourceFileName: String
+        let fileType: DocumentType
+        let notes: String?
+
         switch input.kind {
         case .link:
-            content = input.url?.absoluteString ?? ""
+            guard let urlString = input.url?.absoluteString,
+                  let payload = urlString.data(using: .utf8)
+            else {
+                return false
+            }
+
+            data = payload
+            sourceFileName = input.originalFilename ?? "shared_link.txt"
+            fileType = .other
+            notes = input.suggestedSnippet
+
         case .text:
-            content = input.text ?? ""
+            guard let text = input.text,
+                  let payload = text.data(using: .utf8)
+            else {
+                return false
+            }
+
+            data = payload
+            sourceFileName = input.originalFilename ?? "shared_text.txt"
+            fileType = .other
+            notes = input.suggestedSnippet
+
         case .image:
-            content = persistedImageURL?.absoluteString ?? input.originalFilename ?? ""
+            guard let persistedImageURL else {
+                return false
+            }
+
+            do {
+                data = try Data(contentsOf: persistedImageURL)
+            } catch {
+                logger.error("Failed to read persisted image: \(error.localizedDescription)")
+                return false
+            }
+
+            sourceFileName = input.originalFilename ?? persistedImageURL.lastPathComponent
+            fileType = DocumentType.fromExtension(URL(fileURLWithPath: sourceFileName).pathExtension)
+            notes = input.suggestedSnippet
         }
 
-        let note = Note(
+        guard let fileURL = documentService.saveDocument(data: data, fileName: sourceFileName, projectId: projectId) else {
+            if let persistedImageURL {
+                try? FileManager.default.removeItem(at: persistedImageURL)
+            }
+            return false
+        }
+
+        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let document = Document(
             projectId: projectId,
-            title: name.trimmingCharacters(in: .whitespacesAndNewlines),
-            content: content
+            name: trimmedName.isEmpty ? nil : trimmedName,
+            fileType: fileType,
+            fileName: fileURL.lastPathComponent,
+            fileSize: Int64(data.count),
+            notes: notes
         )
 
-        let inserted = repo.insert(note)
+        let inserted = repo.insert(document)
+
         if !inserted, let persistedImageURL {
             try? FileManager.default.removeItem(at: persistedImageURL)
+        }
+
+        if !inserted {
+            _ = documentService.deleteDocument(fileName: fileURL.lastPathComponent, projectId: projectId)
         }
 
         return inserted

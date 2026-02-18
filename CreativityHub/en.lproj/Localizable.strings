@@ -502,3 +502,12 @@
 "share.error.unsupported" = "This content type is not supported.";
 "share.error.no_projects" = "No Projects Found";
 "share.error.no_projects_hint" = "Create a project in CreativityHub first, then share content here.";
+
+// MARK: - Project Content
+"tab.projects_list" = "Projects List";
+"project.selector.select_project" = "Select a project";
+"project.selector.create_new" = "Create New Project";
+"project.content.title" = "Project";
+"project.content.empty.title" = "No Projects Yet";
+"project.content.empty.subtitle" = "Create your first project to get started";
+"project.content.empty.add_button" = "Create Project";

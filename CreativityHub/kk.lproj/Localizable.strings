@@ -502,3 +502,12 @@
 "share.error.unsupported" = "Бұл мазмұн түрі қолдау көрсетілмейді.";
 "share.error.no_projects" = "Жобалар табылмады";
 "share.error.no_projects_hint" = "Алдымен CreativityHub-та жоба жасаңыз, содан кейін мазмұнмен бөлісіңіз.";
+
+// MARK: - Project Content
+"tab.projects_list" = "Жобалар тізімі";
+"project.selector.select_project" = "Жобаны таңдаңыз";
+"project.selector.create_new" = "Жаңа жоба жасау";
+"project.content.title" = "Жоба";
+"project.content.empty.title" = "Жобалар жоқ";
+"project.content.empty.subtitle" = "Бастау үшін бірінші жобаңызды жасаңыз";
+"project.content.empty.add_button" = "Жоба жасау";
