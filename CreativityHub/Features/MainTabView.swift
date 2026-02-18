@@ -10,11 +10,11 @@ struct MainTabView: View {
             }
 
             Tab(L("tab.projects"), systemImage: "folder.fill", value: 1) {
-                ProjectsListView()
+                ProjectContentView()
             }
 
-            Tab(L("tab.search"), systemImage: "magnifyingglass", value: 2) {
-                SearchView()
+            Tab(L("tab.projects_list"), systemImage: "list.bullet.rectangle", value: 2) {
+                ProjectsListView()
             }
 
             Tab(L("tab.settings"), systemImage: "gearshape.fill", value: 3) {

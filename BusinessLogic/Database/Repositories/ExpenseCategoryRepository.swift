@@ -26,6 +26,28 @@ class ExpenseCategoryRepository {
         )
     }
 
+    func fetchAll() -> [ExpenseCategory] {
+        var categories: [ExpenseCategory] = []
+        do {
+            for row in try db.prepare(table.order(sortOrderColumn.asc)) {
+                if let category = mapRow(row) {
+                    categories.append(category)
+                }
+            }
+        } catch {
+            logger.error("Failed to fetch all expense categories: \(error)")
+        }
+        return categories
+    }
+
+    func deleteAll() {
+        do {
+            try db.run(table.delete())
+        } catch {
+            logger.error("Failed to delete all expense categories: \(error)")
+        }
+    }
+
     func fetchByProjectId(projectId: UUID) -> [ExpenseCategory] {
         var categories: [ExpenseCategory] = []
         do {

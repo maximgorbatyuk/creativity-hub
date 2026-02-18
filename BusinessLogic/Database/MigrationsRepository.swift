@@ -38,6 +38,15 @@ class MigrationsRepository {
         }
     }
 
+    func resetMigrations() {
+        do {
+            try db.run(table.delete())
+            logger.info("All migration records deleted")
+        } catch {
+            logger.error("Failed to reset migrations: \(error)")
+        }
+    }
+
     func addMigrationVersion() {
         do {
             try db.run(table.insert(dateColumn <- Date()))

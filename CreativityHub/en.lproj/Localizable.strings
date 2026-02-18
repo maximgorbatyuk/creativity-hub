@@ -62,6 +62,8 @@
 "empty.expenses.message" = "Track your project spending here";
 "empty.notes.title" = "No Notes";
 "empty.notes.message" = "Jot down thoughts and details";
+"empty.reminders.title" = "No Reminders";
+"empty.reminders.message" = "Set reminders to stay on track";
 "empty.search.title" = "No Results";
 "empty.search.message" = "Try a different search term";
 
@@ -101,6 +103,7 @@
 "settings.color_scheme" = "Color Scheme";
 "settings.version" = "Version";
 "settings.developer" = "Developer";
+"settings.contact_telegram" = "Contact developer via Telegram";
 
 /* Tabs */
 "tab.today" = "Today";
@@ -110,9 +113,401 @@
 
 /* Today */
 "today.create_project" = "Create Project";
+"today.overdue" = "Overdue";
+"today.upcoming_reminders" = "Upcoming Reminders";
+"today.active_projects" = "%d Active Projects";
+"today.empty.title" = "All Clear";
+"today.empty.message" = "No active projects or upcoming reminders. Create a project to get started!";
 
 /* Projects */
 "projects.new" = "New Project";
+"project.filter.all" = "All";
+"project.action.pin" = "Pin";
+"project.action.unpin" = "Unpin";
+"project.action.set_status" = "Set Status";
+"project.delete.title" = "Delete Project";
+"project.delete.message" = "This will permanently delete the project and all its contents. This action cannot be undone.";
+
+/* Project Form */
+"project.form.add_title" = "New Project";
+"project.form.edit_title" = "Edit Project";
+"project.form.section.basic" = "Basic Info";
+"project.form.section.color" = "Color";
+"project.form.section.status" = "Status";
+"project.form.section.dates" = "Dates";
+"project.form.section.budget" = "Budget";
+"project.form.name" = "Project Name";
+"project.form.description" = "Description";
+"project.form.status" = "Status";
+"project.form.set_dates" = "Set Dates";
+"project.form.start_date" = "Start Date";
+"project.form.target_date" = "Target Date";
+"project.form.set_budget" = "Set Budget";
+"project.form.budget_amount" = "Amount";
+"project.form.error.name_required" = "Project name is required";
+"project.form.error.invalid_dates" = "Target date must be after start date";
+
+/* Project Detail */
+"project.detail.dates" = "Dates";
+"project.detail.start" = "Start";
+"project.detail.target" = "Target";
+"project.detail.progress" = "Progress";
+"project.detail.progress_percent" = "%d%% complete";
+"project.detail.budget" = "Budget";
+"project.detail.budget_total" = "Total Budget";
+"project.detail.spent" = "Spent";
+"project.section.checklists" = "Checklists";
+"project.section.ideas" = "Ideas";
+"project.section.notes" = "Notes";
+"project.section.documents" = "Documents";
+"project.section.expenses" = "Expenses";
+"project.section.reminders" = "Reminders";
+
+/* Ideas */
+"idea.list.title" = "Ideas";
+"idea.list.add" = "Add Idea";
+"idea.filter.all" = "All";
+"idea.filter.no_results" = "No ideas match this filter";
+"idea.detail.title" = "Idea";
+"idea.detail.link" = "Link";
+"idea.detail.notes" = "Notes";
+"idea.detail.tags" = "Tags";
+"idea.detail.no_tags" = "No tags added";
+"idea.action.open_url" = "Open in Browser";
+"idea.delete.title" = "Delete Idea";
+"idea.delete.message" = "This idea will be permanently deleted.";
+"idea.tags.existing" = "Available Tags";
+"idea.tags.add_title" = "Add Tags";
+
+/* Idea Form */
+"idea.form.add_title" = "New Idea";
+"idea.form.edit_title" = "Edit Idea";
+"idea.form.section.basic" = "Title";
+"idea.form.section.url" = "URL";
+"idea.form.section.source" = "Source";
+"idea.form.section.notes" = "Notes";
+"idea.form.title" = "Idea Title";
+"idea.form.url_placeholder" = "https://...";
+"idea.form.detected_source" = "Detected: %@";
+"idea.form.source_type" = "Source Type";
+"idea.form.notes_placeholder" = "Describe your idea...";
+"idea.form.error.title_required" = "Idea title is required";
+
+/* Checklists */
+"checklist.list.title" = "Checklists";
+"checklist.list.add" = "Add Checklist";
+"checklist.progress" = "%d of %d";
+"checklist.filter.all" = "All";
+"checklist.filter.pending" = "Pending";
+"checklist.filter.completed" = "Done";
+"checklist.filter.overdue" = "Overdue";
+"checklist.detail.progress" = "Progress";
+"checklist.detail.add_item" = "Add Item";
+
+/* Checklist Form */
+"checklist.form.add_title" = "New Checklist";
+"checklist.form.edit_title" = "Edit Checklist";
+"checklist.form.name" = "Name";
+"checklist.form.name_placeholder" = "Checklist name";
+
+/* Checklist Item Form */
+"checklist_item.form.add_title" = "New Item";
+"checklist_item.form.edit_title" = "Edit Item";
+"checklist_item.form.section.basic" = "Basic Info";
+"checklist_item.form.section.priority" = "Priority";
+"checklist_item.form.section.due_date" = "Due Date";
+"checklist_item.form.section.cost" = "Estimated Cost";
+"checklist_item.form.section.notes" = "Notes";
+"checklist_item.form.name" = "Item Name";
+"checklist_item.form.priority" = "Priority";
+"checklist_item.form.set_due_date" = "Set Due Date";
+"checklist_item.form.due_date" = "Due Date";
+"checklist_item.form.set_cost" = "Add Estimated Cost";
+"checklist_item.form.cost_amount" = "Amount";
+"checklist_item.form.notes_placeholder" = "Additional notes";
+"checklist_item.form.error.name_required" = "Item name is required";
+
+/* Notes */
+"note.list.title" = "Notes";
+"note.list.add" = "Add Note";
+"note.list.sort_by" = "Sort by";
+"note.sort.updated" = "Updated";
+"note.sort.title" = "Title";
+"note.sort.created" = "Created";
+"note.action.pin" = "Pin";
+"note.action.unpin" = "Unpin";
+"note.delete.title" = "Delete Note";
+"note.delete.message" = "This note will be permanently deleted.";
+"note.detail.title" = "Note";
+"note.detail.content" = "Content";
+"note.detail.info" = "Info";
+"note.detail.created" = "Created";
+"note.detail.updated" = "Updated";
+
+/* Note Form */
+"note.form.add_title" = "New Note";
+"note.form.edit_title" = "Edit Note";
+"note.form.section.title" = "Title";
+"note.form.section.content" = "Content";
+"note.form.title_placeholder" = "Note title";
+"note.form.content_placeholder" = "Write your note...";
+"note.form.error.title_required" = "Note title is required";
+
+/* Documents */
+"document.list.title" = "Documents";
+"document.list.add" = "Add Document";
+"document.filter.all" = "All";
+"document.filter.pdf" = "PDF";
+"document.filter.images" = "Images";
+"document.filter.no_results" = "No documents match this filter";
+"document.summary.files_count" = "%d files";
+"document.type.other" = "Other";
+"document.delete.title" = "Delete Document";
+"document.delete.message" = "This document will be permanently deleted.";
+"document.action.share" = "Share";
+"document.action.rename" = "Rename";
+"document.action.open_in" = "Open In...";
+"document.rename.title" = "Rename Document";
+"document.rename.placeholder" = "Document name";
+"document.rename.message" = "Enter a custom name for this document";
+"document.preview.unsupported" = "Preview not available";
+"document.preview.image_error" = "Could not load image";
+"document.error.import_failed" = "Failed to import documents";
+
+/* Document Import */
+"document.import.title" = "Import Document";
+"document.import.section.source" = "Choose Source";
+"document.import.files" = "Files";
+"document.import.files.description" = "Import from Files app";
+"document.import.photos" = "Photo Library";
+"document.import.photos.description" = "Choose from your photos";
+"document.import.camera" = "Camera";
+"document.import.camera.description" = "Take a new photo";
+"document.import.supported_formats" = "Supported formats: PDF, JPEG, PNG, HEIC";
+"document.import.processing" = "Processing...";
+
+/* Empty States - Documents */
+"empty.documents.title" = "No Documents";
+"empty.documents.message" = "Add files and photos to your project";
+
+/* Expenses */
+"expense.list.title" = "Expenses";
+"expense.list.add" = "Add Expense";
+"expense.list.add_category" = "Add Category";
+"expense.filter.all" = "All";
+"expense.filter.no_results" = "No expenses match this filter";
+"expense.summary.paid" = "Paid";
+"expense.summary.planned" = "Planned";
+"expense.detail.title" = "Expense";
+"expense.detail.details" = "Details";
+"expense.detail.date" = "Date";
+"expense.detail.category" = "Category";
+"expense.detail.currency" = "Currency";
+"expense.detail.notes" = "Notes";
+"expense.detail.info" = "Info";
+"expense.detail.created" = "Created";
+"expense.detail.updated" = "Updated";
+"expense.delete.title" = "Delete Expense";
+"expense.delete.message" = "This expense will be permanently deleted.";
+
+/* Expense Form */
+"expense.form.add_title" = "New Expense";
+"expense.form.edit_title" = "Edit Expense";
+"expense.form.section.amount" = "Amount";
+"expense.form.amount_placeholder" = "0.00";
+"expense.form.currency" = "Currency";
+"expense.form.section.vendor" = "Vendor";
+"expense.form.vendor_placeholder" = "Store or vendor name";
+"expense.form.section.status" = "Status";
+"expense.form.status" = "Status";
+"expense.form.section.category" = "Category";
+"expense.form.category" = "Category";
+"expense.form.no_category" = "No Category";
+"expense.form.section.date" = "Date";
+"expense.form.date" = "Date";
+"expense.form.section.notes" = "Notes";
+"expense.form.notes_placeholder" = "Additional notes...";
+"expense.form.error.amount_required" = "Please enter a valid amount";
+
+/* Expense Category Form */
+"expense.category.form.add_title" = "New Category";
+"expense.category.form.edit_title" = "Edit Category";
+"expense.category.form.section.name" = "Name";
+"expense.category.form.name_placeholder" = "Category name";
+"expense.category.form.section.color" = "Color";
+"expense.category.form.section.budget" = "Budget Limit";
+"expense.category.form.set_budget" = "Set Budget Limit";
+"expense.category.form.budget_placeholder" = "0.00";
+"expense.category.form.error.name_required" = "Category name is required";
+
+/* Reminders */
+"reminder.list.title" = "Reminders";
+"reminder.list.add" = "Add Reminder";
+"reminder.filter.all" = "All";
+"reminder.filter.pending" = "Pending";
+"reminder.filter.completed" = "Completed";
+"reminder.filter.overdue" = "Overdue";
+"reminder.filter.no_results" = "No reminders match this filter";
+"reminder.sort.due_date" = "Due Date";
+"reminder.sort.priority" = "Priority";
+"reminder.sort.created" = "Created";
+"reminder.summary.pending" = "%d pending";
+"reminder.summary.overdue" = "%d overdue";
+"reminder.status.completed" = "Completed";
+"reminder.status.pending" = "Pending";
+"reminder.action.mark_completed" = "Mark Completed";
+"reminder.action.mark_pending" = "Mark Pending";
+"reminder.detail.title" = "Reminder";
+"reminder.detail.details" = "Details";
+"reminder.detail.priority" = "Priority";
+"reminder.detail.due_date" = "Due Date";
+"reminder.detail.notes" = "Notes";
+"reminder.detail.info" = "Info";
+"reminder.detail.created" = "Created";
+"reminder.detail.updated" = "Updated";
+"reminder.delete.title" = "Delete Reminder";
+"reminder.delete.message" = "This reminder will be permanently deleted.";
+
+/* Reminder Form */
+"reminder.form.add_title" = "New Reminder";
+"reminder.form.edit_title" = "Edit Reminder";
+"reminder.form.section.title" = "Title";
+"reminder.form.section.priority" = "Priority";
+"reminder.form.section.due_date" = "Due Date";
+"reminder.form.section.notes" = "Notes";
+"reminder.form.title_placeholder" = "Reminder title";
+"reminder.form.priority" = "Priority";
+"reminder.form.set_due_date" = "Set Due Date";
+"reminder.form.due_date" = "Due Date";
+"reminder.form.notes_placeholder" = "Additional notes...";
+"reminder.form.error.title_required" = "Reminder title is required";
+
+/* Shared */
+"button.see_all" = "See All";
 
 /* Search */
 "search.placeholder" = "Search projects, tasks, ideas...";
+"search.prompt" = "Type at least 2 characters to search";
+"search.section.projects" = "Projects";
+"search.section.ideas" = "Ideas";
+"search.section.notes" = "Notes";
+"search.section.reminders" = "Reminders";
+"search.section.expenses" = "Expenses";
+"search.section.checklist_items" = "Checklist Items";
+
+/* Backup */
+"settings.section.backup" = "Backup & Restore";
+"backup.export" = "Export Data";
+"backup.import" = "Import Data";
+"backup.icloud.create" = "Backup to iCloud";
+"backup.icloud.manage" = "Manage iCloud Backups";
+"backup.icloud.title" = "iCloud Backups";
+"backup.icloud.empty.title" = "No Backups";
+"backup.icloud.empty.message" = "Create your first backup to get started";
+"backup.loading" = "Loading backups...";
+"backup.footer" = "Export your data as a JSON file or back up to iCloud. Import restores from a previously exported file.";
+"backup.delete.title" = "Delete Backup?";
+"backup.delete.message" = "Are you sure you want to delete the backup from";
+"backup.restore.title" = "Restore from Backup?";
+"backup.restore.message" = "This will replace all current data with the backup. This action cannot be undone.";
+"backup.restore.action" = "Restore";
+"backup.delete_all.title" = "Delete All Backups?";
+"backup.delete_all.message" = "Are you sure you want to delete all backups? This cannot be undone.";
+"backup.delete_all.action" = "Delete All Backups";
+"backup.error.title" = "Backup Error";
+"backup.error.invalid_json" = "The file is not a valid backup";
+"backup.error.missing_metadata" = "The backup file is missing required metadata";
+"backup.error.newer_schema" = "This backup was created with a newer version of the app";
+"backup.error.corrupted_data" = "The backup data appears to be corrupted";
+"backup.error.icloud_not_available" = "iCloud is not available. Please sign in to iCloud in Settings.";
+"backup.error.icloud_storage_full" = "iCloud storage is full";
+
+/* Developer Mode */
+"settings.section.developer" = "Developer";
+"settings.developer.mode" = "Developer Mode";
+"settings.developer.enabled" = "Enabled";
+"settings.developer.activated_title" = "Developer Mode Activated";
+"settings.developer.activated_message" = "Developer mode has been enabled. You can now access additional debugging tools and options.";
+"settings.developer.delete_all_data" = "Delete All Data";
+"settings.developer.delete_all_confirm_title" = "Delete All Data?";
+"settings.developer.delete_all_confirm_message" = "This will permanently delete all data. This action cannot be undone.";
+"settings.developer.delete_all_confirm_action" = "Delete All";
+"settings.developer.generate_random_data" = "Generate Random Data";
+"settings.developer.random_data_confirm_title" = "Generate Random Data?";
+"settings.developer.random_data_confirm_message" = "This will replace existing data for the selected project with random test data.";
+"settings.developer.random_data_confirm_action" = "Generate";
+"settings.developer.select_project" = "Select Project";
+"settings.developer.no_projects" = "No Projects";
+"settings.developer.no_projects_message" = "Create a project first, then generate random data for it.";
+"settings.developer.schema_version" = "Database Schema Version";
+"settings.developer.footer" = "These tools are for development and testing only.";
+"settings.developer.request_permission" = "Request Notification Permission";
+"settings.developer.send_notification" = "Send Test Notification";
+"settings.developer.schedule_notification" = "Schedule Notification (5s)";
+"settings.developer.view_settings_table" = "View user_settings Table";
+"settings.developer.no_settings" = "No settings found";
+"settings.developer.reset_migration" = "Reset Database Migrations";
+"settings.developer.reset_migration_title" = "Reset Migrations?";
+"settings.developer.reset_migration_confirm" = "Reset";
+"settings.developer.reset_migration_warning" = "This will clear all migration records. The app will re-run migrations on next launch. Use with caution.";
+
+/* Document Storage Browser */
+"developer.document_storage.button" = "Document Storage Browser";
+"developer.document_storage.title" = "Document Storage";
+"developer.document_storage.folders" = "Folders";
+"developer.document_storage.root_files" = "Root Files";
+"developer.document_storage.no_files" = "No files";
+"developer.document_storage.stats.title" = "Storage";
+"developer.document_storage.stats.files_folders" = "%d files in %d folders";
+"developer.document_storage.stats.files" = "files";
+"developer.document_storage.file_info" = "File Info";
+"developer.document_storage.type" = "Type";
+"developer.document_storage.size" = "Size";
+"developer.document_storage.created" = "Created";
+"developer.document_storage.modified" = "Modified";
+"developer.document_storage.path" = "Path";
+"developer.document_storage.quick_look" = "Quick Look";
+"developer.document_storage.share" = "Share";
+"developer.document_storage.delete" = "Delete";
+"developer.document_storage.delete_confirm.title" = "Delete File?";
+"developer.document_storage.delete_confirm.message" = "This file will be permanently deleted. This action cannot be undone.";
+
+/* Launch Screen Preview */
+"developer.launch_screen.button" = "View Launch Screen";
+
+/* Share Extension */
+"share.title" = "Save to CreativityHub";
+"share.section.content" = "Shared Content";
+"share.section.project" = "Project";
+"share.section.type" = "Save As";
+"share.section.details" = "Details";
+"share.field.project" = "Project";
+"share.field.type" = "Type";
+"share.field.name" = "Name";
+"share.field.note_text" = "Text";
+"share.field.note_description" = "Description";
+"share.placeholder.select_project" = "Select a project";
+"share.placeholder.select_type" = "Select type";
+"share.placeholder.name" = "Enter name";
+"share.placeholder.note_description" = "Enter description";
+"share.optional" = "Optional";
+"share.type.idea" = "Idea";
+"share.type.document" = "Document";
+"share.type.note" = "Note";
+"share.kind.link" = "Link";
+"share.kind.text" = "Text";
+"share.kind.image" = "Image";
+"share.error.save_failed" = "Failed to save. Please try again.";
+"share.error.cancelled" = "User cancelled.";
+"share.error.unsupported" = "This content type is not supported.";
+"share.error.no_projects" = "No Projects Found";
+"share.error.no_projects_hint" = "Create a project in CreativityHub first, then share content here.";
+
+// MARK: - Project Content
+"tab.projects_list" = "Projects List";
+"project.selector.select_project" = "Select a project";
+"project.selector.create_new" = "Create New Project";
+"project.content.title" = "Project";
+"project.content.empty.title" = "No Projects Yet";
+"project.content.empty.subtitle" = "Create your first project to get started";
+"project.content.empty.add_button" = "Create Project";

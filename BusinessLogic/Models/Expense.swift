@@ -37,7 +37,7 @@ enum ExpenseStatus: String, Codable, CaseIterable, Identifiable {
 
 // MARK: - Expense
 
-struct Expense: Codable, Identifiable, Equatable {
+struct Expense: Codable, Identifiable, Equatable, Hashable {
     let id: UUID
     let projectId: UUID
     var categoryId: UUID?

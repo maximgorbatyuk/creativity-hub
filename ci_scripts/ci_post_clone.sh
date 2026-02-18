@@ -30,7 +30,6 @@ if [ -z "$FIREBASE_API_KEY" ] || [ -z "$FIREBASE_GCM_SENDER_ID" ] || [ -z "$FIRE
 fi
 
 # Define the path where the plist should be created
-# TODO: Update BUNDLE_ID, PROJECT_ID, STORAGE_BUCKET with your Firebase project values
 PLIST_PATH="$CI_PRIMARY_REPOSITORY_PATH/CreativityHub/GoogleService-Info.plist"
 
 # Create the GoogleService-Info.plist file

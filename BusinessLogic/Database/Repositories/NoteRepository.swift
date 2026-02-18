@@ -25,6 +25,28 @@ class NoteRepository {
         )
     }
 
+    func fetchAll() -> [Note] {
+        var notes: [Note] = []
+        do {
+            for row in try db.prepare(table.order(updatedAtColumn.desc)) {
+                if let note = mapRow(row) {
+                    notes.append(note)
+                }
+            }
+        } catch {
+            logger.error("Failed to fetch all notes: \(error)")
+        }
+        return notes
+    }
+
+    func deleteAll() {
+        do {
+            try db.run(table.delete())
+        } catch {
+            logger.error("Failed to delete all notes: \(error)")
+        }
+    }
+
     func fetchByProjectId(projectId: UUID) -> [Note] {
         var notes: [Note] = []
         do {
@@ -111,6 +133,21 @@ class NoteRepository {
             return true
         } catch {
             logger.error("Failed to delete notes for project: \(error)")
+            return false
+        }
+    }
+
+    func togglePin(id: UUID, isPinned: Bool) -> Bool {
+        let record = table.filter(idColumn == id.uuidString)
+        do {
+            try db.run(record.update(
+                isPinnedColumn <- isPinned,
+                updatedAtColumn <- Date()
+            ))
+            logger.info("Toggled pin for note \(id): \(isPinned)")
+            return true
+        } catch {
+            logger.error("Failed to toggle pin for note \(id): \(error)")
             return false
         }
     }

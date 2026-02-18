@@ -29,6 +29,28 @@ class ChecklistItemRepository {
         )
     }
 
+    func fetchAll() -> [ChecklistItem] {
+        var items: [ChecklistItem] = []
+        do {
+            for row in try db.prepare(table.order(createdAtColumn.desc)) {
+                if let item = mapRow(row) {
+                    items.append(item)
+                }
+            }
+        } catch {
+            logger.error("Failed to fetch all checklist items: \(error)")
+        }
+        return items
+    }
+
+    func deleteAll() {
+        do {
+            try db.run(table.delete())
+        } catch {
+            logger.error("Failed to delete all checklist items: \(error)")
+        }
+    }
+
     func fetchByChecklistId(checklistId: UUID) -> [ChecklistItem] {
         var items: [ChecklistItem] = []
         do {
@@ -161,6 +183,37 @@ class ChecklistItemRepository {
             logger.error("Failed to delete items for checklist: \(error)")
             return false
         }
+    }
+
+    func updateSortOrders(_ items: [ChecklistItem]) -> Bool {
+        do {
+            try db.transaction {
+                for item in items {
+                    let record = table.filter(idColumn == item.id.uuidString)
+                    try db.run(record.update(
+                        sortOrderColumn <- item.sortOrder,
+                        updatedAtColumn <- Date()
+                    ))
+                }
+            }
+            logger.info("Updated sort orders for \(items.count) checklist items")
+            return true
+        } catch {
+            logger.error("Failed to update item sort orders: \(error)")
+            return false
+        }
+    }
+
+    func nextSortOrder(checklistId: UUID) -> Int {
+        do {
+            let maxOrder = try db.scalar(
+                table.filter(checklistIdColumn == checklistId.uuidString).select(sortOrderColumn.max)
+            )
+            return (maxOrder ?? 0) + 1
+        } catch {
+            logger.error("Failed to get next sort order: \(error)")
+        }
+        return 0
     }
 
     func countByChecklistId(checklistId: UUID) -> Int {

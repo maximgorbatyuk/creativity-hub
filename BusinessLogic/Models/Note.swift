@@ -1,6 +1,6 @@
 import Foundation
 
-struct Note: Codable, Identifiable, Equatable {
+struct Note: Codable, Identifiable, Equatable, Hashable {
     let id: UUID
     let projectId: UUID
     var title: String

@@ -27,6 +27,28 @@ class IdeaRepository {
         )
     }
 
+    func fetchAll() -> [Idea] {
+        var ideas: [Idea] = []
+        do {
+            for row in try db.prepare(table.order(createdAtColumn.desc)) {
+                if let idea = mapRow(row) {
+                    ideas.append(idea)
+                }
+            }
+        } catch {
+            logger.error("Failed to fetch all ideas: \(error)")
+        }
+        return ideas
+    }
+
+    func deleteAll() {
+        do {
+            try db.run(table.delete())
+        } catch {
+            logger.error("Failed to delete all ideas: \(error)")
+        }
+    }
+
     func fetchByProjectId(projectId: UUID) -> [Idea] {
         var ideas: [Idea] = []
         do {

@@ -23,6 +23,28 @@ class ChecklistRepository {
         )
     }
 
+    func fetchAll() -> [Checklist] {
+        var checklists: [Checklist] = []
+        do {
+            for row in try db.prepare(table.order(createdAtColumn.desc)) {
+                if let checklist = mapRow(row) {
+                    checklists.append(checklist)
+                }
+            }
+        } catch {
+            logger.error("Failed to fetch all checklists: \(error)")
+        }
+        return checklists
+    }
+
+    func deleteAll() {
+        do {
+            try db.run(table.delete())
+        } catch {
+            logger.error("Failed to delete all checklists: \(error)")
+        }
+    }
+
     func fetchByProjectId(projectId: UUID) -> [Checklist] {
         var checklists: [Checklist] = []
         do {
@@ -107,6 +129,37 @@ class ChecklistRepository {
             logger.error("Failed to delete checklists for project: \(error)")
             return false
         }
+    }
+
+    func updateSortOrders(_ checklists: [Checklist]) -> Bool {
+        do {
+            try db.transaction {
+                for checklist in checklists {
+                    let record = table.filter(idColumn == checklist.id.uuidString)
+                    try db.run(record.update(
+                        sortOrderColumn <- checklist.sortOrder,
+                        updatedAtColumn <- Date()
+                    ))
+                }
+            }
+            logger.info("Updated sort orders for \(checklists.count) checklists")
+            return true
+        } catch {
+            logger.error("Failed to update checklist sort orders: \(error)")
+            return false
+        }
+    }
+
+    func nextSortOrder(projectId: UUID) -> Int {
+        do {
+            let maxOrder = try db.scalar(
+                table.filter(projectIdColumn == projectId.uuidString).select(sortOrderColumn.max)
+            )
+            return (maxOrder ?? 0) + 1
+        } catch {
+            logger.error("Failed to get next sort order: \(error)")
+        }
+        return 0
     }
 
     func countByProjectId(projectId: UUID) -> Int {

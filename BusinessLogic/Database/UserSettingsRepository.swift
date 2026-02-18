@@ -110,6 +110,19 @@ class UserSettingsRepository {
         upsertValue(key: UserSettingKey.colorScheme.rawValue, value: scheme.rawValue)
     }
 
+    // MARK: - Fetch All
+
+    func fetchAll() -> [(id: Int64, key: String, value: String)] {
+        do {
+            return try db.prepare(table).map { row in
+                (id: row[idColumn], key: row[keyColumn], value: row[valueColumn])
+            }
+        } catch {
+            logger.error("Failed to fetch all settings: \(error)")
+            return []
+        }
+    }
+
     // MARK: - User ID
 
     func fetchOrGenerateUserId() -> String {

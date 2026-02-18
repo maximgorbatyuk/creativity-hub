@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-struct ExpenseCategory: Codable, Identifiable, Equatable {
+struct ExpenseCategory: Codable, Identifiable, Equatable, Hashable {
     let id: UUID
     let projectId: UUID
     var name: String

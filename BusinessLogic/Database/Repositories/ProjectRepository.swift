@@ -31,6 +31,14 @@ class ProjectRepository {
         )
     }
 
+    func deleteAll() {
+        do {
+            try db.run(table.delete())
+        } catch {
+            logger.error("Failed to delete all projects: \(error)")
+        }
+    }
+
     func fetchAll() -> [Project] {
         var projects: [Project] = []
         do {
@@ -162,6 +170,45 @@ class ProjectRepository {
             logger.error("Failed to search projects: \(error)")
         }
         return projects
+    }
+
+    func togglePin(id: UUID, isPinned: Bool) -> Bool {
+        let record = table.filter(idColumn == id.uuidString)
+        do {
+            try db.run(record.update(
+                isPinnedColumn <- isPinned,
+                updatedAtColumn <- Date()
+            ))
+            logger.info("Toggled pin for project \(id): \(isPinned)")
+            return true
+        } catch {
+            logger.error("Failed to toggle pin for project \(id): \(error)")
+            return false
+        }
+    }
+
+    func updateStatus(id: UUID, status: ProjectStatus) -> Bool {
+        let record = table.filter(idColumn == id.uuidString)
+        do {
+            try db.run(record.update(
+                statusColumn <- status.rawValue,
+                updatedAtColumn <- Date()
+            ))
+            logger.info("Updated status for project \(id): \(status.rawValue)")
+            return true
+        } catch {
+            logger.error("Failed to update status for project \(id): \(error)")
+            return false
+        }
+    }
+
+    func touchUpdatedAt(id: UUID) {
+        let record = table.filter(idColumn == id.uuidString)
+        do {
+            try db.run(record.update(updatedAtColumn <- Date()))
+        } catch {
+            logger.error("Failed to touch updatedAt for project \(id): \(error)")
+        }
     }
 
     // MARK: - Row Mapping

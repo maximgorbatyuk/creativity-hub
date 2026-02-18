@@ -37,7 +37,7 @@ enum ProjectStatus: String, Codable, CaseIterable, Identifiable {
 
 // MARK: - Project
 
-struct Project: Codable, Identifiable, Equatable {
+struct Project: Codable, Identifiable, Equatable, Hashable {
     let id: UUID
     var name: String
     var projectDescription: String?
