@@ -39,7 +39,6 @@ if [ -z "$FIREBASE_API_KEY" ] || [ -z "$FIREBASE_GCM_SENDER_ID" ] || [ -z "$FIRE
 fi
 
 # Generate the plist
-# TODO: Update BUNDLE_ID, PROJECT_ID, STORAGE_BUCKET with your Firebase project values
 PLIST_PATH="./CreativityHub/GoogleService-Info.plist"
 
 cat > "$PLIST_PATH" << EOF

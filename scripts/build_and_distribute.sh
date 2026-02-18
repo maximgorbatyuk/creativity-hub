@@ -41,7 +41,6 @@ echo ""
 # ============================================================================
 echo "🔧 Step 2: Generating GoogleService-Info.plist..."
 
-# TODO: Update BUNDLE_ID, PROJECT_ID, STORAGE_BUCKET with your Firebase project values
 PLIST_PATH="./CreativityHub/GoogleService-Info.plist"
 
 cat > "$PLIST_PATH" << EOF
