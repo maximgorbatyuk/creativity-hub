@@ -314,9 +314,19 @@ struct DocumentPickerView: View {
 
         let pending = pendingDocuments[currentPendingIndex]
         let viewModel = DocumentsListViewModel(projectId: projectId)
-        _ = viewModel.addDocument(from: pending.tempURL, name: name)
+        let wasSaved = viewModel.addDocument(from: pending.tempURL, name: name)
 
         try? FileManager.default.removeItem(at: pending.tempURL)
+
+        guard wasSaved else {
+            analytics.trackEvent("documents_import_failed", properties: ["index": currentPendingIndex])
+            pendingDocuments = []
+            currentPendingIndex = 0
+            errorMessage = L("document.error.import_failed")
+            showError = true
+            onComplete(false)
+            return
+        }
 
         currentPendingIndex += 1
 

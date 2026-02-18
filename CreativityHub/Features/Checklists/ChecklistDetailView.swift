@@ -123,9 +123,16 @@ struct ChecklistDetailView: View {
                     .tint(.orange)
                 }
             }
-            .onMove(perform: viewModel.moveItem)
+            .onMove(perform: moveHandler)
         }
         .listStyle(.plain)
+    }
+
+    private var moveHandler: ((IndexSet, Int) -> Void)? {
+        guard viewModel.selectedFilter == .all else { return nil }
+        return { source, destination in
+            viewModel.moveItem(from: source, to: destination)
+        }
     }
 
     // MARK: - Empty State

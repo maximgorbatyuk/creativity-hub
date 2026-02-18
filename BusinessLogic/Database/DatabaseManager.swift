@@ -49,6 +49,63 @@ class DatabaseManager {
         logger.info("All data deleted from database")
     }
 
+    func deleteProjectCascade(projectId: UUID) -> Bool {
+        var isSuccess = true
+
+        if let remindersDeleted = reminderRepository?.deleteByProjectId(projectId: projectId) {
+            isSuccess = remindersDeleted && isSuccess
+        }
+
+        if let notesDeleted = noteRepository?.deleteByProjectId(projectId: projectId) {
+            isSuccess = notesDeleted && isSuccess
+        }
+
+        if let expensesDeleted = expenseRepository?.deleteByProjectId(projectId: projectId) {
+            isSuccess = expensesDeleted && isSuccess
+        }
+
+        if let categoriesDeleted = expenseCategoryRepository?.deleteByProjectId(projectId: projectId) {
+            isSuccess = categoriesDeleted && isSuccess
+        }
+
+        if let documentsDeleted = documentRepository?.deleteByProjectId(projectId: projectId) {
+            isSuccess = documentsDeleted && isSuccess
+        }
+
+        let checklists = checklistRepository?.fetchByProjectId(projectId: projectId) ?? []
+        for checklist in checklists {
+            if let itemsDeleted = checklistItemRepository?.deleteByChecklistId(checklistId: checklist.id) {
+                isSuccess = itemsDeleted && isSuccess
+            }
+        }
+
+        if let checklistsDeleted = checklistRepository?.deleteByProjectId(projectId: projectId) {
+            isSuccess = checklistsDeleted && isSuccess
+        }
+
+        let ideas = ideaRepository?.fetchByProjectId(projectId: projectId) ?? []
+        for idea in ideas {
+            if let linksDeleted = tagRepository?.deleteLinksForIdea(ideaId: idea.id) {
+                isSuccess = linksDeleted && isSuccess
+            }
+        }
+
+        if let ideasDeleted = ideaRepository?.deleteByProjectId(projectId: projectId) {
+            isSuccess = ideasDeleted && isSuccess
+        }
+
+        let projectDeleted = projectRepository?.delete(id: projectId) ?? false
+        isSuccess = projectDeleted && isSuccess
+
+        if isSuccess {
+            logger.info("Deleted project and related data: \(projectId)")
+        } else {
+            logger.error("Failed to fully delete project and related data: \(projectId)")
+        }
+
+        return isSuccess
+    }
+
     private func setupDatabase() {
         do {
             let dbURL = AppGroupContainer.databaseURL

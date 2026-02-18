@@ -23,6 +23,7 @@ final class ProjectDetailViewModel {
 
     // MARK: - Private
 
+    private let databaseManager: DatabaseManager
     private let projectRepository: ProjectRepository?
     private let checklistRepository: ChecklistRepository?
     private let checklistItemRepository: ChecklistItemRepository?
@@ -37,6 +38,7 @@ final class ProjectDetailViewModel {
 
     init(project: Project, databaseManager: DatabaseManager = .shared) {
         self.project = project
+        self.databaseManager = databaseManager
         self.projectRepository = databaseManager.projectRepository
         self.checklistRepository = databaseManager.checklistRepository
         self.checklistItemRepository = databaseManager.checklistItemRepository
@@ -70,7 +72,7 @@ final class ProjectDetailViewModel {
     }
 
     func deleteProject() -> Bool {
-        guard projectRepository?.delete(id: project.id) == true else {
+        guard databaseManager.deleteProjectCascade(projectId: project.id) else {
             logger.error("Failed to delete project \(self.project.id)")
             return false
         }

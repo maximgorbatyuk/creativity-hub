@@ -166,8 +166,13 @@ class ReminderRepository {
 
     func fetchUpcoming(limit: Int = 10) -> [Reminder] {
         var reminders: [Reminder] = []
+        let now = Date()
         do {
-            let query = table.filter(isCompletedColumn == false)
+            let query = table.filter(
+                isCompletedColumn == false &&
+                dueDateColumn != nil &&
+                dueDateColumn >= now
+            )
                 .order(dueDateColumn.asc, createdAtColumn.desc)
                 .limit(limit)
             for row in try db.prepare(query) {

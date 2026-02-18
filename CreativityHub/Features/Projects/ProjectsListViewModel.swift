@@ -33,12 +33,14 @@ final class ProjectsListViewModel {
 
     // MARK: - Private
 
+    private let databaseManager: DatabaseManager
     private let projectRepository: ProjectRepository?
     private let logger: Logger
 
     // MARK: - Init
 
     init(databaseManager: DatabaseManager = .shared) {
+        self.databaseManager = databaseManager
         self.projectRepository = databaseManager.projectRepository
         self.logger = Logger(
             subsystem: Bundle.main.bundleIdentifier ?? "-",
@@ -87,7 +89,7 @@ final class ProjectsListViewModel {
     }
 
     func deleteProject(_ project: Project) {
-        guard projectRepository?.delete(id: project.id) == true else {
+        guard databaseManager.deleteProjectCascade(projectId: project.id) else {
             logger.error("Failed to delete project \(project.id)")
             return
         }

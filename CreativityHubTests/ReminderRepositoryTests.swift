@@ -95,4 +95,35 @@ struct ReminderRepositoryTests {
         let fetched = helper.reminderRepository.fetchByProjectId(projectId: project.id)
         #expect(fetched.first?.dueDate != nil)
     }
+
+    @Test func fetchUpcoming_excludesOverdueAndNoDueDate() throws {
+        let (helper, project) = try setupWithProject()
+
+        let overdue = createTestReminder(
+            projectId: project.id,
+            title: "Overdue",
+            dueDate: Calendar.current.date(byAdding: .day, value: -1, to: Date())
+        )
+
+        let upcoming = createTestReminder(
+            projectId: project.id,
+            title: "Upcoming",
+            dueDate: Calendar.current.date(byAdding: .day, value: 2, to: Date())
+        )
+
+        let noDueDate = createTestReminder(
+            projectId: project.id,
+            title: "No Due Date",
+            dueDate: nil
+        )
+
+        _ = helper.reminderRepository.insert(overdue)
+        _ = helper.reminderRepository.insert(upcoming)
+        _ = helper.reminderRepository.insert(noDueDate)
+
+        let upcomingItems = helper.reminderRepository.fetchUpcoming(limit: 10)
+
+        #expect(upcomingItems.count == 1)
+        #expect(upcomingItems.first?.title == "Upcoming")
+    }
 }

@@ -122,7 +122,12 @@ final class ChecklistDetailViewModel {
     }
 
     func moveItem(from source: IndexSet, to destination: Int) {
-        var updated = filteredItems
+        guard selectedFilter == .all else {
+            logger.warning("Attempted to reorder checklist items with active filter")
+            return
+        }
+
+        var updated = items
         updated.move(fromOffsets: source, toOffset: destination)
         for (index, _) in updated.enumerated() {
             updated[index].sortOrder = index
