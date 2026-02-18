@@ -17,7 +17,8 @@ The app is named **CreativityHub** (one word, capital C and H). All identifiers 
 
 | Target | Environment | Bundle ID |
 |--------|-------------|-----------|
-| Main app | Both | `dev.mgorbatyuk.CreativityHub` |
+| Main app | Release | `dev.mgorbatyuk.CreativityHub` |
+| Main app | Debug | `dev.mgorbatyuk.CreativityHub.dev` |
 | ShareExtension | Release | `dev.mgorbatyuk.CreativityHub.ShareExtension` |
 | ShareExtension | Debug | `dev.mgorbatyuk.CreativityHub.dev.ShareExtension` |
 
