@@ -87,6 +87,28 @@ Languages: English (`en`), Russian (`ru`), Kazakh (`kk`)
 
 All user-facing strings use the global `L()` function which reads from `*.lproj/Localizable.strings` bundles via `LocalizationManager`.
 
+## Scripts
+
+```bash
+# Development setup (installs SwiftLint, SwiftFormat, xcbeautify, creates .env)
+./scripts/setup.sh
+
+# Code quality
+./scripts/run_format.sh           # Format code with SwiftFormat
+./scripts/run_lint.sh             # Lint code with SwiftLint (strict mode)
+./scripts/run_all_checks.sh       # Run format + lint + tests
+./scripts/detect_unused_code.sh   # Detect unused code with Periphery
+
+# Testing
+./run_tests.sh                    # Run tests on iPhone 17 Pro Max simulator with coverage
+
+# Firebase & CI/CD
+./scripts/generate_firebase_plist.sh   # Generate GoogleService-Info.plist from scripts/.env
+./scripts/build_and_distribute.sh      # Build locally + push to trigger Xcode Cloud
+```
+
+Xcode Cloud runs `ci_scripts/ci_post_clone.sh` automatically to generate `GoogleService-Info.plist` from secrets (`FIREBASE_API_KEY`, `FIREBASE_GCM_SENDER_ID`, `FIREBASE_APP_ID`).
+
 ## Key Patterns
 
 - **MVVM**: ViewModels use `@Observable`; `LocalizationManager` uses `ObservableObject` (required by `@EnvironmentObject`)
