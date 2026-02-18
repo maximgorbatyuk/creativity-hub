@@ -30,6 +30,28 @@ class ExpenseRepository {
         )
     }
 
+    func fetchAll() -> [Expense] {
+        var expenses: [Expense] = []
+        do {
+            for row in try db.prepare(table.order(dateColumn.desc)) {
+                if let expense = mapRow(row) {
+                    expenses.append(expense)
+                }
+            }
+        } catch {
+            logger.error("Failed to fetch all expenses: \(error)")
+        }
+        return expenses
+    }
+
+    func deleteAll() {
+        do {
+            try db.run(table.delete())
+        } catch {
+            logger.error("Failed to delete all expenses: \(error)")
+        }
+    }
+
     func fetchByProjectId(projectId: UUID) -> [Expense] {
         var expenses: [Expense] = []
         do {

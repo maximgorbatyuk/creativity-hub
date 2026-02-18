@@ -44,6 +44,8 @@ enum EmptyStateType {
     case ideas
     case expenses
     case notes
+    case documents
+    case reminders
     case searchResults
 
     var icon: String {
@@ -54,6 +56,8 @@ enum EmptyStateType {
         case .ideas: return "lightbulb"
         case .expenses: return "creditcard"
         case .notes: return "note.text"
+        case .documents: return "doc.fill"
+        case .reminders: return "bell.fill"
         case .searchResults: return "magnifyingglass"
         }
     }
@@ -66,6 +70,8 @@ enum EmptyStateType {
         case .ideas: return L("empty.ideas.title")
         case .expenses: return L("empty.expenses.title")
         case .notes: return L("empty.notes.title")
+        case .documents: return L("empty.documents.title")
+        case .reminders: return L("empty.reminders.title")
         case .searchResults: return L("empty.search.title")
         }
     }
@@ -78,6 +84,8 @@ enum EmptyStateType {
         case .ideas: return L("empty.ideas.message")
         case .expenses: return L("empty.expenses.message")
         case .notes: return L("empty.notes.message")
+        case .documents: return L("empty.documents.message")
+        case .reminders: return L("empty.reminders.message")
         case .searchResults: return L("empty.search.message")
         }
     }

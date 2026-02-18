@@ -23,6 +23,28 @@ class ChecklistRepository {
         )
     }
 
+    func fetchAll() -> [Checklist] {
+        var checklists: [Checklist] = []
+        do {
+            for row in try db.prepare(table.order(createdAtColumn.desc)) {
+                if let checklist = mapRow(row) {
+                    checklists.append(checklist)
+                }
+            }
+        } catch {
+            logger.error("Failed to fetch all checklists: \(error)")
+        }
+        return checklists
+    }
+
+    func deleteAll() {
+        do {
+            try db.run(table.delete())
+        } catch {
+            logger.error("Failed to delete all checklists: \(error)")
+        }
+    }
+
     func fetchByProjectId(projectId: UUID) -> [Checklist] {
         var checklists: [Checklist] = []
         do {

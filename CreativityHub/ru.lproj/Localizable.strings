@@ -62,6 +62,8 @@
 "empty.expenses.message" = "Отслеживайте расходы по проекту здесь";
 "empty.notes.title" = "Нет заметок";
 "empty.notes.message" = "Записывайте мысли и детали";
+"empty.reminders.title" = "Нет напоминаний";
+"empty.reminders.message" = "Создайте напоминания, чтобы ничего не забыть";
 "empty.search.title" = "Ничего не найдено";
 "empty.search.message" = "Попробуйте другой запрос";
 
@@ -110,6 +112,11 @@
 
 /* Today */
 "today.create_project" = "Создать проект";
+"today.overdue" = "Просрочено";
+"today.upcoming_reminders" = "Предстоящие напоминания";
+"today.active_projects" = "%d активных проектов";
+"today.empty.title" = "Всё чисто";
+"today.empty.message" = "Нет активных проектов или предстоящих напоминаний. Создайте проект, чтобы начать!";
 
 /* Projects */
 "projects.new" = "Новый проект";
@@ -151,7 +158,39 @@
 "project.section.checklists" = "Чеклисты";
 "project.section.ideas" = "Идеи";
 "project.section.notes" = "Заметки";
+"project.section.documents" = "Документы";
 "project.section.expenses" = "Расходы";
+"project.section.reminders" = "Напоминания";
+
+/* Ideas */
+"idea.list.title" = "Идеи";
+"idea.list.add" = "Добавить идею";
+"idea.filter.all" = "Все";
+"idea.filter.no_results" = "Нет идей для этого фильтра";
+"idea.detail.title" = "Идея";
+"idea.detail.link" = "Ссылка";
+"idea.detail.notes" = "Заметки";
+"idea.detail.tags" = "Теги";
+"idea.detail.no_tags" = "Теги не добавлены";
+"idea.action.open_url" = "Открыть в браузере";
+"idea.delete.title" = "Удалить идею";
+"idea.delete.message" = "Эта идея будет удалена навсегда.";
+"idea.tags.existing" = "Доступные теги";
+"idea.tags.add_title" = "Добавить теги";
+
+/* Idea Form */
+"idea.form.add_title" = "Новая идея";
+"idea.form.edit_title" = "Редактировать идею";
+"idea.form.section.basic" = "Заголовок";
+"idea.form.section.url" = "Ссылка";
+"idea.form.section.source" = "Источник";
+"idea.form.section.notes" = "Заметки";
+"idea.form.title" = "Название идеи";
+"idea.form.url_placeholder" = "https://...";
+"idea.form.detected_source" = "Определено: %@";
+"idea.form.source_type" = "Тип источника";
+"idea.form.notes_placeholder" = "Опишите вашу идею...";
+"idea.form.error.title_required" = "Название идеи обязательно";
 
 /* Checklists */
 "checklist.list.title" = "Чеклисты";
@@ -187,11 +226,220 @@
 "checklist_item.form.notes_placeholder" = "Дополнительные заметки";
 "checklist_item.form.error.name_required" = "Название пункта обязательно";
 
+/* Notes */
+"note.list.title" = "Заметки";
+"note.list.add" = "Добавить заметку";
+"note.list.sort_by" = "Сортировка";
+"note.sort.updated" = "Обновление";
+"note.sort.title" = "Название";
+"note.sort.created" = "Создание";
+"note.action.pin" = "Закрепить";
+"note.action.unpin" = "Открепить";
+"note.delete.title" = "Удалить заметку";
+"note.delete.message" = "Эта заметка будет удалена навсегда.";
+"note.detail.title" = "Заметка";
+"note.detail.content" = "Содержание";
+"note.detail.info" = "Информация";
+"note.detail.created" = "Создано";
+"note.detail.updated" = "Обновлено";
+
+/* Note Form */
+"note.form.add_title" = "Новая заметка";
+"note.form.edit_title" = "Редактировать заметку";
+"note.form.section.title" = "Заголовок";
+"note.form.section.content" = "Содержание";
+"note.form.title_placeholder" = "Название заметки";
+"note.form.content_placeholder" = "Напишите заметку...";
+"note.form.error.title_required" = "Название заметки обязательно";
+
+/* Documents */
+"document.list.title" = "Документы";
+"document.list.add" = "Добавить документ";
+"document.filter.all" = "Все";
+"document.filter.pdf" = "PDF";
+"document.filter.images" = "Изображения";
+"document.filter.no_results" = "Нет документов для этого фильтра";
+"document.summary.files_count" = "%d файлов";
+"document.type.other" = "Другое";
+"document.delete.title" = "Удалить документ";
+"document.delete.message" = "Этот документ будет удалён навсегда.";
+"document.action.share" = "Поделиться";
+"document.action.rename" = "Переименовать";
+"document.action.open_in" = "Открыть в...";
+"document.rename.title" = "Переименовать документ";
+"document.rename.placeholder" = "Название документа";
+"document.rename.message" = "Введите название для этого документа";
+"document.preview.unsupported" = "Предпросмотр недоступен";
+"document.preview.image_error" = "Не удалось загрузить изображение";
+"document.error.import_failed" = "Не удалось импортировать документы";
+
+/* Document Import */
+"document.import.title" = "Импорт документа";
+"document.import.section.source" = "Выберите источник";
+"document.import.files" = "Файлы";
+"document.import.files.description" = "Импорт из приложения Файлы";
+"document.import.photos" = "Фотоальбом";
+"document.import.photos.description" = "Выбрать из фотографий";
+"document.import.camera" = "Камера";
+"document.import.camera.description" = "Сделать новое фото";
+"document.import.supported_formats" = "Поддерживаемые форматы: PDF, JPEG, PNG, HEIC";
+"document.import.processing" = "Обработка...";
+
+/* Empty States - Documents */
+"empty.documents.title" = "Нет документов";
+"empty.documents.message" = "Добавьте файлы и фотографии в проект";
+
+/* Expenses */
+"expense.list.title" = "Расходы";
+"expense.list.add" = "Добавить расход";
+"expense.list.add_category" = "Добавить категорию";
+"expense.filter.all" = "Все";
+"expense.filter.no_results" = "Нет расходов для этого фильтра";
+"expense.summary.paid" = "Оплачено";
+"expense.summary.planned" = "Запланировано";
+"expense.detail.title" = "Расход";
+"expense.detail.details" = "Детали";
+"expense.detail.date" = "Дата";
+"expense.detail.category" = "Категория";
+"expense.detail.currency" = "Валюта";
+"expense.detail.notes" = "Заметки";
+"expense.detail.info" = "Информация";
+"expense.detail.created" = "Создано";
+"expense.detail.updated" = "Обновлено";
+"expense.delete.title" = "Удалить расход";
+"expense.delete.message" = "Этот расход будет удалён навсегда.";
+
+/* Expense Form */
+"expense.form.add_title" = "Новый расход";
+"expense.form.edit_title" = "Редактировать расход";
+"expense.form.section.amount" = "Сумма";
+"expense.form.amount_placeholder" = "0.00";
+"expense.form.currency" = "Валюта";
+"expense.form.section.vendor" = "Продавец";
+"expense.form.vendor_placeholder" = "Название магазина или продавца";
+"expense.form.section.status" = "Статус";
+"expense.form.status" = "Статус";
+"expense.form.section.category" = "Категория";
+"expense.form.category" = "Категория";
+"expense.form.no_category" = "Без категории";
+"expense.form.section.date" = "Дата";
+"expense.form.date" = "Дата";
+"expense.form.section.notes" = "Заметки";
+"expense.form.notes_placeholder" = "Дополнительные заметки...";
+"expense.form.error.amount_required" = "Введите корректную сумму";
+
+/* Expense Category Form */
+"expense.category.form.add_title" = "Новая категория";
+"expense.category.form.edit_title" = "Редактировать категорию";
+"expense.category.form.section.name" = "Название";
+"expense.category.form.name_placeholder" = "Название категории";
+"expense.category.form.section.color" = "Цвет";
+"expense.category.form.section.budget" = "Лимит бюджета";
+"expense.category.form.set_budget" = "Установить лимит бюджета";
+"expense.category.form.budget_placeholder" = "0.00";
+"expense.category.form.error.name_required" = "Название категории обязательно";
+
+/* Reminders */
+"reminder.list.title" = "Напоминания";
+"reminder.list.add" = "Добавить напоминание";
+"reminder.filter.all" = "Все";
+"reminder.filter.pending" = "Активные";
+"reminder.filter.completed" = "Выполненные";
+"reminder.filter.overdue" = "Просроченные";
+"reminder.filter.no_results" = "Нет напоминаний для этого фильтра";
+"reminder.sort.due_date" = "Срок";
+"reminder.sort.priority" = "Приоритет";
+"reminder.sort.created" = "Создание";
+"reminder.summary.pending" = "%d активных";
+"reminder.summary.overdue" = "%d просроченных";
+"reminder.status.completed" = "Выполнено";
+"reminder.status.pending" = "Активно";
+"reminder.action.mark_completed" = "Отметить выполненным";
+"reminder.action.mark_pending" = "Отметить активным";
+"reminder.detail.title" = "Напоминание";
+"reminder.detail.details" = "Детали";
+"reminder.detail.priority" = "Приоритет";
+"reminder.detail.due_date" = "Срок";
+"reminder.detail.notes" = "Заметки";
+"reminder.detail.info" = "Информация";
+"reminder.detail.created" = "Создано";
+"reminder.detail.updated" = "Обновлено";
+"reminder.delete.title" = "Удалить напоминание";
+"reminder.delete.message" = "Это напоминание будет удалено навсегда.";
+
+/* Reminder Form */
+"reminder.form.add_title" = "Новое напоминание";
+"reminder.form.edit_title" = "Редактировать напоминание";
+"reminder.form.section.title" = "Заголовок";
+"reminder.form.section.priority" = "Приоритет";
+"reminder.form.section.due_date" = "Срок";
+"reminder.form.section.notes" = "Заметки";
+"reminder.form.title_placeholder" = "Название напоминания";
+"reminder.form.priority" = "Приоритет";
+"reminder.form.set_due_date" = "Установить срок";
+"reminder.form.due_date" = "Срок";
+"reminder.form.notes_placeholder" = "Дополнительные заметки...";
+"reminder.form.error.title_required" = "Название напоминания обязательно";
+
 /* Shared */
 "button.see_all" = "Все";
 
 /* Search */
 "search.placeholder" = "Поиск проектов, задач, идей...";
+"search.prompt" = "Введите минимум 2 символа для поиска";
+"search.section.projects" = "Проекты";
+"search.section.ideas" = "Идеи";
+"search.section.notes" = "Заметки";
+"search.section.reminders" = "Напоминания";
+"search.section.expenses" = "Расходы";
+"search.section.checklist_items" = "Элементы чеклистов";
+
+/* Backup */
+"settings.section.backup" = "Резервное копирование";
+"backup.export" = "Экспорт данных";
+"backup.import" = "Импорт данных";
+"backup.icloud.create" = "Копировать в iCloud";
+"backup.icloud.manage" = "Управление копиями iCloud";
+"backup.icloud.title" = "Копии iCloud";
+"backup.icloud.empty.title" = "Нет копий";
+"backup.icloud.empty.message" = "Создайте первую резервную копию для начала";
+"backup.loading" = "Загрузка копий...";
+"backup.footer" = "Экспортируйте данные в JSON-файл или сохраните в iCloud. Импорт восстанавливает данные из ранее экспортированного файла.";
+"backup.delete.title" = "Удалить копию?";
+"backup.delete.message" = "Вы уверены, что хотите удалить копию от";
+"backup.restore.title" = "Восстановить из копии?";
+"backup.restore.message" = "Все текущие данные будут заменены данными из копии. Это действие нельзя отменить.";
+"backup.restore.action" = "Восстановить";
+"backup.delete_all.title" = "Удалить все копии?";
+"backup.delete_all.message" = "Вы уверены, что хотите удалить все копии? Это действие нельзя отменить.";
+"backup.delete_all.action" = "Удалить все копии";
+"backup.error.title" = "Ошибка копирования";
+"backup.error.invalid_json" = "Файл не является корректной резервной копией";
+"backup.error.missing_metadata" = "В файле копии отсутствуют обязательные метаданные";
+"backup.error.newer_schema" = "Эта копия создана в более новой версии приложения";
+"backup.error.corrupted_data" = "Данные копии повреждены";
+"backup.error.icloud_not_available" = "iCloud недоступен. Войдите в iCloud в Настройках.";
+"backup.error.icloud_storage_full" = "Хранилище iCloud заполнено";
+
+/* Developer Mode */
+"settings.section.developer" = "Разработка";
+"settings.developer.mode" = "Режим разработчика";
+"settings.developer.enabled" = "Включён";
+"settings.developer.activated_title" = "Режим разработчика активирован";
+"settings.developer.activated_message" = "Режим разработчика включён. Теперь доступны дополнительные инструменты отладки.";
+"settings.developer.delete_all_data" = "Удалить все данные";
+"settings.developer.delete_all_confirm_title" = "Удалить все данные?";
+"settings.developer.delete_all_confirm_message" = "Все данные будут удалены навсегда. Это действие нельзя отменить.";
+"settings.developer.delete_all_confirm_action" = "Удалить всё";
+"settings.developer.generate_random_data" = "Сгенерировать тестовые данные";
+"settings.developer.random_data_confirm_title" = "Сгенерировать тестовые данные?";
+"settings.developer.random_data_confirm_message" = "Существующие данные выбранного проекта будут заменены случайными тестовыми данными.";
+"settings.developer.random_data_confirm_action" = "Сгенерировать";
+"settings.developer.select_project" = "Выберите проект";
+"settings.developer.no_projects" = "Нет проектов";
+"settings.developer.no_projects_message" = "Сначала создайте проект, затем генерируйте для него тестовые данные.";
+"settings.developer.schema_version" = "Версия схемы БД";
+"settings.developer.footer" = "Эти инструменты предназначены только для разработки и тестирования.";
 
 /* Share Extension */
 "share.title" = "Сохранить в CreativityHub";

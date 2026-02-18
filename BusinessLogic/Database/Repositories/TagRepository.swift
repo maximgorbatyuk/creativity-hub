@@ -23,6 +23,15 @@ class TagRepository {
         )
     }
 
+    func deleteAll() {
+        do {
+            try db.run(ideaTagsTable.delete())
+            try db.run(tagsTable.delete())
+        } catch {
+            logger.error("Failed to delete all tags: \(error)")
+        }
+    }
+
     func fetchAll() -> [Tag] {
         var tags: [Tag] = []
         do {
@@ -47,6 +56,21 @@ class TagRepository {
             logger.error("Failed to fetch tag by id \(id): \(error)")
         }
         return nil
+    }
+
+    func fetchAllIdeaTagLinks() -> [(ideaId: UUID, tagId: UUID)] {
+        var links: [(ideaId: UUID, tagId: UUID)] = []
+        do {
+            for row in try db.prepare(ideaTagsTable) {
+                if let ideaId = UUID(uuidString: row[ideaIdColumn]),
+                   let tagId = UUID(uuidString: row[tagIdColumn]) {
+                    links.append((ideaId: ideaId, tagId: tagId))
+                }
+            }
+        } catch {
+            logger.error("Failed to fetch all idea-tag links: \(error)")
+        }
+        return links
     }
 
     func fetchTagsForIdea(ideaId: UUID) -> [Tag] {

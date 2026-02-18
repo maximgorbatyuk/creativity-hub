@@ -11,7 +11,7 @@ class DatabaseManager {
         category: "DatabaseManager"
     )
 
-    private let latestVersion = 2
+    private let latestVersion = 4
 
     // Repositories
     private(set) var migrationRepository: MigrationsRepository?
@@ -24,9 +24,29 @@ class DatabaseManager {
     private(set) var expenseRepository: ExpenseRepository?
     private(set) var expenseCategoryRepository: ExpenseCategoryRepository?
     private(set) var noteRepository: NoteRepository?
+    private(set) var documentRepository: DocumentRepository?
+    private(set) var reminderRepository: ReminderRepository?
 
     private init() {
         setupDatabase()
+    }
+
+    func getDatabaseSchemaVersion() -> Int {
+        Int(migrationRepository?.getLatestMigrationVersion() ?? 0)
+    }
+
+    func deleteAllData() {
+        reminderRepository?.deleteAll()
+        documentRepository?.deleteAll()
+        noteRepository?.deleteAll()
+        expenseRepository?.deleteAll()
+        expenseCategoryRepository?.deleteAll()
+        checklistItemRepository?.deleteAll()
+        checklistRepository?.deleteAll()
+        ideaRepository?.deleteAll()
+        tagRepository?.deleteAll()
+        projectRepository?.deleteAll()
+        logger.info("All data deleted from database")
     }
 
     private func setupDatabase() {
@@ -55,6 +75,8 @@ class DatabaseManager {
         expenseRepository = ExpenseRepository(db: db)
         expenseCategoryRepository = ExpenseCategoryRepository(db: db)
         noteRepository = NoteRepository(db: db)
+        documentRepository = DocumentRepository(db: db)
+        reminderRepository = ReminderRepository(db: db)
     }
 
     private func migrateIfNeeded() {
@@ -90,6 +112,10 @@ class DatabaseManager {
                     }
                 case 2:
                     try Migration_20260217_InitialSchema(db: db).execute()
+                case 3:
+                    try Migration_20260218_AddDocumentsTable(db: db).execute()
+                case 4:
+                    try Migration_20260218_AddRemindersTable(db: db).execute()
                 default:
                     throw RuntimeError("Unknown migration version: \(version)")
                 }

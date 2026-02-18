@@ -5,7 +5,9 @@ struct ProjectSectionCounts {
     var checklists: Int = 0
     var ideas: Int = 0
     var notes: Int = 0
+    var documents: Int = 0
     var expenses: Int = 0
+    var reminders: Int = 0
 }
 
 @MainActor
@@ -26,7 +28,9 @@ final class ProjectDetailViewModel {
     private let checklistItemRepository: ChecklistItemRepository?
     private let ideaRepository: IdeaRepository?
     private let noteRepository: NoteRepository?
+    private let documentRepository: DocumentRepository?
     private let expenseRepository: ExpenseRepository?
+    private let reminderRepository: ReminderRepository?
     private let logger: Logger
 
     // MARK: - Init
@@ -38,7 +42,9 @@ final class ProjectDetailViewModel {
         self.checklistItemRepository = databaseManager.checklistItemRepository
         self.ideaRepository = databaseManager.ideaRepository
         self.noteRepository = databaseManager.noteRepository
+        self.documentRepository = databaseManager.documentRepository
         self.expenseRepository = databaseManager.expenseRepository
+        self.reminderRepository = databaseManager.reminderRepository
         self.logger = Logger(
             subsystem: Bundle.main.bundleIdentifier ?? "-",
             category: "ProjectDetailViewModel"
@@ -104,7 +110,9 @@ final class ProjectDetailViewModel {
         sectionCounts.checklists = checklistRepository?.countByProjectId(projectId: projectId) ?? 0
         sectionCounts.ideas = ideaRepository?.countByProjectId(projectId: projectId) ?? 0
         sectionCounts.notes = noteRepository?.countByProjectId(projectId: projectId) ?? 0
+        sectionCounts.documents = documentRepository?.countByProjectId(projectId: projectId) ?? 0
         sectionCounts.expenses = (expenseRepository?.fetchByProjectId(projectId: projectId) ?? []).count
+        sectionCounts.reminders = reminderRepository?.countByProjectId(projectId: projectId) ?? 0
 
         loadChecklistProgress(projectId: projectId)
         loadTotalExpenses(projectId: projectId)

@@ -62,6 +62,8 @@
 "empty.expenses.message" = "Жоба шығыстарын осында қадағалаңыз";
 "empty.notes.title" = "Жазбалар жоқ";
 "empty.notes.message" = "Ойларыңыз бен мәліметтерді жазып алыңыз";
+"empty.reminders.title" = "Еске салулар жоқ";
+"empty.reminders.message" = "Ештеңені ұмытпау үшін еске салулар жасаңыз";
 "empty.search.title" = "Нәтижелер жоқ";
 "empty.search.message" = "Басқа іздеу сөзін қолданып көріңіз";
 
@@ -110,6 +112,11 @@
 
 /* Today */
 "today.create_project" = "Жоба жасау";
+"today.overdue" = "Мерзімі өткен";
+"today.upcoming_reminders" = "Алдағы еске салулар";
+"today.active_projects" = "%d белсенді жоба";
+"today.empty.title" = "Бәрі таза";
+"today.empty.message" = "Белсенді жобалар немесе алдағы еске салулар жоқ. Бастау үшін жоба жасаңыз!";
 
 /* Projects */
 "projects.new" = "Жаңа жоба";
@@ -151,7 +158,39 @@
 "project.section.checklists" = "Тізімдер";
 "project.section.ideas" = "Идеялар";
 "project.section.notes" = "Жазбалар";
+"project.section.documents" = "Құжаттар";
 "project.section.expenses" = "Шығыстар";
+"project.section.reminders" = "Еске салулар";
+
+/* Ideas */
+"idea.list.title" = "Идеялар";
+"idea.list.add" = "Идея қосу";
+"idea.filter.all" = "Барлығы";
+"idea.filter.no_results" = "Бұл сүзгі бойынша идеялар жоқ";
+"idea.detail.title" = "Идея";
+"idea.detail.link" = "Сілтеме";
+"idea.detail.notes" = "Жазбалар";
+"idea.detail.tags" = "Тегтер";
+"idea.detail.no_tags" = "Тегтер қосылмаған";
+"idea.action.open_url" = "Браузерде ашу";
+"idea.delete.title" = "Идеяны жою";
+"idea.delete.message" = "Бұл идея біржола жойылады.";
+"idea.tags.existing" = "Қолжетімді тегтер";
+"idea.tags.add_title" = "Тегтер қосу";
+
+/* Idea Form */
+"idea.form.add_title" = "Жаңа идея";
+"idea.form.edit_title" = "Идеяны өзгерту";
+"idea.form.section.basic" = "Тақырып";
+"idea.form.section.url" = "Сілтеме";
+"idea.form.section.source" = "Көзі";
+"idea.form.section.notes" = "Жазбалар";
+"idea.form.title" = "Идея атауы";
+"idea.form.url_placeholder" = "https://...";
+"idea.form.detected_source" = "Анықталды: %@";
+"idea.form.source_type" = "Көз түрі";
+"idea.form.notes_placeholder" = "Идеяңызды сипаттаңыз...";
+"idea.form.error.title_required" = "Идея атауы міндетті";
 
 /* Checklists */
 "checklist.list.title" = "Тізімдер";
@@ -187,11 +226,220 @@
 "checklist_item.form.notes_placeholder" = "Қосымша жазбалар";
 "checklist_item.form.error.name_required" = "Элемент атауы міндетті";
 
+/* Notes */
+"note.list.title" = "Жазбалар";
+"note.list.add" = "Жазба қосу";
+"note.list.sort_by" = "Сұрыптау";
+"note.sort.updated" = "Жаңартылған";
+"note.sort.title" = "Атауы";
+"note.sort.created" = "Жасалған";
+"note.action.pin" = "Бекіту";
+"note.action.unpin" = "Босату";
+"note.delete.title" = "Жазбаны жою";
+"note.delete.message" = "Бұл жазба біржола жойылады.";
+"note.detail.title" = "Жазба";
+"note.detail.content" = "Мазмұны";
+"note.detail.info" = "Ақпарат";
+"note.detail.created" = "Жасалған";
+"note.detail.updated" = "Жаңартылған";
+
+/* Note Form */
+"note.form.add_title" = "Жаңа жазба";
+"note.form.edit_title" = "Жазбаны өзгерту";
+"note.form.section.title" = "Тақырып";
+"note.form.section.content" = "Мазмұны";
+"note.form.title_placeholder" = "Жазба атауы";
+"note.form.content_placeholder" = "Жазбаңызды жазыңыз...";
+"note.form.error.title_required" = "Жазба атауы міндетті";
+
+/* Documents */
+"document.list.title" = "Құжаттар";
+"document.list.add" = "Құжат қосу";
+"document.filter.all" = "Барлығы";
+"document.filter.pdf" = "PDF";
+"document.filter.images" = "Суреттер";
+"document.filter.no_results" = "Бұл сүзгі бойынша құжаттар жоқ";
+"document.summary.files_count" = "%d файл";
+"document.type.other" = "Басқа";
+"document.delete.title" = "Құжатты жою";
+"document.delete.message" = "Бұл құжат біржола жойылады.";
+"document.action.share" = "Бөлісу";
+"document.action.rename" = "Атын өзгерту";
+"document.action.open_in" = "Ашу...";
+"document.rename.title" = "Құжат атын өзгерту";
+"document.rename.placeholder" = "Құжат атауы";
+"document.rename.message" = "Бұл құжатқа атау енгізіңіз";
+"document.preview.unsupported" = "Алдын ала қарау мүмкін емес";
+"document.preview.image_error" = "Суретті жүктеу мүмкін болмады";
+"document.error.import_failed" = "Құжаттарды импорттау сәтсіз аяқталды";
+
+/* Document Import */
+"document.import.title" = "Құжат импорты";
+"document.import.section.source" = "Көзін таңдаңыз";
+"document.import.files" = "Файлдар";
+"document.import.files.description" = "Файлдар қолданбасынан импорттау";
+"document.import.photos" = "Фотоальбом";
+"document.import.photos.description" = "Фотосуреттерден таңдау";
+"document.import.camera" = "Камера";
+"document.import.camera.description" = "Жаңа фото түсіру";
+"document.import.supported_formats" = "Қолдау көрсетілетін форматтар: PDF, JPEG, PNG, HEIC";
+"document.import.processing" = "Өңделуде...";
+
+/* Empty States - Documents */
+"empty.documents.title" = "Құжаттар жоқ";
+"empty.documents.message" = "Жобаға файлдар мен суреттер қосыңыз";
+
+/* Expenses */
+"expense.list.title" = "Шығыстар";
+"expense.list.add" = "Шығыс қосу";
+"expense.list.add_category" = "Санат қосу";
+"expense.filter.all" = "Барлығы";
+"expense.filter.no_results" = "Бұл сүзгі бойынша шығыстар жоқ";
+"expense.summary.paid" = "Төленген";
+"expense.summary.planned" = "Жоспарланған";
+"expense.detail.title" = "Шығыс";
+"expense.detail.details" = "Мәліметтер";
+"expense.detail.date" = "Күні";
+"expense.detail.category" = "Санат";
+"expense.detail.currency" = "Валюта";
+"expense.detail.notes" = "Жазбалар";
+"expense.detail.info" = "Ақпарат";
+"expense.detail.created" = "Жасалған";
+"expense.detail.updated" = "Жаңартылған";
+"expense.delete.title" = "Шығысты жою";
+"expense.delete.message" = "Бұл шығыс біржола жойылады.";
+
+/* Expense Form */
+"expense.form.add_title" = "Жаңа шығыс";
+"expense.form.edit_title" = "Шығысты өзгерту";
+"expense.form.section.amount" = "Сома";
+"expense.form.amount_placeholder" = "0.00";
+"expense.form.currency" = "Валюта";
+"expense.form.section.vendor" = "Сатушы";
+"expense.form.vendor_placeholder" = "Дүкен немесе сатушы атауы";
+"expense.form.section.status" = "Мәртебе";
+"expense.form.status" = "Мәртебе";
+"expense.form.section.category" = "Санат";
+"expense.form.category" = "Санат";
+"expense.form.no_category" = "Санатсыз";
+"expense.form.section.date" = "Күні";
+"expense.form.date" = "Күні";
+"expense.form.section.notes" = "Жазбалар";
+"expense.form.notes_placeholder" = "Қосымша жазбалар...";
+"expense.form.error.amount_required" = "Жарамды соманы енгізіңіз";
+
+/* Expense Category Form */
+"expense.category.form.add_title" = "Жаңа санат";
+"expense.category.form.edit_title" = "Санатты өзгерту";
+"expense.category.form.section.name" = "Атауы";
+"expense.category.form.name_placeholder" = "Санат атауы";
+"expense.category.form.section.color" = "Түс";
+"expense.category.form.section.budget" = "Бюджет шегі";
+"expense.category.form.set_budget" = "Бюджет шегін белгілеу";
+"expense.category.form.budget_placeholder" = "0.00";
+"expense.category.form.error.name_required" = "Санат атауы міндетті";
+
+/* Reminders */
+"reminder.list.title" = "Еске салулар";
+"reminder.list.add" = "Еске салу қосу";
+"reminder.filter.all" = "Барлығы";
+"reminder.filter.pending" = "Белсенді";
+"reminder.filter.completed" = "Орындалған";
+"reminder.filter.overdue" = "Мерзімі өткен";
+"reminder.filter.no_results" = "Бұл сүзгі бойынша еске салулар жоқ";
+"reminder.sort.due_date" = "Мерзімі";
+"reminder.sort.priority" = "Басымдық";
+"reminder.sort.created" = "Жасалған";
+"reminder.summary.pending" = "%d белсенді";
+"reminder.summary.overdue" = "%d мерзімі өткен";
+"reminder.status.completed" = "Орындалды";
+"reminder.status.pending" = "Белсенді";
+"reminder.action.mark_completed" = "Орындалды деп белгілеу";
+"reminder.action.mark_pending" = "Белсенді деп белгілеу";
+"reminder.detail.title" = "Еске салу";
+"reminder.detail.details" = "Мәліметтер";
+"reminder.detail.priority" = "Басымдық";
+"reminder.detail.due_date" = "Мерзімі";
+"reminder.detail.notes" = "Жазбалар";
+"reminder.detail.info" = "Ақпарат";
+"reminder.detail.created" = "Жасалған";
+"reminder.detail.updated" = "Жаңартылған";
+"reminder.delete.title" = "Еске салуды жою";
+"reminder.delete.message" = "Бұл еске салу біржола жойылады.";
+
+/* Reminder Form */
+"reminder.form.add_title" = "Жаңа еске салу";
+"reminder.form.edit_title" = "Еске салуды өзгерту";
+"reminder.form.section.title" = "Тақырып";
+"reminder.form.section.priority" = "Басымдық";
+"reminder.form.section.due_date" = "Мерзімі";
+"reminder.form.section.notes" = "Жазбалар";
+"reminder.form.title_placeholder" = "Еске салу атауы";
+"reminder.form.priority" = "Басымдық";
+"reminder.form.set_due_date" = "Мерзімді белгілеу";
+"reminder.form.due_date" = "Мерзімі";
+"reminder.form.notes_placeholder" = "Қосымша жазбалар...";
+"reminder.form.error.title_required" = "Еске салу атауы міндетті";
+
 /* Shared */
 "button.see_all" = "Барлығы";
 
 /* Search */
 "search.placeholder" = "Жобаларды, тапсырмаларды, идеяларды іздеу...";
+"search.prompt" = "Іздеу үшін кемінде 2 таңба енгізіңіз";
+"search.section.projects" = "Жобалар";
+"search.section.ideas" = "Идеялар";
+"search.section.notes" = "Жазбалар";
+"search.section.reminders" = "Еске салулар";
+"search.section.expenses" = "Шығыстар";
+"search.section.checklist_items" = "Тізім элементтері";
+
+/* Backup */
+"settings.section.backup" = "Сақтық көшірме";
+"backup.export" = "Деректерді экспорттау";
+"backup.import" = "Деректерді импорттау";
+"backup.icloud.create" = "iCloud-қа көшіру";
+"backup.icloud.manage" = "iCloud көшірмелерін басқару";
+"backup.icloud.title" = "iCloud көшірмелері";
+"backup.icloud.empty.title" = "Көшірмелер жоқ";
+"backup.icloud.empty.message" = "Бастау үшін алғашқы сақтық көшірмеңізді жасаңыз";
+"backup.loading" = "Көшірмелер жүктелуде...";
+"backup.footer" = "Деректеріңізді JSON файлына экспорттаңыз немесе iCloud-қа сақтаңыз. Импорт бұрын экспортталған файлдан қалпына келтіреді.";
+"backup.delete.title" = "Көшірмені жою?";
+"backup.delete.message" = "Мына күндегі көшірмені жоюға сенімдісіз бе:";
+"backup.restore.title" = "Көшірмеден қалпына келтіру?";
+"backup.restore.message" = "Барлық ағымдағы деректер көшірмедегі деректермен ауыстырылады. Бұл әрекетті кері қайтару мүмкін емес.";
+"backup.restore.action" = "Қалпына келтіру";
+"backup.delete_all.title" = "Барлық көшірмелерді жою?";
+"backup.delete_all.message" = "Барлық көшірмелерді жоюға сенімдісіз бе? Бұл әрекетті кері қайтару мүмкін емес.";
+"backup.delete_all.action" = "Барлық көшірмелерді жою";
+"backup.error.title" = "Көшірме қатесі";
+"backup.error.invalid_json" = "Файл жарамды сақтық көшірме емес";
+"backup.error.missing_metadata" = "Көшірме файлында міндетті метадеректер жоқ";
+"backup.error.newer_schema" = "Бұл көшірме қолданбаның жаңарақ нұсқасында жасалған";
+"backup.error.corrupted_data" = "Көшірме деректері зақымдалған";
+"backup.error.icloud_not_available" = "iCloud қолжетімді емес. Баптауларда iCloud-қа кіріңіз.";
+"backup.error.icloud_storage_full" = "iCloud қоймасы толған";
+
+/* Developer Mode */
+"settings.section.developer" = "Әзірлеу";
+"settings.developer.mode" = "Әзірлеуші режимі";
+"settings.developer.enabled" = "Қосулы";
+"settings.developer.activated_title" = "Әзірлеуші режимі іске қосылды";
+"settings.developer.activated_message" = "Әзірлеуші режимі қосылды. Енді қосымша жөндеу құралдары қолжетімді.";
+"settings.developer.delete_all_data" = "Барлық деректерді жою";
+"settings.developer.delete_all_confirm_title" = "Барлық деректерді жою?";
+"settings.developer.delete_all_confirm_message" = "Барлық деректер біржола жойылады. Бұл әрекетті кері қайтару мүмкін емес.";
+"settings.developer.delete_all_confirm_action" = "Барлығын жою";
+"settings.developer.generate_random_data" = "Тестілік деректер жасау";
+"settings.developer.random_data_confirm_title" = "Тестілік деректер жасау?";
+"settings.developer.random_data_confirm_message" = "Таңдалған жобаның деректері кездейсоқ тестілік деректермен ауыстырылады.";
+"settings.developer.random_data_confirm_action" = "Жасау";
+"settings.developer.select_project" = "Жобаны таңдаңыз";
+"settings.developer.no_projects" = "Жобалар жоқ";
+"settings.developer.no_projects_message" = "Алдымен жоба жасаңыз, содан кейін ол үшін тестілік деректер жасаңыз.";
+"settings.developer.schema_version" = "Деректер қоры нұсқасы";
+"settings.developer.footer" = "Бұл құралдар тек әзірлеу мен тестілеу үшін арналған.";
 
 /* Share Extension */
 "share.title" = "CreativityHub-қа сақтау";

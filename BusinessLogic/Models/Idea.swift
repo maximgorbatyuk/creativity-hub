@@ -66,7 +66,7 @@ enum IdeaSourceType: String, Codable, CaseIterable, Identifiable {
 
 // MARK: - Idea
 
-struct Idea: Codable, Identifiable, Equatable {
+struct Idea: Codable, Identifiable, Equatable, Hashable {
     let id: UUID
     let projectId: UUID
     var url: String?

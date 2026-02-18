@@ -7,6 +7,11 @@ struct ProjectDetailView: View {
     @State private var showEditSheet = false
     @State private var showDeleteConfirmation = false
     @State private var showChecklistsList = false
+    @State private var showIdeasList = false
+    @State private var showNotesList = false
+    @State private var showDocumentsList = false
+    @State private var showExpensesList = false
+    @State private var showRemindersList = false
 
     private let analytics = AnalyticsService.shared
 
@@ -57,6 +62,21 @@ struct ProjectDetailView: View {
         }
         .navigationDestination(isPresented: $showChecklistsList) {
             ChecklistsListView(projectId: viewModel.project.id)
+        }
+        .navigationDestination(isPresented: $showIdeasList) {
+            IdeasListView(projectId: viewModel.project.id)
+        }
+        .navigationDestination(isPresented: $showNotesList) {
+            NotesListView(projectId: viewModel.project.id)
+        }
+        .navigationDestination(isPresented: $showDocumentsList) {
+            DocumentsListView(projectId: viewModel.project.id)
+        }
+        .navigationDestination(isPresented: $showExpensesList) {
+            ExpensesListView(projectId: viewModel.project.id)
+        }
+        .navigationDestination(isPresented: $showRemindersList) {
+            RemindersListView(projectId: viewModel.project.id)
         }
     }
 
@@ -230,21 +250,45 @@ struct ProjectDetailView: View {
                 color: .yellow,
                 title: L("project.section.ideas"),
                 count: viewModel.sectionCounts.ideas
-            )
+            ) {
+                showIdeasList = true
+            }
             Divider().padding(.leading, 52)
             sectionRow(
                 icon: "note.text",
                 color: .orange,
                 title: L("project.section.notes"),
                 count: viewModel.sectionCounts.notes
-            )
+            ) {
+                showNotesList = true
+            }
+            Divider().padding(.leading, 52)
+            sectionRow(
+                icon: "doc.fill",
+                color: .purple,
+                title: L("project.section.documents"),
+                count: viewModel.sectionCounts.documents
+            ) {
+                showDocumentsList = true
+            }
             Divider().padding(.leading, 52)
             sectionRow(
                 icon: "creditcard.fill",
                 color: .green,
                 title: L("project.section.expenses"),
                 count: viewModel.sectionCounts.expenses
-            )
+            ) {
+                showExpensesList = true
+            }
+            Divider().padding(.leading, 52)
+            sectionRow(
+                icon: "bell.fill",
+                color: .blue,
+                title: L("project.section.reminders"),
+                count: viewModel.sectionCounts.reminders
+            ) {
+                showRemindersList = true
+            }
         }
         .cardBackground()
     }

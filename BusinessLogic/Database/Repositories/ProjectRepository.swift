@@ -31,6 +31,14 @@ class ProjectRepository {
         )
     }
 
+    func deleteAll() {
+        do {
+            try db.run(table.delete())
+        } catch {
+            logger.error("Failed to delete all projects: \(error)")
+        }
+    }
+
     func fetchAll() -> [Project] {
         var projects: [Project] = []
         do {

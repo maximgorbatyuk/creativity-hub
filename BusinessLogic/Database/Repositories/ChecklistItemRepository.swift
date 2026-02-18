@@ -29,6 +29,28 @@ class ChecklistItemRepository {
         )
     }
 
+    func fetchAll() -> [ChecklistItem] {
+        var items: [ChecklistItem] = []
+        do {
+            for row in try db.prepare(table.order(createdAtColumn.desc)) {
+                if let item = mapRow(row) {
+                    items.append(item)
+                }
+            }
+        } catch {
+            logger.error("Failed to fetch all checklist items: \(error)")
+        }
+        return items
+    }
+
+    func deleteAll() {
+        do {
+            try db.run(table.delete())
+        } catch {
+            logger.error("Failed to delete all checklist items: \(error)")
+        }
+    }
+
     func fetchByChecklistId(checklistId: UUID) -> [ChecklistItem] {
         var items: [ChecklistItem] = []
         do {
