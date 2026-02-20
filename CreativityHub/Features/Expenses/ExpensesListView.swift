@@ -20,8 +20,8 @@ struct ExpensesListView: View {
             } else if viewModel.expenses.isEmpty {
                 emptyState
             } else {
+                totalSummaryCard
                 filterSection
-                summaryBar
                 if viewModel.filteredExpenses.isEmpty {
                     filterEmptyState
                 } else {
@@ -117,15 +117,6 @@ struct ExpensesListView: View {
                         viewModel.selectedFilter = .status(status)
                     }
                 }
-
-                ForEach(viewModel.categories) { category in
-                    FilterChip(
-                        title: category.name,
-                        isSelected: viewModel.selectedFilter == .category(category)
-                    ) {
-                        viewModel.selectedFilter = .category(category)
-                    }
-                }
             }
             .padding(.horizontal)
             .padding(.vertical, 8)
@@ -134,33 +125,22 @@ struct ExpensesListView: View {
 
     // MARK: - Summary
 
-    private var summaryBar: some View {
-        HStack(spacing: 16) {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(L("expense.summary.paid"))
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                Text(viewModel.defaultCurrency.format(viewModel.totalPaid))
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.green)
-            }
-
-            Spacer()
-
-            VStack(alignment: .trailing, spacing: 2) {
-                Text(L("expense.summary.planned"))
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                Text(viewModel.defaultCurrency.format(viewModel.totalPlanned))
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.orange)
-            }
+    private var totalSummaryCard: some View {
+        VStack(spacing: 4) {
+            Text(L("expense.summary.total"))
+                .font(.caption)
+                .foregroundColor(.secondary)
+            Text(viewModel.formattedTotal)
+                .font(.title)
+                .fontWeight(.bold)
+                .foregroundColor(.orange)
         }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 12)
+        .background(Color(UIColor.secondarySystemBackground))
+        .cornerRadius(12)
         .padding(.horizontal)
         .padding(.vertical, 8)
-        .background(Color(UIColor.systemBackground))
     }
 
     // MARK: - List

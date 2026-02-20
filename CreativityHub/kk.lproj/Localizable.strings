@@ -106,10 +106,22 @@
 "settings.contact_telegram" = "Telegram арқылы әзірлеушімен байланысу";
 
 /* Tabs */
+"tab.home" = "Басты бет";
 "tab.today" = "Бүгін";
 "tab.projects" = "Жобалар";
+"tab.active_project" = "Белсенді жоба";
 "tab.search" = "Іздеу";
 "tab.settings" = "Баптаулар";
+
+/* Home */
+"home.overdue" = "Мерзімі өткен";
+"home.upcoming_reminders" = "Алдағы еске салулар";
+"home.active_projects" = "%d белсенді жоба";
+"home.stats.projects" = "Жобалар";
+"home.stats.reminders" = "Еске салулар";
+"home.stats.logged_time" = "Тіркелген уақыт";
+"home.empty.title" = "Бәрі таза";
+"home.empty.message" = "Белсенді жобалар немесе алдағы еске салулар жоқ. Бастау үшін жоба жасаңыз!";
 
 /* Today */
 "today.create_project" = "Жоба жасау";
@@ -298,6 +310,7 @@
 "expense.filter.no_results" = "Бұл сүзгі бойынша шығыстар жоқ";
 "expense.summary.paid" = "Төленген";
 "expense.summary.planned" = "Жоспарланған";
+"expense.summary.total" = "Барлық шығыстар";
 "expense.detail.title" = "Шығыс";
 "expense.detail.details" = "Мәліметтер";
 "expense.detail.date" = "Күні";
@@ -394,6 +407,7 @@
 "search.section.reminders" = "Еске салулар";
 "search.section.expenses" = "Шығыстар";
 "search.section.checklist_items" = "Тізім элементтері";
+"search.section.documents" = "Құжаттар";
 
 /* Backup */
 "settings.section.backup" = "Сақтық көшірме";
@@ -404,7 +418,14 @@
 "backup.icloud.title" = "iCloud көшірмелері";
 "backup.icloud.empty.title" = "Көшірмелер жоқ";
 "backup.icloud.empty.message" = "Бастау үшін алғашқы сақтық көшірмеңізді жасаңыз";
+"backup.icloud.not_available.title" = "iCloud қолжетімсіз";
+"backup.icloud.not_available.message" = "Сақтық көшірмелерді қосу үшін Баптауларда iCloud-қа кіріңіз.";
 "backup.loading" = "Көшірмелер жүктелуде...";
+"backup.last" = "Соңғы көшірме";
+"backup.automatic.title" = "Автоматты көшірме";
+"backup.automatic.last" = "Соңғысы:";
+"backup.automatic.description" = "iCloud-қа автоматты көшірмелер деректеріңізді қауіпсіз сақтайды.";
+"backup.automatic.retention" = "Ең көбі 5 көшірме сақталады, 30 күннен асқан көшірмелер автоматты түрде жойылады.";
 "backup.footer" = "Деректеріңізді JSON файлына экспорттаңыз немесе iCloud-қа сақтаңыз. Импорт бұрын экспортталған файлдан қалпына келтіреді.";
 "backup.delete.title" = "Көшірмені жою?";
 "backup.delete.message" = "Мына күндегі көшірмені жоюға сенімдісіз бе:";
@@ -497,6 +518,7 @@
 "share.kind.link" = "Сілтеме";
 "share.kind.text" = "Мәтін";
 "share.kind.image" = "Сурет";
+"share.kind.file" = "Файл";
 "share.error.save_failed" = "Сақтау сәтсіз аяқталды. Қайта көріңіз.";
 "share.error.cancelled" = "Пайдаланушы әрекетті болдырмады.";
 "share.error.unsupported" = "Бұл мазмұн түрі қолдау көрсетілмейді.";
@@ -511,3 +533,4 @@
 "project.content.empty.title" = "Жобалар жоқ";
 "project.content.empty.subtitle" = "Бастау үшін бірінші жобаңызды жасаңыз";
 "project.content.empty.add_button" = "Жоба жасау";
+"project.content.add_item" = "Жаңа қосу";

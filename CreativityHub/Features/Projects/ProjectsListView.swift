@@ -123,15 +123,15 @@ struct ProjectsListView: View {
             viewModel.showAddSheet = true
         } label: {
             Image(systemName: "plus")
-                .font(.title2)
-                .fontWeight(.semibold)
+                .font(.system(size: 24, weight: .semibold))
                 .foregroundColor(.white)
                 .frame(width: 56, height: 56)
                 .background(Color.accentColor)
                 .clipShape(Circle())
-                .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
+                .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
         }
-        .padding()
+        .padding(.trailing, 20)
+        .padding(.bottom, 20)
     }
 }
 

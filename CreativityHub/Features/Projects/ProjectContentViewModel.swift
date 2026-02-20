@@ -189,7 +189,7 @@ final class ProjectContentViewModel {
         sectionCounts.documents = documentRepository?.countByProjectId(projectId: projectId) ?? 0
         sectionCounts.reminders = reminderRepository?.countByProjectId(projectId: projectId) ?? 0
 
-        // Expenses count and total
+        // Expenses count and totals by currency
         let allExpenses = expenseRepository?.fetchByProjectId(projectId: projectId) ?? []
         sectionCounts.expenses = allExpenses.count
         totalExpenses = allExpenses

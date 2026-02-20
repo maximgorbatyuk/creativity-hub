@@ -139,5 +139,6 @@ final class ProjectDetailViewModel {
         totalExpenses = expenses
             .filter { $0.status == .paid }
             .reduce(Decimal.zero) { $0 + $1.amount }
+
     }
 }

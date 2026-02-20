@@ -8,6 +8,7 @@ enum SearchResultSection: String, CaseIterable, Identifiable {
     case reminders
     case expenses
     case checklistItems
+    case documents
 
     var id: String { rawValue }
 
@@ -19,6 +20,7 @@ enum SearchResultSection: String, CaseIterable, Identifiable {
         case .reminders: return L("search.section.reminders")
         case .expenses: return L("search.section.expenses")
         case .checklistItems: return L("search.section.checklist_items")
+        case .documents: return L("search.section.documents")
         }
     }
 
@@ -30,6 +32,7 @@ enum SearchResultSection: String, CaseIterable, Identifiable {
         case .reminders: return "bell.fill"
         case .expenses: return "creditcard.fill"
         case .checklistItems: return "checkmark.circle"
+        case .documents: return "doc.fill"
         }
     }
 }
@@ -46,6 +49,7 @@ final class SearchViewModel {
     var reminders: [Reminder] = []
     var expenses: [Expense] = []
     var checklistItems: [ChecklistItem] = []
+    var documents: [Document] = []
     var isSearching = false
 
     // MARK: - Private
@@ -56,6 +60,7 @@ final class SearchViewModel {
     private let reminderRepository: ReminderRepository?
     private let expenseRepository: ExpenseRepository?
     private let checklistItemRepository: ChecklistItemRepository?
+    private let documentRepository: DocumentRepository?
     private let logger: Logger
 
     // MARK: - Init
@@ -67,6 +72,7 @@ final class SearchViewModel {
         self.reminderRepository = databaseManager.reminderRepository
         self.expenseRepository = databaseManager.expenseRepository
         self.checklistItemRepository = databaseManager.checklistItemRepository
+        self.documentRepository = databaseManager.documentRepository
         self.logger = Logger(
             subsystem: Bundle.main.bundleIdentifier ?? "-",
             category: "SearchViewModel"
@@ -89,6 +95,7 @@ final class SearchViewModel {
         reminders = reminderRepository?.search(query: trimmed) ?? []
         expenses = expenseRepository?.search(query: trimmed) ?? []
         checklistItems = checklistItemRepository?.search(query: trimmed) ?? []
+        documents = documentRepository?.search(query: trimmed) ?? []
         isSearching = false
     }
 
@@ -99,18 +106,21 @@ final class SearchViewModel {
         reminders = []
         expenses = []
         checklistItems = []
+        documents = []
     }
 
     // MARK: - Computed
 
     var hasResults: Bool {
         !projects.isEmpty || !ideas.isEmpty || !notes.isEmpty ||
-        !reminders.isEmpty || !expenses.isEmpty || !checklistItems.isEmpty
+        !reminders.isEmpty || !expenses.isEmpty || !checklistItems.isEmpty ||
+        !documents.isEmpty
     }
 
     var totalResultCount: Int {
         projects.count + ideas.count + notes.count +
-        reminders.count + expenses.count + checklistItems.count
+        reminders.count + expenses.count + checklistItems.count +
+        documents.count
     }
 
     var visibleSections: [SearchResultSection] {
@@ -121,6 +131,7 @@ final class SearchViewModel {
         if !reminders.isEmpty { sections.append(.reminders) }
         if !expenses.isEmpty { sections.append(.expenses) }
         if !checklistItems.isEmpty { sections.append(.checklistItems) }
+        if !documents.isEmpty { sections.append(.documents) }
         return sections
     }
 }

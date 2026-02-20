@@ -11,6 +11,7 @@ struct ProjectContentView: View {
     @State private var showDocumentsList = false
     @State private var showExpensesList = false
     @State private var showRemindersList = false
+    @State private var showAddItemSelector = false
 
     private let analytics = AnalyticsService.shared
 
@@ -81,6 +82,9 @@ struct ProjectContentView: View {
                         viewModel.updateProject(updated)
                     }
                 }
+            }
+            .sheet(isPresented: $showAddItemSelector) {
+                addItemSelectorSheet
             }
             .alert(L("project.delete.title"), isPresented: $showDeleteConfirmation) {
                 Button(L("button.cancel"), role: .cancel) {}
@@ -440,11 +444,118 @@ struct ProjectContentView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
+    // MARK: - Add Item Selector
+
+    private var addItemSelectorSheet: some View {
+        NavigationStack {
+            let columns = [
+                GridItem(.flexible()),
+                GridItem(.flexible()),
+                GridItem(.flexible())
+            ]
+
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: 20) {
+                    addItemGridButton(
+                        icon: "checklist",
+                        color: .blue,
+                        title: L("project.section.checklists")
+                    ) {
+                        showAddItemSelector = false
+                        showChecklistsList = true
+                    }
+
+                    addItemGridButton(
+                        icon: "lightbulb.fill",
+                        color: .yellow,
+                        title: L("project.section.ideas")
+                    ) {
+                        showAddItemSelector = false
+                        showIdeasList = true
+                    }
+
+                    addItemGridButton(
+                        icon: "note.text",
+                        color: .orange,
+                        title: L("project.section.notes")
+                    ) {
+                        showAddItemSelector = false
+                        showNotesList = true
+                    }
+
+                    addItemGridButton(
+                        icon: "doc.fill",
+                        color: .purple,
+                        title: L("project.section.documents")
+                    ) {
+                        showAddItemSelector = false
+                        showDocumentsList = true
+                    }
+
+                    addItemGridButton(
+                        icon: "creditcard.fill",
+                        color: .green,
+                        title: L("project.section.expenses")
+                    ) {
+                        showAddItemSelector = false
+                        showExpensesList = true
+                    }
+
+                    addItemGridButton(
+                        icon: "bell.fill",
+                        color: .red,
+                        title: L("project.section.reminders")
+                    ) {
+                        showAddItemSelector = false
+                        showRemindersList = true
+                    }
+                }
+                .padding(24)
+            }
+            .navigationTitle(L("project.content.add_item"))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(L("button.cancel")) {
+                        showAddItemSelector = false
+                    }
+                }
+            }
+        }
+        .presentationDetents([.medium])
+    }
+
+    private func addItemGridButton(
+        icon: String,
+        color: Color,
+        title: String,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            VStack(spacing: 10) {
+                Image(systemName: icon)
+                    .font(.system(size: 28))
+                    .foregroundColor(.white)
+                    .frame(width: 56, height: 56)
+                    .background(color)
+                    .clipShape(Circle())
+
+                Text(title)
+                    .font(.caption)
+                    .foregroundColor(.primary)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+            }
+            .frame(maxWidth: .infinity)
+        }
+        .buttonStyle(.plain)
+    }
+
     // MARK: - FAB
 
     private var floatingAddButton: some View {
         Button {
-            showAddProjectSheet = true
+            showAddItemSelector = true
         } label: {
             Image(systemName: "plus")
                 .font(.system(size: 24, weight: .semibold))

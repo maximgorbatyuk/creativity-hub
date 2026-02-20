@@ -117,3 +117,16 @@ Xcode Cloud runs `ci_scripts/ci_post_clone.sh` automatically to generate `Google
 - **File system sync**: Xcode auto-compiles source files from `CreativityHub/`, `BusinessLogic/`, and `ShareExtension/` folders — no manual pbxproj edits for source files
 - **Analytics**: Firebase Analytics in Release builds only (`#if DEBUG` guard)
 - **Color scheme**: Communicated via `NotificationCenter` with `.appColorSchemeDidChange`
+
+## Automatic Backup Pattern
+
+CreativityHub follows Journey Wallet's automatic iCloud backup approach:
+
+- Use `BackgroundTaskManager` (`CreativityHub/Services/BackgroundTaskManager.swift`) as the single owner of scheduling and retry logic.
+- Persist automatic backup toggle and last successful automatic backup date in `UserDefaults` (inside `BackgroundTaskManager`), not in SQLite.
+- Register background tasks in `AppDelegate.application(_:didFinishLaunchingWithOptions:)`, then call `scheduleNextBackup()` at startup.
+- Retry pending failed backups in `AppDelegate.applicationWillEnterForeground(_:)` via `BackgroundTaskManager.shared.retryIfNeeded()`.
+- Run backups silently through `BackupService.createiCloudBackup()` (no success alerts for automatic runs).
+- Keep task identifier synchronized with Info.plist:
+  - `BackgroundTaskManager.dailyBackupTaskIdentifier`
+  - `BGTaskSchedulerPermittedIdentifiers` entry in `CreativityHub/Info.plist`

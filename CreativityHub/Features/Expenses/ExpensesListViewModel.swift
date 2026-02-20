@@ -137,12 +137,26 @@ final class ExpensesListViewModel {
 
     // MARK: - Statistics
 
-    var totalPaid: Decimal {
-        expenses.filter(\.isPaid).reduce(Decimal.zero) { $0 + $1.amount }
+    var totalByCurrency: [Currency: Decimal] {
+        expenseRepository?.calculateTotalByProjectId(projectId: projectId) ?? [:]
     }
 
-    var totalPlanned: Decimal {
-        expenses.filter(\.isPlanned).reduce(Decimal.zero) { $0 + $1.amount }
+    var formattedTotal: String {
+        let sorted = totalByCurrency
+            .filter { $0.value > 0 }
+            .sorted { $0.key.shortName < $1.key.shortName }
+        if sorted.isEmpty { return "" }
+        return sorted
+            .map { "\($0.key.rawValue)\(formatAmount($0.value))" }
+            .joined(separator: " • ")
+    }
+
+    private func formatAmount(_ value: Decimal) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 2
+        return formatter.string(from: value as NSDecimalNumber) ?? "\(value)"
     }
 
     // MARK: - Private

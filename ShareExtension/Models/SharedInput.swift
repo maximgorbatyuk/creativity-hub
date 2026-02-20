@@ -5,6 +5,7 @@ enum SharedInputKind: String {
     case link
     case text
     case image
+    case file
 }
 
 /// Normalized input model parsed from NSExtensionItem attachments.

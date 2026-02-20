@@ -14,13 +14,8 @@ struct LaunchScreenView: View {
 
     var body: some View {
         ZStack {
-            Color(
-                red: 254 / 255,
-                green: 230 / 255,
-                blue: 98 / 255
-            )
-            .opacity(0.3)
-            .ignoresSafeArea()
+            Color("LaunchScreenColor")
+                .ignoresSafeArea()
 
             VStack(spacing: 24) {
                 Spacer()

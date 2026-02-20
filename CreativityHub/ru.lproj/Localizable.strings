@@ -106,10 +106,22 @@
 "settings.contact_telegram" = "Связаться с разработчиком в Telegram";
 
 /* Tabs */
+"tab.home" = "Главная";
 "tab.today" = "Сегодня";
 "tab.projects" = "Проекты";
+"tab.active_project" = "Активный проект";
 "tab.search" = "Поиск";
 "tab.settings" = "Настройки";
+
+/* Home */
+"home.overdue" = "Просрочено";
+"home.upcoming_reminders" = "Предстоящие напоминания";
+"home.active_projects" = "%d активных проектов";
+"home.stats.projects" = "Проекты";
+"home.stats.reminders" = "Напоминания";
+"home.stats.logged_time" = "Учтённое время";
+"home.empty.title" = "Всё чисто";
+"home.empty.message" = "Нет активных проектов или предстоящих напоминаний. Создайте проект, чтобы начать!";
 
 /* Today */
 "today.create_project" = "Создать проект";
@@ -298,6 +310,7 @@
 "expense.filter.no_results" = "Нет расходов для этого фильтра";
 "expense.summary.paid" = "Оплачено";
 "expense.summary.planned" = "Запланировано";
+"expense.summary.total" = "Всего потрачено";
 "expense.detail.title" = "Расход";
 "expense.detail.details" = "Детали";
 "expense.detail.date" = "Дата";
@@ -394,6 +407,7 @@
 "search.section.reminders" = "Напоминания";
 "search.section.expenses" = "Расходы";
 "search.section.checklist_items" = "Элементы чеклистов";
+"search.section.documents" = "Документы";
 
 /* Backup */
 "settings.section.backup" = "Резервное копирование";
@@ -404,7 +418,14 @@
 "backup.icloud.title" = "Копии iCloud";
 "backup.icloud.empty.title" = "Нет копий";
 "backup.icloud.empty.message" = "Создайте первую резервную копию для начала";
+"backup.icloud.not_available.title" = "iCloud недоступен";
+"backup.icloud.not_available.message" = "Войдите в iCloud в Настройках, чтобы включить резервные копии.";
 "backup.loading" = "Загрузка копий...";
+"backup.last" = "Последняя копия";
+"backup.automatic.title" = "Автоматическая копия";
+"backup.automatic.last" = "Последняя:";
+"backup.automatic.description" = "Автоматические копии в iCloud защищают ваши данные.";
+"backup.automatic.retention" = "Хранятся максимум 5 копий, копии старше 30 дней удаляются автоматически.";
 "backup.footer" = "Экспортируйте данные в JSON-файл или сохраните в iCloud. Импорт восстанавливает данные из ранее экспортированного файла.";
 "backup.delete.title" = "Удалить копию?";
 "backup.delete.message" = "Вы уверены, что хотите удалить копию от";
@@ -497,6 +518,7 @@
 "share.kind.link" = "Ссылка";
 "share.kind.text" = "Текст";
 "share.kind.image" = "Изображение";
+"share.kind.file" = "Файл";
 "share.error.save_failed" = "Не удалось сохранить. Попробуйте снова.";
 "share.error.cancelled" = "Пользователь отменил действие.";
 "share.error.unsupported" = "Этот тип контента не поддерживается.";
@@ -511,3 +533,4 @@
 "project.content.empty.title" = "Пока нет проектов";
 "project.content.empty.subtitle" = "Создайте свой первый проект";
 "project.content.empty.add_button" = "Создать проект";
+"project.content.add_item" = "Добавить";

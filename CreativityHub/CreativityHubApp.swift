@@ -56,7 +56,18 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         FirebaseApp.configure()
         #endif
 
+        Task { @MainActor in
+            BackgroundTaskManager.shared.registerBackgroundTasks()
+            BackgroundTaskManager.shared.scheduleNextBackup()
+        }
+
         return true
+    }
+
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        Task { @MainActor in
+            await BackgroundTaskManager.shared.retryIfNeeded()
+        }
     }
 
     func userNotificationCenter(

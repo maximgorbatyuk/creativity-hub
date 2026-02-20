@@ -98,9 +98,8 @@ final class ShareFormViewModel: ObservableObject {
             selectedType = .note
             noteText = input.text ?? ""
             name = input.suggestedTitle ?? ""
-        case .image:
-            selectedType = .idea
-            name = input.suggestedTitle ?? ""
+        case .image, .file:
+            selectedType = .document
         }
     }
 
@@ -149,7 +148,7 @@ final class ShareFormViewModel: ObservableObject {
         guard let input = sharedInput else { return false }
 
         let persistedImageURL = persistedImageURLIfNeeded(from: input)
-        if input.kind == .image, persistedImageURL == nil {
+        if (input.kind == .image || input.kind == .file), persistedImageURL == nil {
             return false
         }
 
@@ -185,7 +184,7 @@ final class ShareFormViewModel: ObservableObject {
 
         let documentService = DocumentService.shared
         let persistedImageURL = persistedImageURLIfNeeded(from: input)
-        if input.kind == .image, persistedImageURL == nil {
+        if (input.kind == .image || input.kind == .file), persistedImageURL == nil {
             return false
         }
 
@@ -219,7 +218,7 @@ final class ShareFormViewModel: ObservableObject {
             fileType = .other
             notes = input.suggestedSnippet
 
-        case .image:
+        case .image, .file:
             guard let persistedImageURL else {
                 return false
             }
@@ -227,7 +226,7 @@ final class ShareFormViewModel: ObservableObject {
             do {
                 data = try Data(contentsOf: persistedImageURL)
             } catch {
-                logger.error("Failed to read persisted image: \(error.localizedDescription)")
+                logger.error("Failed to read persisted file: \(error.localizedDescription)")
                 return false
             }
 
@@ -273,7 +272,7 @@ final class ShareFormViewModel: ObservableObject {
         let trimmedDescription = noteDescription.trimmingCharacters(in: .whitespacesAndNewlines)
 
         let persistedImageURL = persistedImageURLIfNeeded(from: sharedInput)
-        if sharedInput?.kind == .image, persistedImageURL == nil {
+        if let kind = sharedInput?.kind, (kind == .image || kind == .file), persistedImageURL == nil {
             return false
         }
 
@@ -312,7 +311,7 @@ final class ShareFormViewModel: ObservableObject {
     private func persistedImageURLIfNeeded(from input: SharedInput?) -> URL? {
         guard
             let input,
-            input.kind == .image,
+            input.kind == .image || input.kind == .file,
             let tempImageURL = input.imageFileURL
         else {
             return nil

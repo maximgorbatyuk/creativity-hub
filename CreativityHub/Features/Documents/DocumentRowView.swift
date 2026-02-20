@@ -42,18 +42,25 @@ struct DocumentRowView: View {
                     .foregroundColor(.secondary)
                     .lineLimit(1)
             } else {
-                HStack(spacing: 8) {
-                    Text(document.fileType.displayName)
+                if let filePath = document.filePath, !filePath.isEmpty {
+                    Text(filePath)
                         .font(.caption)
                         .foregroundColor(.secondary)
+                        .lineLimit(1)
+                } else {
+                    HStack(spacing: 8) {
+                        Text(document.fileType.displayName)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
 
-                    Text("·")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                        Text("·")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
 
-                    Text(document.formattedFileSize)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                        Text(document.formattedFileSize)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
                 }
             }
         }

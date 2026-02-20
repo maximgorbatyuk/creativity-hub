@@ -11,6 +11,8 @@ final class TodayViewModel {
     var overdueChecklistItems: [ChecklistItem] = []
     var upcomingReminders: [Reminder] = []
     var overdueReminders: [Reminder] = []
+    var totalProjectCount = 0
+    var totalReminderCount = 0
     var isLoading = false
 
     // MARK: - Private
@@ -36,6 +38,8 @@ final class TodayViewModel {
 
     func loadData() {
         isLoading = true
+        totalProjectCount = projectRepository?.fetchAll().count ?? 0
+        totalReminderCount = reminderRepository?.fetchAll().count ?? 0
         activeProjects = projectRepository?.fetchByStatus(.active) ?? []
         overdueChecklistItems = checklistItemRepository?.fetchOverdueItems() ?? []
         upcomingReminders = reminderRepository?.fetchUpcoming(limit: 5) ?? []

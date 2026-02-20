@@ -16,6 +16,7 @@ final class InputParser {
         var extractedURL: URL?
         var extractedText: String?
         var extractedImageURL: URL?
+        var extractedFileURL: URL?
         var extractedTitle: String?
         var extractedFilename: String?
 
@@ -34,13 +35,20 @@ final class InputParser {
                     continue
                 }
 
-                // 2. Try URL
+                // 2. Try file (PDF, etc.)
+                if let fileURL = await extractFile(from: provider) {
+                    extractedFileURL = fileURL
+                    extractedFilename = fileURL.lastPathComponent
+                    continue
+                }
+
+                // 3. Try URL
                 if let url = await extractURL(from: provider) {
                     extractedURL = url
                     continue
                 }
 
-                // 3. Try plain text
+                // 4. Try plain text
                 if let text = await extractText(from: provider) {
                     extractedText = text
                 }
@@ -52,6 +60,15 @@ final class InputParser {
             return SharedInput(
                 kind: .image,
                 imageFileURL: imageURL,
+                suggestedTitle: extractedFilename.map { filenameWithoutExtension($0) },
+                originalFilename: extractedFilename
+            )
+        }
+
+        if let fileURL = extractedFileURL {
+            return SharedInput(
+                kind: .file,
+                imageFileURL: fileURL,
                 suggestedTitle: extractedFilename.map { filenameWithoutExtension($0) },
                 originalFilename: extractedFilename
             )
@@ -136,6 +153,43 @@ final class InputParser {
         ]
 
         for typeIdentifier in imageTypes {
+            guard provider.hasItemConformingToTypeIdentifier(typeIdentifier) else {
+                continue
+            }
+
+            let result: URL? = await withCheckedContinuation { continuation in
+                provider.loadFileRepresentation(forTypeIdentifier: typeIdentifier) { url, error in
+                    guard let url, error == nil else {
+                        continuation.resume(returning: nil)
+                        return
+                    }
+
+                    let tempURL = FileManager.default.temporaryDirectory
+                        .appendingPathComponent(UUID().uuidString + "_" + url.lastPathComponent)
+
+                    do {
+                        try FileManager.default.copyItem(at: url, to: tempURL)
+                        continuation.resume(returning: tempURL)
+                    } catch {
+                        continuation.resume(returning: nil)
+                    }
+                }
+            }
+
+            if result != nil {
+                return result
+            }
+        }
+
+        return nil
+    }
+
+    private func extractFile(from provider: NSItemProvider) async -> URL? {
+        let fileTypes = [
+            UTType.pdf.identifier,
+        ]
+
+        for typeIdentifier in fileTypes {
             guard provider.hasItemConformingToTypeIdentifier(typeIdentifier) else {
                 continue
             }
