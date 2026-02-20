@@ -17,6 +17,11 @@ enum ProjectFilter: String, CaseIterable {
     }
 }
 
+struct ProjectRowStats {
+    let checklistProgress: (checked: Int, total: Int)
+    let reminderCount: Int
+}
+
 @MainActor
 @Observable
 final class ProjectsListViewModel {
@@ -25,6 +30,7 @@ final class ProjectsListViewModel {
 
     var projects: [Project] = []
     var filteredProjects: [Project] = []
+    var projectStats: [UUID: ProjectRowStats] = [:]
     var selectedFilter: ProjectFilter = .all
     var isLoading = false
 
@@ -35,6 +41,9 @@ final class ProjectsListViewModel {
 
     private let databaseManager: DatabaseManager
     private let projectRepository: ProjectRepository?
+    private let checklistRepository: ChecklistRepository?
+    private let checklistItemRepository: ChecklistItemRepository?
+    private let reminderRepository: ReminderRepository?
     private let logger: Logger
 
     // MARK: - Init
@@ -42,6 +51,9 @@ final class ProjectsListViewModel {
     init(databaseManager: DatabaseManager = .shared) {
         self.databaseManager = databaseManager
         self.projectRepository = databaseManager.projectRepository
+        self.checklistRepository = databaseManager.checklistRepository
+        self.checklistItemRepository = databaseManager.checklistItemRepository
+        self.reminderRepository = databaseManager.reminderRepository
         self.logger = Logger(
             subsystem: Bundle.main.bundleIdentifier ?? "-",
             category: "ProjectsListViewModel"
@@ -53,8 +65,13 @@ final class ProjectsListViewModel {
     func loadProjects() {
         isLoading = true
         projects = projectRepository?.fetchAll() ?? []
+        loadStats()
         applyFilter()
         isLoading = false
+    }
+
+    func stats(for project: Project) -> ProjectRowStats {
+        projectStats[project.id] ?? ProjectRowStats(checklistProgress: (0, 0), reminderCount: 0)
     }
 
     func applyFilter() {
@@ -105,5 +122,27 @@ final class ProjectsListViewModel {
         }
         logger.info("Toggled pin for project \(project.id): \(newPinned)")
         loadProjects()
+    }
+
+    // MARK: - Private
+
+    private func loadStats() {
+        var stats: [UUID: ProjectRowStats] = [:]
+        for project in projects {
+            let checklists = checklistRepository?.fetchByProjectId(projectId: project.id) ?? []
+            var totalItems = 0
+            var checkedItems = 0
+            for checklist in checklists {
+                let items = checklistItemRepository?.fetchByChecklistId(checklistId: checklist.id) ?? []
+                totalItems += items.count
+                checkedItems += items.filter(\.isCompleted).count
+            }
+            let reminderCount = reminderRepository?.countByProjectId(projectId: project.id) ?? 0
+            stats[project.id] = ProjectRowStats(
+                checklistProgress: (checked: checkedItems, total: totalItems),
+                reminderCount: reminderCount
+            )
+        }
+        projectStats = stats
     }
 }

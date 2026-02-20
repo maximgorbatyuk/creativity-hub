@@ -56,19 +56,31 @@ struct ReminderRowView: View {
     }
 
     private var trailingInfo: some View {
-        VStack(alignment: .trailing, spacing: 2) {
+        VStack(alignment: .trailing, spacing: 4) {
+            toggleButton
+
             if reminder.isOverdue {
                 Image(systemName: "exclamationmark.triangle.fill")
                     .font(.caption)
                     .foregroundColor(.red)
             }
-
-            if reminder.hasNotes {
-                Image(systemName: "note.text")
-                    .font(.caption2)
-                    .foregroundColor(.secondary)
-            }
         }
+    }
+
+    private var toggleButton: some View {
+        Button(action: onToggle) {
+            Text(reminder.isCompleted
+                ? L("reminder.action.mark_pending")
+                : L("reminder.action.mark_completed"))
+                .font(.caption2)
+                .fontWeight(.medium)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(reminder.isCompleted ? Color.orange.opacity(0.15) : Color.green.opacity(0.15))
+                .foregroundColor(reminder.isCompleted ? .orange : .green)
+                .cornerRadius(6)
+        }
+        .buttonStyle(.plain)
     }
 
     private func dueDateLabel(_ date: Date) -> some View {

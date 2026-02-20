@@ -24,6 +24,7 @@ struct ProjectsListView: View {
                 floatingAddButton
             }
             .navigationTitle(L("tab.projects"))
+            .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 viewModel.loadProjects()
                 analytics.trackScreen("projects_list")
@@ -63,6 +64,7 @@ struct ProjectsListView: View {
             .padding(.horizontal)
             .padding(.vertical, 8)
         }
+        .background(Color(UIColor.systemBackground))
     }
 
     // MARK: - List
@@ -70,7 +72,7 @@ struct ProjectsListView: View {
     private var projectsList: some View {
         List {
             ForEach(viewModel.filteredProjects) { project in
-                ProjectRowView(project: project)
+                ProjectRowView(project: project, stats: viewModel.stats(for: project))
                     .contentShape(Rectangle())
                     .onTapGesture {
                         selectedProject = project

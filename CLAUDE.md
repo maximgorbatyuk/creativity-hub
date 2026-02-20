@@ -41,29 +41,109 @@ xcodebuild -project CreativityHub.xcodeproj -scheme CreativityHub \
 
 ```
 CreativityHub/
-├── CreativityHub/          # Main app target
-│   ├── Config/             # xcconfig files (Base, Debug, Release)
-│   ├── Features/           # Feature views (Today, Projects, Search)
-│   ├── Onboarding/         # Onboarding flow
-│   ├── Services/           # AnalyticsService
-│   ├── Shared/             # Reusable UI components
-│   ├── UserSettings/       # Settings view and view model
-│   ├── ContentView.swift   # Root view (onboarding → main flow)
-│   ├── CreativityHubApp.swift
+├── CreativityHub/              # Main app target
+│   ├── Config/                 # xcconfig files (Base, Debug, Release)
+│   ├── Developer/              # Developer-mode-only tools (file browser, settings table, launch screen preview)
+│   ├── Features/               # Feature modules (see Features section below)
+│   ├── Onboarding/             # Onboarding flow (language selection, intro pages)
+│   ├── Services/               # AnalyticsService, BackupService, BackgroundTaskManager, DeveloperModeManager, RandomDataGenerator
+│   ├── Shared/                 # Reusable UI components (EmptyState, ErrorState, Loading, CardBackground, FilterChip, etc.)
+│   ├── UserSettings/           # Settings view, view model, iCloud backup list
+│   ├── ContentView.swift       # Root view (LaunchScreen → Onboarding → MainTabView)
+│   ├── MainTabView.swift       # Bottom tab bar (Today, Active Project, Projects, Settings)
+│   ├── CreativityHubApp.swift  # App entry point with AppDelegate, Firebase config
 │   └── Info.plist
-├── BusinessLogic/          # Shared between main app and ShareExtension
-│   ├── Database/           # DatabaseManager, repositories, migrations
-│   ├── Errors/             # AppError, RuntimeError
-│   ├── Helpers/            # L(), AppGroupContainer, AppLogger, AppNotifications
-│   ├── Models/             # Domain models (Project, Idea, Note, etc.)
-│   └── Services/           # LocalizationManager
-├── ShareExtension/         # Share Extension target
+├── BusinessLogic/              # Shared between main app and ShareExtension
+│   ├── Database/               # DatabaseManager, migrations, repositories
+│   ├── Errors/                 # AppError, RuntimeError
+│   ├── Helpers/                # L(), AppGroupContainer, AppLogger, AppNotifications
+│   ├── Models/                 # Domain models (Project, Idea, Note, Checklist, Expense, Document, Reminder, Tag, etc.)
+│   └── Services/               # LocalizationManager, DocumentService
+├── CreativityHubTests/         # Unit tests
+│   ├── Utils/                  # TestDatabaseHelper, TestHelpers
+│   ├── ProjectRepositoryTests.swift
+│   ├── NoteRepositoryTests.swift
+│   ├── ReminderRepositoryTests.swift
+│   ├── DeveloperModeManagerTests.swift
+│   └── ExportModelsTests.swift
+├── ShareExtension/             # Share Extension target
 │   ├── ShareViewController.swift
+│   ├── ShareFormView.swift
+│   ├── ShareFormViewModel.swift
+│   ├── Models/                 # ShareObjectType, SharedInput
+│   ├── Services/               # InputParser
 │   ├── Info.plist
 │   ├── ShareExtension.entitlements        # Release
 │   └── ShareExtensionDebug.entitlements   # Debug
+├── scripts/                    # Development & build scripts
+├── ci_scripts/                 # Xcode Cloud CI hooks
+├── docs/                       # Documentation
 └── CreativityHub.xcodeproj
 ```
+
+## Features
+
+The app has a 4-tab layout (`MainTabView`): Today, Active Project, Projects, Settings.
+
+| Feature | Files | Description |
+|---------|-------|-------------|
+| **Today** | `TodayView`, `TodayViewModel` | Dashboard with upcoming reminders, quick stats, recent projects, ideas by source |
+| **Projects** | 10 files | List/filter by status (active/completed/archived), detail view, content dashboard, create/edit form |
+| **Ideas** | 7 files | List (grid/list toggle), detail with source auto-detection (Instagram, TikTok, Pinterest, YouTube, Website), create/edit |
+| **Notes** | 5 files | List, detail, create/edit |
+| **Checklists** | 8 files | List with progress tracking, detail with item management, create/edit checklist and items |
+| **Expenses** | 6 files | List with filtering/sorting, detail, create/edit, expense category management |
+| **Documents** | 5 files | List with type detection (PDF, JPEG, PNG, HEIC), document picker, in-app preview |
+| **Reminders** | 7 files | List by status, detail, create/edit, upcoming reminders widget |
+| **Search** | `SearchView`, `SearchViewModel` | Global full-text search across all entity types |
+
+## Database
+
+### Repositories (`BusinessLogic/Database/Repositories/`)
+
+| Repository | Purpose |
+|------------|---------|
+| `ProjectRepository` | CRUD for projects with cascade delete |
+| `IdeaRepository` | CRUD for ideas with project filtering |
+| `NoteRepository` | CRUD for notes |
+| `ChecklistRepository` | CRUD for checklists |
+| `ChecklistItemRepository` | CRUD for checklist items |
+| `ExpenseRepository` | CRUD for expenses with filtering |
+| `ExpenseCategoryRepository` | CRUD for expense categories |
+| `TagRepository` | CRUD for tags |
+| `ReminderRepository` | CRUD for reminders with project filtering |
+| `DocumentRepository` | CRUD for documents with file path management |
+| `UserSettingsRepository` | User prefs (language, color scheme, backup toggle, user ID) |
+
+### Migrations (`BusinessLogic/Database/Migrations/`)
+
+1. `Migration_20260217_InitialSchema` — Core tables: projects, ideas, notes, checklists, checklist_items, tags, expenses, expense_categories
+2. `Migration_20260218_AddDocumentsTable` — Documents table with type & file path
+3. `Migration_20260218_AddRemindersTable` — Reminders table with date & status
+4. `Migration_20260220_DocumentFilePath` — Document file path refinements
+
+### Models (`BusinessLogic/Models/`)
+
+`Project`, `Idea`, `Note`, `Checklist`, `ChecklistItem`, `Expense`, `ExpenseCategory`, `Document`, `Reminder`, `Tag`, `Currency`, `UserSettings`, `ExportModels`
+
+## Services
+
+### Main App (`CreativityHub/Services/`)
+
+| Service | Purpose |
+|---------|---------|
+| `AnalyticsService` | Firebase Analytics (Release only). Persistent `user_id` via `UserSettingsRepository.fetchOrGenerateUserId()`, session ID, global properties on every event. |
+| `BackupService` | iCloud & safety backup orchestration. ZIP files with SQLite + documents. Safety backups in `Documents/creativityhub/safety_backups/` (max 3), iCloud backups (max 5). |
+| `BackgroundTaskManager` | Automatic daily backup scheduling via BGTaskScheduler. State in UserDefaults. |
+| `DeveloperModeManager` | 15-tap unlock on app version row. In-memory state only. |
+| `RandomDataGenerator` | Test data generation for development |
+
+### Shared (`BusinessLogic/Services/`)
+
+| Service | Purpose |
+|---------|---------|
+| `LocalizationManager` | `ObservableObject` managing language selection and string lookups (en, ru, kk) |
+| `DocumentService` | File operations for documents (save, load, delete) |
 
 ## Config Files (xcconfig)
 
@@ -79,6 +159,8 @@ Variables defined in xcconfig files and used via `$(VARIABLE_NAME)` in Info.plis
 Each target has separate Debug/Release entitlements:
 - Main app: `CreativityHub.entitlements` (Release), `CreativityHubDebug.entitlements` (Debug)
 - ShareExtension: `ShareExtension.entitlements` (Release), `ShareExtensionDebug.entitlements` (Debug)
+
+iCloud containers: `iCloud.dev.mgorbatyuk.CreativityHub` (Release), `iCloud.dev.mgorbatyuk.CreativityHub.dev` (Debug). iCloud services use `CloudDocuments` (not `CloudKit`).
 
 Entitlements must use the exact app group identifiers listed above.
 
@@ -115,8 +197,8 @@ Xcode Cloud runs `ci_scripts/ci_post_clone.sh` automatically to generate `Google
 - **MVVM**: ViewModels use `@Observable`; `LocalizationManager` uses `ObservableObject` (required by `@EnvironmentObject`)
 - **Database**: SQLite.swift via App Group shared container. UUIDs stored as String, Decimal stored as String.
 - **File system sync**: Xcode auto-compiles source files from `CreativityHub/`, `BusinessLogic/`, and `ShareExtension/` folders — no manual pbxproj edits for source files
-- **Analytics**: Firebase Analytics in Release builds only (`#if DEBUG` guard)
-- **Color scheme**: Communicated via `NotificationCenter` with `.appColorSchemeDidChange`
+- **Analytics**: Firebase Analytics in Release builds only (`#if DEBUG` guard). A persistent `user_id` (UUID) is generated on first launch via `UserSettingsRepository.fetchOrGenerateUserId()`, stored in SQLite, and included in every event through `AnalyticsService.getGlobalProperties()`.
+- **Color scheme**: `AppColorScheme` enum (system/light/dark) persisted in SQLite via `UserSettingsRepository`, communicated via `NotificationCenter` with `.appColorSchemeDidChange`
 
 ## Automatic Backup Pattern
 

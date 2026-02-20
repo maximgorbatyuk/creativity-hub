@@ -15,10 +15,14 @@ final class AnalyticsService: Sendable {
   /// Session identifier - immutable after initialization
   private let _sessionId = UUID().uuidString
 
+  /// Persistent user identifier from SQLite
+  nonisolated(unsafe) private var _userId: String?
+
   let logger: Logger
 
   init() {
     self.logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "-", category: "Analytics")
+    self.initializeUserId()
   }
 
   /// Track a custom event with optional properties.
@@ -95,6 +99,13 @@ final class AnalyticsService: Sendable {
 
   // MARK: - Private
 
+  private func initializeUserId() {
+    if let repo = DatabaseManager.shared.userSettingsRepository {
+      self._userId = repo.fetchOrGenerateUserId()
+      logger.info("Initialized user_id: \(self._userId ?? "nil")")
+    }
+  }
+
   private func mergeProperties(_ parameters: [String: Any]?) -> [String: Any] {
     var merged = getGlobalProperties()
 
@@ -119,6 +130,10 @@ final class AnalyticsService: Sendable {
       "platform": "iOS",
       "os_version": UIDevice.current.systemVersion
     ]
+
+    if let userId = _userId {
+      _globalProps!["user_id"] = userId
+    }
 
     guard let props = _globalProps else { return [:] }
     return props
