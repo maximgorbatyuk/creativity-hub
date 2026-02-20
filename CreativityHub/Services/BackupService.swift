@@ -26,7 +26,11 @@ final class BackupService {
             return nil
         }
 
-        var bundleIdentifier = Bundle.main.bundleIdentifier ?? "dev.mgorbatyuk.CreativityHub"
+        var bundleIdentifier = environment.getAppBundleId()
+        if bundleIdentifier == "-" {
+            bundleIdentifier = "dev.mgorbatyuk.CreativityHub"
+        }
+
         if bundleIdentifier.contains("Debug") {
             bundleIdentifier = bundleIdentifier.replacingOccurrences(of: "Debug", with: "")
         }
@@ -61,10 +65,12 @@ final class BackupService {
     private let documentRepository: DocumentRepository?
     private let reminderRepository: ReminderRepository?
     private let databaseManager: DatabaseManager
+    private let environment: EnvironmentService
     private let logger: Logger
 
-    init(databaseManager: DatabaseManager = .shared) {
+    init(databaseManager: DatabaseManager = .shared, environment: EnvironmentService = .shared) {
         self.databaseManager = databaseManager
+        self.environment = environment
         self.currentSchemaVersion = databaseManager.getDatabaseSchemaVersion()
         self.settingsRepository = databaseManager.userSettingsRepository
         self.projectRepository = databaseManager.projectRepository
@@ -78,7 +84,7 @@ final class BackupService {
         self.documentRepository = databaseManager.documentRepository
         self.reminderRepository = databaseManager.reminderRepository
         self.logger = Logger(
-            subsystem: Bundle.main.bundleIdentifier ?? "-",
+            subsystem: environment.getAppBundleId(),
             category: "BackupService"
         )
     }
@@ -426,9 +432,7 @@ final class BackupService {
     }
 
     private func getAppVersion() -> String {
-        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
-        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
-        return "\(version) (\(build))"
+        environment.getAppVisibleVersion()
     }
 
     private func getDeviceName() -> String {

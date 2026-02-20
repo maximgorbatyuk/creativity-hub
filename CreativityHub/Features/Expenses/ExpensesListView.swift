@@ -13,21 +13,25 @@ struct ExpensesListView: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            if viewModel.isLoading {
-                ProgressView()
-                    .frame(maxHeight: .infinity)
-            } else if viewModel.expenses.isEmpty {
-                emptyState
-            } else {
-                totalSummaryCard
-                filterSection
-                if viewModel.filteredExpenses.isEmpty {
-                    filterEmptyState
+        ZStack(alignment: .bottomTrailing) {
+            VStack(spacing: 0) {
+                if viewModel.isLoading {
+                    ProgressView()
+                        .frame(maxHeight: .infinity)
+                } else if viewModel.expenses.isEmpty {
+                    emptyState
                 } else {
-                    listContent
+                    totalSummaryCard
+                    filterSection
+                    if viewModel.filteredExpenses.isEmpty {
+                        filterEmptyState
+                    } else {
+                        listContent
+                    }
                 }
             }
+
+            floatingAddButton
         }
         .navigationTitle(L("expense.list.title"))
         .navigationBarTitleDisplayMode(.inline)
@@ -79,20 +83,10 @@ struct ExpensesListView: View {
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
-            Menu {
-                Button {
-                    viewModel.showAddSheet = true
-                } label: {
-                    Label(L("expense.list.add"), systemImage: "plus")
-                }
-
-                Button {
-                    viewModel.showCategorySheet = true
-                } label: {
-                    Label(L("expense.list.add_category"), systemImage: "folder.badge.plus")
-                }
+            Button {
+                viewModel.showCategorySheet = true
             } label: {
-                Image(systemName: "plus.circle.fill")
+                Image(systemName: "folder.badge.plus")
             }
         }
     }
@@ -203,5 +197,21 @@ struct ExpensesListView: View {
                 .foregroundColor(.secondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private var floatingAddButton: some View {
+        Button {
+            viewModel.showAddSheet = true
+        } label: {
+            Image(systemName: "plus")
+                .font(.system(size: 24, weight: .semibold))
+                .foregroundColor(.white)
+                .frame(width: 56, height: 56)
+                .background(Color.green)
+                .clipShape(Circle())
+                .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
+        }
+        .padding(.trailing, 20)
+        .padding(.bottom, 20)
     }
 }

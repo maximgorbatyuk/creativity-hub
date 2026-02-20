@@ -26,27 +26,23 @@ final class UserSettingsViewModel {
     var projects: [Project] = []
 
     private let db: DatabaseManager
+    private let environment: EnvironmentService
     private let developerMode: DeveloperModeManager
     private let userSettingsRepository: UserSettingsRepository?
     private let backupService: BackupService
     private let backgroundTaskManager: BackgroundTaskManager
-    private let logger = Logger(
-        subsystem: Bundle.main.bundleIdentifier ?? "-",
-        category: "UserSettingsViewModel"
-    )
+    private let logger: Logger
 
     var appVersion: String {
-        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "-"
-        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "-"
-        return "\(version) (\(build))"
+        environment.getAppVisibleVersion()
     }
 
     var developerName: String {
-        Bundle.main.object(forInfoDictionaryKey: "DeveloperName") as? String ?? ""
+        environment.getDeveloperName()
     }
 
     var telegramLink: String {
-        Bundle.main.object(forInfoDictionaryKey: "DeveloperTelegramLink") as? String ?? ""
+        environment.getDeveloperTelegramLink()
     }
 
     var isiCloudAvailable: Bool {
@@ -58,8 +54,7 @@ final class UserSettingsViewModel {
     }
 
     var isDevelopmentMode: Bool {
-        let buildEnv = Bundle.main.object(forInfoDictionaryKey: "BuildEnvironment") as? String ?? ""
-        return buildEnv == "dev" || developerMode.isDeveloperModeEnabled
+        environment.isDevelopmentMode() || developerMode.isDeveloperModeEnabled
     }
 
     var databaseSchemaVersion: Int {
@@ -70,13 +65,19 @@ final class UserSettingsViewModel {
         db: DatabaseManager = .shared,
         backupService: BackupService = .shared,
         developerMode: DeveloperModeManager = .shared,
+        environment: EnvironmentService = .shared,
         backgroundTaskManager: BackgroundTaskManager = .shared
     ) {
         self.db = db
+        self.environment = environment
         self.developerMode = developerMode
         self.userSettingsRepository = db.userSettingsRepository
         self.backupService = backupService
         self.backgroundTaskManager = backgroundTaskManager
+        self.logger = Logger(
+            subsystem: environment.getAppBundleId(),
+            category: "UserSettingsViewModel"
+        )
         self.defaultCurrency = userSettingsRepository?.fetchCurrency() ?? .usd
         self.selectedLanguage = userSettingsRepository?.fetchLanguage() ?? .en
         self.selectedColorScheme = userSettingsRepository?.fetchColorScheme() ?? .system

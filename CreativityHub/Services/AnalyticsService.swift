@@ -1,7 +1,6 @@
 import FirebaseAnalytics
 import Foundation
 import os
-import UIKit
 
 /// Service for tracking analytics events using Firebase Analytics.
 /// Analytics are only active in Release builds - DEBUG builds log locally only.
@@ -21,7 +20,7 @@ final class AnalyticsService: Sendable {
   let logger: Logger
 
   init() {
-    self.logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "-", category: "Analytics")
+    self.logger = Logger(subsystem: EnvironmentService.shared.getAppBundleId(), category: "Analytics")
     self.initializeUserId()
   }
 
@@ -121,14 +120,13 @@ final class AnalyticsService: Sendable {
       return props
     }
 
-    let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown"
-    let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "unknown"
+    let appVersion = EnvironmentService.shared.getAppVisibleVersion()
 
     _globalProps = [
       "session_id": _sessionId,
-      "app_version": "\(version) (\(build))",
+      "app_version": appVersion,
       "platform": "iOS",
-      "os_version": UIDevice.current.systemVersion
+      "os_version": EnvironmentService.shared.getOsVersion()
     ]
 
     if let userId = _userId {

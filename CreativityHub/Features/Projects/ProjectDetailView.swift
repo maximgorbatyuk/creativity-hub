@@ -33,13 +33,13 @@ struct ProjectDetailView: View {
                 if viewModel.project.hasBudget {
                     budgetCard
                 }
+                projectActionsSection
             }
             .padding()
         }
         .background(Color(UIColor.systemGroupedBackground))
         .navigationTitle(viewModel.project.name)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar { toolbarContent }
         .onAppear {
             viewModel.loadData()
             analytics.trackScreen("project_detail")
@@ -77,51 +77,6 @@ struct ProjectDetailView: View {
         }
         .navigationDestination(isPresented: $showRemindersList) {
             RemindersListView(projectId: viewModel.project.id)
-        }
-    }
-
-    // MARK: - Toolbar
-
-    @ToolbarContentBuilder
-    private var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) {
-            Menu {
-                Button {
-                    showEditSheet = true
-                } label: {
-                    Label(L("button.edit"), systemImage: "pencil")
-                }
-
-                Button {
-                    viewModel.togglePin()
-                } label: {
-                    Label(
-                        viewModel.project.isPinned ? L("project.action.unpin") : L("project.action.pin"),
-                        systemImage: viewModel.project.isPinned ? "pin.slash" : "pin"
-                    )
-                }
-
-                Menu(L("project.action.set_status")) {
-                    ForEach(ProjectStatus.allCases) { status in
-                        Button {
-                            viewModel.updateStatus(status)
-                        } label: {
-                            Label(status.displayName, systemImage: status.icon)
-                        }
-                        .disabled(viewModel.project.status == status)
-                    }
-                }
-
-                Divider()
-
-                Button(role: .destructive) {
-                    showDeleteConfirmation = true
-                } label: {
-                    Label(L("button.delete"), systemImage: "trash")
-                }
-            } label: {
-                Image(systemName: "ellipsis.circle")
-            }
         }
     }
 
@@ -365,6 +320,86 @@ struct ProjectDetailView: View {
         }
         .padding()
         .cardBackground()
+    }
+
+    // MARK: - Actions
+
+    private var projectActionsSection: some View {
+        HStack(spacing: 8) {
+            actionButton(
+                title: L("button.edit"),
+                systemImage: "pencil",
+                tintColor: .blue
+            ) {
+                showEditSheet = true
+            }
+
+            actionButton(
+                title: viewModel.project.isPinned ? L("project.action.unpin") : L("project.action.pin"),
+                systemImage: viewModel.project.isPinned ? "pin.slash" : "pin",
+                tintColor: .orange
+            ) {
+                viewModel.togglePin()
+            }
+
+            Menu {
+                ForEach(ProjectStatus.allCases) { status in
+                    Button {
+                        viewModel.updateStatus(status)
+                    } label: {
+                        Label(status.displayName, systemImage: status.icon)
+                    }
+                    .disabled(viewModel.project.status == status)
+                }
+            } label: {
+                actionLabel(
+                    title: L("project.action.set_status"),
+                    systemImage: "flag.fill",
+                    tintColor: .indigo
+                )
+            }
+
+            actionButton(
+                title: L("button.delete"),
+                systemImage: "trash",
+                tintColor: .red
+            ) {
+                showDeleteConfirmation = true
+            }
+        }
+    }
+
+    private func actionButton(
+        title: String,
+        systemImage: String,
+        tintColor: Color,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            actionLabel(title: title, systemImage: systemImage, tintColor: tintColor)
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func actionLabel(
+        title: String,
+        systemImage: String,
+        tintColor: Color
+    ) -> some View {
+        VStack(spacing: 6) {
+            Image(systemName: systemImage)
+                .font(.system(size: 20))
+            Text(title)
+                .font(.caption2)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+        }
+        .fontWeight(.semibold)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 12)
+        .foregroundColor(tintColor)
+        .background(tintColor.opacity(0.1))
+        .cornerRadius(12)
     }
 
     // MARK: - Helpers

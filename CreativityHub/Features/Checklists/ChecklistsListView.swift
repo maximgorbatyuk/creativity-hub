@@ -13,27 +13,22 @@ struct ChecklistsListView: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            if viewModel.isLoading {
-                ProgressView()
-                    .frame(maxHeight: .infinity)
-            } else if viewModel.checklists.isEmpty {
-                emptyState
-            } else {
-                checklistsList
+        ZStack(alignment: .bottomTrailing) {
+            VStack(spacing: 0) {
+                if viewModel.isLoading {
+                    ProgressView()
+                        .frame(maxHeight: .infinity)
+                } else if viewModel.checklists.isEmpty {
+                    emptyState
+                } else {
+                    checklistsList
+                }
             }
+
+            floatingAddButton
         }
         .navigationTitle(L("checklist.list.title"))
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button {
-                    viewModel.showAddSheet = true
-                } label: {
-                    Image(systemName: "plus")
-                }
-            }
-        }
         .onAppear {
             viewModel.loadData()
             analytics.trackScreen("checklists_list")
@@ -96,5 +91,21 @@ struct ChecklistsListView: View {
         ) {
             viewModel.showAddSheet = true
         }
+    }
+
+    private var floatingAddButton: some View {
+        Button {
+            viewModel.showAddSheet = true
+        } label: {
+            Image(systemName: "plus")
+                .font(.system(size: 24, weight: .semibold))
+                .foregroundColor(.white)
+                .frame(width: 56, height: 56)
+                .background(Color.blue)
+                .clipShape(Circle())
+                .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
+        }
+        .padding(.trailing, 20)
+        .padding(.bottom, 20)
     }
 }

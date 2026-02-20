@@ -18,22 +18,26 @@ struct IdeasListView: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            if viewModel.isLoading {
-                ProgressView()
-                    .frame(maxHeight: .infinity)
-            } else if viewModel.ideas.isEmpty {
-                emptyState
-            } else {
-                filterSection
-                if viewModel.filteredIdeas.isEmpty {
-                    filterEmptyState
-                } else if viewModel.layout == .list {
-                    listContent
+        ZStack(alignment: .bottomTrailing) {
+            VStack(spacing: 0) {
+                if viewModel.isLoading {
+                    ProgressView()
+                        .frame(maxHeight: .infinity)
+                } else if viewModel.ideas.isEmpty {
+                    emptyState
                 } else {
-                    gridContent
+                    filterSection
+                    if viewModel.filteredIdeas.isEmpty {
+                        filterEmptyState
+                    } else if viewModel.layout == .list {
+                        listContent
+                    } else {
+                        gridContent
+                    }
                 }
             }
+
+            floatingAddButton
         }
         .navigationTitle(L("idea.list.title"))
         .navigationBarTitleDisplayMode(.inline)
@@ -63,20 +67,12 @@ struct IdeasListView: View {
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
-            HStack(spacing: 12) {
-                Button {
-                    withAnimation {
-                        viewModel.layout = viewModel.layout == .list ? .grid : .list
-                    }
-                } label: {
-                    Image(systemName: viewModel.layout == .list ? "square.grid.2x2" : "list.bullet")
+            Button {
+                withAnimation {
+                    viewModel.layout = viewModel.layout == .list ? .grid : .list
                 }
-
-                Button {
-                    viewModel.showAddSheet = true
-                } label: {
-                    Image(systemName: "plus")
-                }
+            } label: {
+                Image(systemName: viewModel.layout == .list ? "square.grid.2x2" : "list.bullet")
             }
         }
     }
@@ -184,5 +180,21 @@ struct IdeasListView: View {
                 .foregroundColor(.secondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private var floatingAddButton: some View {
+        Button {
+            viewModel.showAddSheet = true
+        } label: {
+            Image(systemName: "plus")
+                .font(.system(size: 24, weight: .semibold))
+                .foregroundColor(.white)
+                .frame(width: 56, height: 56)
+                .background(Color.yellow)
+                .clipShape(Circle())
+                .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
+        }
+        .padding(.trailing, 20)
+        .padding(.bottom, 20)
     }
 }
