@@ -120,6 +120,8 @@ struct ExpenseDetailView: View {
                 Spacer()
             }
 
+            statusButtonsRow
+
             if let vendor = expense.vendor, !vendor.isEmpty {
                 HStack(spacing: 6) {
                     Image(systemName: "storefront")
@@ -133,6 +135,44 @@ struct ExpenseDetailView: View {
         }
         .padding()
         .cardBackground()
+    }
+
+    private var statusButtonsRow: some View {
+        HStack(spacing: 8) {
+            ForEach(ExpenseStatus.allCases) { statusOption in
+                statusButton(for: statusOption)
+            }
+        }
+    }
+
+    private func statusButton(for statusOption: ExpenseStatus) -> some View {
+        let isActive = expense.status == statusOption
+
+        return Button {
+            updateExpenseStatus(to: statusOption)
+        } label: {
+            HStack(spacing: 4) {
+                Image(systemName: statusOption.icon)
+                    .font(.caption2)
+                Text(statusOption.displayName)
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .lineLimit(1)
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 6)
+            .background(
+                Capsule()
+                    .fill(isActive ? statusOption.color.opacity(0.16) : Color(UIColor.systemGray6))
+            )
+            .overlay(
+                Capsule()
+                    .stroke(isActive ? statusOption.color : Color.clear, lineWidth: 1)
+            )
+            .foregroundColor(isActive ? statusOption.color : .secondary)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(statusOption.displayName)
     }
 
     // MARK: - Details
@@ -228,5 +268,13 @@ struct ExpenseDetailView: View {
     private var categoryName: String? {
         guard let categoryId = expense.categoryId else { return nil }
         return categories.first { $0.id == categoryId }?.name
+    }
+
+    private func updateExpenseStatus(to status: ExpenseStatus) {
+        guard expense.status != status else { return }
+
+        expense.status = status
+        expense.updatedAt = Date()
+        onUpdate(expense)
     }
 }

@@ -104,12 +104,37 @@
 "settings.version" = "Version";
 "settings.developer" = "Developer";
 "settings.contact_telegram" = "Contact developer via Telegram";
+"settings.tags" = "Tags";
+
+/* Tags */
+"tags.title" = "Tags";
+"tags.empty" = "No tags yet";
+"tags.empty.message" = "Tags help you organize ideas across projects.";
+"tags.add" = "Add Tag";
+"tags.edit" = "Edit Tag";
+"tags.delete.title" = "Delete Tag";
+"tags.delete.message" = "This tag will be removed from all ideas. This action cannot be undone.";
+"tags.name" = "Name";
+"tags.color" = "Color";
+"tags.name.placeholder" = "Tag name";
 
 /* Tabs */
+"tab.home" = "Home";
 "tab.today" = "Today";
 "tab.projects" = "Projects";
+"tab.active_project" = "Active Project";
 "tab.search" = "Search";
 "tab.settings" = "Settings";
+
+/* Home */
+"home.overdue" = "Overdue";
+"home.upcoming_reminders" = "Upcoming Reminders";
+"home.active_projects" = "%d Active Projects";
+"home.stats.projects" = "Projects";
+"home.stats.reminders" = "Reminders";
+"home.stats.logged_time" = "Logged time";
+"home.empty.title" = "All Clear";
+"home.empty.message" = "No active projects or upcoming reminders. Create a project to get started!";
 
 /* Today */
 "today.create_project" = "Create Project";
@@ -298,6 +323,7 @@
 "expense.filter.no_results" = "No expenses match this filter";
 "expense.summary.paid" = "Paid";
 "expense.summary.planned" = "Planned";
+"expense.summary.total" = "Total spent";
 "expense.detail.title" = "Expense";
 "expense.detail.details" = "Details";
 "expense.detail.date" = "Date";
@@ -394,6 +420,7 @@
 "search.section.reminders" = "Reminders";
 "search.section.expenses" = "Expenses";
 "search.section.checklist_items" = "Checklist Items";
+"search.section.documents" = "Documents";
 
 /* Backup */
 "settings.section.backup" = "Backup & Restore";
@@ -404,7 +431,14 @@
 "backup.icloud.title" = "iCloud Backups";
 "backup.icloud.empty.title" = "No Backups";
 "backup.icloud.empty.message" = "Create your first backup to get started";
+"backup.icloud.not_available.title" = "iCloud Not Available";
+"backup.icloud.not_available.message" = "Please sign in to iCloud in Settings to enable backups.";
 "backup.loading" = "Loading backups...";
+"backup.last" = "Last backup";
+"backup.automatic.title" = "Automatic Backup";
+"backup.automatic.last" = "Last:";
+"backup.automatic.description" = "Automatic backups to iCloud keep your data safe.";
+"backup.automatic.retention" = "Maximum 5 backups kept, older than 30 days auto-deleted.";
 "backup.footer" = "Export your data as a JSON file or back up to iCloud. Import restores from a previously exported file.";
 "backup.delete.title" = "Delete Backup?";
 "backup.delete.message" = "Are you sure you want to delete the backup from";
@@ -497,6 +531,7 @@
 "share.kind.link" = "Link";
 "share.kind.text" = "Text";
 "share.kind.image" = "Image";
+"share.kind.file" = "File";
 "share.error.save_failed" = "Failed to save. Please try again.";
 "share.error.cancelled" = "User cancelled.";
 "share.error.unsupported" = "This content type is not supported.";
@@ -511,3 +546,4 @@
 "project.content.empty.title" = "No Projects Yet";
 "project.content.empty.subtitle" = "Create your first project to get started";
 "project.content.empty.add_button" = "Create Project";
+"project.content.add_item" = "Add New";

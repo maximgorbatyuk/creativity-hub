@@ -18,6 +18,9 @@ final class UserSettingsViewModel {
     var iCloudBackups: [BackupInfo] = []
     var backupError: String?
     var exportFileURL: URL?
+    var isAutomaticBackupEnabled = false
+    var lastAutomaticBackupDate: Date?
+    var lastiCloudBackupDate: Date?
 
     // Developer mode
     var projects: [Project] = []
@@ -26,6 +29,7 @@ final class UserSettingsViewModel {
     private let developerMode: DeveloperModeManager
     private let userSettingsRepository: UserSettingsRepository?
     private let backupService: BackupService
+    private let backgroundTaskManager: BackgroundTaskManager
     private let logger = Logger(
         subsystem: Bundle.main.bundleIdentifier ?? "-",
         category: "UserSettingsViewModel"
@@ -65,15 +69,19 @@ final class UserSettingsViewModel {
     init(
         db: DatabaseManager = .shared,
         backupService: BackupService = .shared,
-        developerMode: DeveloperModeManager = .shared
+        developerMode: DeveloperModeManager = .shared,
+        backgroundTaskManager: BackgroundTaskManager = .shared
     ) {
         self.db = db
         self.developerMode = developerMode
         self.userSettingsRepository = db.userSettingsRepository
         self.backupService = backupService
+        self.backgroundTaskManager = backgroundTaskManager
         self.defaultCurrency = userSettingsRepository?.fetchCurrency() ?? .usd
         self.selectedLanguage = userSettingsRepository?.fetchLanguage() ?? .en
         self.selectedColorScheme = userSettingsRepository?.fetchColorScheme() ?? .system
+        self.isAutomaticBackupEnabled = backgroundTaskManager.isAutomaticBackupEnabled
+        self.lastAutomaticBackupDate = backgroundTaskManager.lastAutomaticBackupDate
     }
 
     func saveDefaultCurrency(_ currency: Currency) {
@@ -130,7 +138,8 @@ final class UserSettingsViewModel {
     func createiCloudBackup() async {
         isCreatingiCloudBackup = true
         do {
-            _ = try await backupService.createiCloudBackup()
+            let backupInfo = try await backupService.createiCloudBackup()
+            lastiCloudBackupDate = backupInfo.createdAt
             await loadiCloudBackups()
         } catch {
             logger.error("iCloud backup failed: \(error.localizedDescription)")
@@ -143,6 +152,7 @@ final class UserSettingsViewModel {
         isLoadingBackups = true
         do {
             iCloudBackups = try await backupService.listiCloudBackups()
+            lastiCloudBackupDate = iCloudBackups.first?.createdAt
         } catch {
             logger.error("Failed to load iCloud backups: \(error.localizedDescription)")
             backupError = error.localizedDescription
@@ -176,10 +186,23 @@ final class UserSettingsViewModel {
         do {
             try await backupService.deleteAlliCloudBackups()
             iCloudBackups = []
+            lastiCloudBackupDate = nil
         } catch {
             logger.error("Delete all iCloud backups failed: \(error.localizedDescription)")
             backupError = error.localizedDescription
         }
+    }
+
+    // MARK: - Automatic Backup
+
+    func toggleAutomaticBackup(_ enabled: Bool) {
+        isAutomaticBackupEnabled = enabled
+        backgroundTaskManager.isAutomaticBackupEnabled = enabled
+    }
+
+    func refreshAutomaticBackupState() {
+        isAutomaticBackupEnabled = backgroundTaskManager.isAutomaticBackupEnabled
+        lastAutomaticBackupDate = backgroundTaskManager.lastAutomaticBackupDate
     }
 
     // MARK: - Developer Mode

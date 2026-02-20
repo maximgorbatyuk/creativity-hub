@@ -168,6 +168,25 @@ class ExpenseRepository {
         }
     }
 
+    func calculateTotalByProjectId(projectId: UUID) -> [Currency: Decimal] {
+        var totals: [Currency: Decimal] = [:]
+        do {
+            let query = table.filter(
+                projectIdColumn == projectId.uuidString
+                    && statusColumn == ExpenseStatus.paid.rawValue
+            )
+            for row in try db.prepare(query) {
+                guard let amount = Decimal(string: row[amountColumn]),
+                      let currency = Currency(rawValue: row[currencyColumn])
+                else { continue }
+                totals[currency, default: .zero] += amount
+            }
+        } catch {
+            logger.error("Failed to calculate totals by currency for project: \(error)")
+        }
+        return totals
+    }
+
     func totalByProjectId(projectId: UUID, status: ExpenseStatus? = nil) -> Decimal {
         var total: Decimal = 0
         do {

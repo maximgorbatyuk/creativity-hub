@@ -210,6 +210,9 @@ struct ShareFormView: View {
         case .image:
             name = "photo"
             color = .purple
+        case .file:
+            name = "doc.fill"
+            color = .red
         }
 
         return Image(systemName: name)
@@ -223,6 +226,7 @@ struct ShareFormView: View {
         case .link: return L("share.kind.link")
         case .text: return L("share.kind.text")
         case .image: return L("share.kind.image")
+        case .file: return L("share.kind.file")
         }
     }
 
@@ -232,7 +236,7 @@ struct ShareFormView: View {
             return input.url?.absoluteString ?? ""
         case .text:
             return input.text ?? ""
-        case .image:
+        case .image, .file:
             return input.originalFilename ?? ""
         }
     }

@@ -60,7 +60,7 @@ final class DocumentsListViewModel {
         isLoading = false
     }
 
-    func addDocument(from url: URL, name: String? = nil) -> Bool {
+    func addDocument(from url: URL, name: String? = nil, filePath: String? = nil) -> Bool {
         guard let result = documentService.saveDocument(from: url, projectId: projectId) else {
             logger.error("Failed to save document file from URL")
             return false
@@ -74,6 +74,7 @@ final class DocumentsListViewModel {
             name: documentName,
             fileType: documentType,
             fileName: result.fileName,
+            filePath: filePath,
             fileSize: result.fileSize
         )
 
@@ -89,7 +90,7 @@ final class DocumentsListViewModel {
         }
     }
 
-    func addDocumentFromData(_ data: Data, fileName: String, name: String? = nil) -> Bool {
+    func addDocumentFromData(_ data: Data, fileName: String, name: String? = nil, filePath: String? = nil) -> Bool {
         guard let fileURL = documentService.saveDocument(data: data, fileName: fileName, projectId: projectId) else {
             logger.error("Failed to save document data")
             return false
@@ -105,6 +106,7 @@ final class DocumentsListViewModel {
             name: documentName,
             fileType: documentType,
             fileName: savedFileName,
+            filePath: filePath,
             fileSize: fileSize
         )
 

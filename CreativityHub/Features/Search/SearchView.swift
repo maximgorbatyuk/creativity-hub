@@ -83,6 +83,10 @@ struct SearchView: View {
                         ForEach(viewModel.checklistItems) { item in
                             checklistItemRow(item)
                         }
+                    case .documents:
+                        ForEach(viewModel.documents) { document in
+                            documentRow(document)
+                        }
                     }
                 } header: {
                     Label(section.displayName, systemImage: section.icon)
@@ -217,6 +221,25 @@ struct SearchView: View {
             Text(expense.formattedAmount)
                 .font(.subheadline)
                 .fontWeight(.medium)
+        }
+    }
+
+    private func documentRow(_ document: Document) -> some View {
+        HStack(spacing: 10) {
+            Image(systemName: document.fileType.icon)
+                .font(.body)
+                .foregroundColor(.blue)
+                .frame(width: 24)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(document.displayName)
+                    .font(.subheadline)
+                    .lineLimit(1)
+
+                Text(document.fileType.displayName)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
         }
     }
 

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ProjectRowView: View {
     let project: Project
+    var stats: ProjectRowStats?
 
     var body: some View {
         HStack(spacing: 12) {
@@ -47,45 +48,47 @@ struct ProjectRowView: View {
                     .lineLimit(1)
             }
 
-            if project.hasDateRange {
-                dateRangeLabel
+            HStack(spacing: 8) {
+                statusBadge
+
+                if let stats, stats.checklistProgress.total > 0 {
+                    progressLabel(stats.checklistProgress)
+                }
+
+                if let stats, stats.reminderCount > 0 {
+                    Label("\(stats.reminderCount)", systemImage: "bell")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
             }
         }
     }
 
+    private var statusBadge: some View {
+        Text(project.status.displayName)
+            .font(.caption2)
+            .fontWeight(.medium)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 2)
+            .background(project.status.color.opacity(0.15))
+            .foregroundColor(project.status.color)
+            .cornerRadius(4)
+    }
+
+    private func progressLabel(_ progress: (checked: Int, total: Int)) -> some View {
+        Label("\(progress.checked)/\(progress.total)", systemImage: "checklist")
+            .font(.caption)
+            .foregroundColor(progress.checked == progress.total ? .green : .secondary)
+    }
+
     private var trailingInfo: some View {
         VStack(alignment: .trailing, spacing: 4) {
-            Text(project.status.displayName)
-                .font(.caption)
-                .fontWeight(.medium)
-                .foregroundColor(project.status.color)
-
             if let formatted = project.formattedBudget {
                 Text(formatted)
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
         }
-    }
-
-    private var dateRangeLabel: some View {
-        HStack(spacing: 4) {
-            Image(systemName: "calendar")
-                .font(.caption2)
-            if let start = project.startDate {
-                Text(start, style: .date)
-                    .font(.caption)
-            }
-            if project.startDate != nil, project.targetDate != nil {
-                Text("–")
-                    .font(.caption)
-            }
-            if let target = project.targetDate {
-                Text(target, style: .date)
-                    .font(.caption)
-            }
-        }
-        .foregroundColor(.secondary)
     }
 
     // MARK: - Helpers

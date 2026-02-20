@@ -34,7 +34,9 @@ final class ProjectContentViewModel {
     private let noteRepository: NoteRepository?
     private let documentRepository: DocumentRepository?
     private let expenseRepository: ExpenseRepository?
+    private let expenseCategoryRepository: ExpenseCategoryRepository?
     private let reminderRepository: ReminderRepository?
+    private let userSettingsRepository: UserSettingsRepository?
     private let logger: Logger
 
     private let selectedProjectKey = "selectedProjectId"
@@ -50,7 +52,9 @@ final class ProjectContentViewModel {
         noteRepository = databaseManager.noteRepository
         documentRepository = databaseManager.documentRepository
         expenseRepository = databaseManager.expenseRepository
+        expenseCategoryRepository = databaseManager.expenseCategoryRepository
         reminderRepository = databaseManager.reminderRepository
+        userSettingsRepository = databaseManager.userSettingsRepository
         logger = Logger(
             subsystem: Bundle.main.bundleIdentifier ?? "-",
             category: "ProjectContentViewModel"
@@ -174,6 +178,77 @@ final class ProjectContentViewModel {
         return Double(checklistProgress.checked) / Double(checklistProgress.total)
     }
 
+    // MARK: - Item Creation
+
+    var defaultCurrency: Currency {
+        userSettingsRepository?.fetchCurrency() ?? .usd
+    }
+
+    var expenseCategories: [ExpenseCategory] {
+        guard let projectId = selectedProjectId else { return [] }
+        return expenseCategoryRepository?.fetchByProjectId(projectId: projectId) ?? []
+    }
+
+    func addChecklist(name: String) {
+        guard let projectId = selectedProjectId else { return }
+        let sortOrder = checklistRepository?.nextSortOrder(projectId: projectId) ?? 0
+        let checklist = Checklist(
+            projectId: projectId,
+            name: name.trimmingCharacters(in: .whitespacesAndNewlines),
+            sortOrder: sortOrder
+        )
+        guard checklistRepository?.insert(checklist) == true else {
+            logger.error("Failed to insert checklist")
+            return
+        }
+        projectRepository?.touchUpdatedAt(id: projectId)
+        refreshData()
+    }
+
+    func addIdea(_ idea: Idea) {
+        guard ideaRepository?.insert(idea) == true else {
+            logger.error("Failed to insert idea")
+            return
+        }
+        if let projectId = selectedProjectId {
+            projectRepository?.touchUpdatedAt(id: projectId)
+        }
+        refreshData()
+    }
+
+    func addNote(_ note: Note) {
+        guard noteRepository?.insert(note) == true else {
+            logger.error("Failed to insert note")
+            return
+        }
+        if let projectId = selectedProjectId {
+            projectRepository?.touchUpdatedAt(id: projectId)
+        }
+        refreshData()
+    }
+
+    func addExpense(_ expense: Expense) {
+        guard expenseRepository?.insert(expense) == true else {
+            logger.error("Failed to insert expense")
+            return
+        }
+        if let projectId = selectedProjectId {
+            projectRepository?.touchUpdatedAt(id: projectId)
+        }
+        refreshData()
+    }
+
+    func addReminder(_ reminder: Reminder) {
+        guard reminderRepository?.insert(reminder) == true else {
+            logger.error("Failed to insert reminder")
+            return
+        }
+        if let projectId = selectedProjectId {
+            projectRepository?.touchUpdatedAt(id: projectId)
+        }
+        refreshData()
+    }
+
     // MARK: - Private
 
     private func loadSectionData() {
@@ -189,7 +264,7 @@ final class ProjectContentViewModel {
         sectionCounts.documents = documentRepository?.countByProjectId(projectId: projectId) ?? 0
         sectionCounts.reminders = reminderRepository?.countByProjectId(projectId: projectId) ?? 0
 
-        // Expenses count and total
+        // Expenses count and totals by currency
         let allExpenses = expenseRepository?.fetchByProjectId(projectId: projectId) ?? []
         sectionCounts.expenses = allExpenses.count
         totalExpenses = allExpenses

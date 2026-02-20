@@ -11,6 +11,13 @@ struct ProjectContentView: View {
     @State private var showDocumentsList = false
     @State private var showExpensesList = false
     @State private var showRemindersList = false
+    @State private var showAddItemSelector = false
+    @State private var showAddChecklistSheet = false
+    @State private var showAddIdeaSheet = false
+    @State private var showAddNoteSheet = false
+    @State private var showAddExpenseSheet = false
+    @State private var showAddReminderSheet = false
+    @State private var showAddDocumentSheet = false
 
     private let analytics = AnalyticsService.shared
 
@@ -79,6 +86,53 @@ struct ProjectContentView: View {
                 if let project = viewModel.selectedProject {
                     ProjectFormView(mode: .edit(project)) { updated in
                         viewModel.updateProject(updated)
+                    }
+                }
+            }
+            .sheet(isPresented: $showAddItemSelector) {
+                addItemSelectorSheet
+            }
+            .sheet(isPresented: $showAddChecklistSheet) {
+                ChecklistFormView { name in
+                    viewModel.addChecklist(name: name)
+                }
+            }
+            .sheet(isPresented: $showAddIdeaSheet) {
+                if let projectId = viewModel.selectedProjectId {
+                    IdeaFormView(mode: .add(projectId: projectId)) { idea in
+                        viewModel.addIdea(idea)
+                    }
+                }
+            }
+            .sheet(isPresented: $showAddNoteSheet) {
+                if let projectId = viewModel.selectedProjectId {
+                    NoteFormView(mode: .add(projectId: projectId)) { note in
+                        viewModel.addNote(note)
+                    }
+                }
+            }
+            .sheet(isPresented: $showAddExpenseSheet) {
+                if let projectId = viewModel.selectedProjectId {
+                    ExpenseFormView(
+                        mode: .add(projectId: projectId),
+                        categories: viewModel.expenseCategories,
+                        defaultCurrency: viewModel.defaultCurrency
+                    ) { expense in
+                        viewModel.addExpense(expense)
+                    }
+                }
+            }
+            .sheet(isPresented: $showAddReminderSheet) {
+                if let projectId = viewModel.selectedProjectId {
+                    ReminderFormView(mode: .add(projectId: projectId)) { reminder in
+                        viewModel.addReminder(reminder)
+                    }
+                }
+            }
+            .sheet(isPresented: $showAddDocumentSheet) {
+                if let projectId = viewModel.selectedProjectId {
+                    DocumentPickerView(projectId: projectId) { _ in
+                        viewModel.refreshData()
                     }
                 }
             }
@@ -440,11 +494,118 @@ struct ProjectContentView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
+    // MARK: - Add Item Selector
+
+    private var addItemSelectorSheet: some View {
+        NavigationStack {
+            let columns = [
+                GridItem(.flexible()),
+                GridItem(.flexible()),
+                GridItem(.flexible())
+            ]
+
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: 20) {
+                    addItemGridButton(
+                        icon: "checklist",
+                        color: .blue,
+                        title: L("project.section.checklists")
+                    ) {
+                        showAddItemSelector = false
+                        showAddChecklistSheet = true
+                    }
+
+                    addItemGridButton(
+                        icon: "lightbulb.fill",
+                        color: .yellow,
+                        title: L("project.section.ideas")
+                    ) {
+                        showAddItemSelector = false
+                        showAddIdeaSheet = true
+                    }
+
+                    addItemGridButton(
+                        icon: "note.text",
+                        color: .orange,
+                        title: L("project.section.notes")
+                    ) {
+                        showAddItemSelector = false
+                        showAddNoteSheet = true
+                    }
+
+                    addItemGridButton(
+                        icon: "doc.fill",
+                        color: .purple,
+                        title: L("project.section.documents")
+                    ) {
+                        showAddItemSelector = false
+                        showAddDocumentSheet = true
+                    }
+
+                    addItemGridButton(
+                        icon: "creditcard.fill",
+                        color: .green,
+                        title: L("project.section.expenses")
+                    ) {
+                        showAddItemSelector = false
+                        showAddExpenseSheet = true
+                    }
+
+                    addItemGridButton(
+                        icon: "bell.fill",
+                        color: .red,
+                        title: L("project.section.reminders")
+                    ) {
+                        showAddItemSelector = false
+                        showAddReminderSheet = true
+                    }
+                }
+                .padding(24)
+            }
+            .navigationTitle(L("project.content.add_item"))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(L("button.cancel")) {
+                        showAddItemSelector = false
+                    }
+                }
+            }
+        }
+        .presentationDetents([.medium])
+    }
+
+    private func addItemGridButton(
+        icon: String,
+        color: Color,
+        title: String,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            VStack(spacing: 10) {
+                Image(systemName: icon)
+                    .font(.system(size: 28))
+                    .foregroundColor(.white)
+                    .frame(width: 56, height: 56)
+                    .background(color)
+                    .clipShape(Circle())
+
+                Text(title)
+                    .font(.caption)
+                    .foregroundColor(.primary)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+            }
+            .frame(maxWidth: .infinity)
+        }
+        .buttonStyle(.plain)
+    }
+
     // MARK: - FAB
 
     private var floatingAddButton: some View {
         Button {
-            showAddProjectSheet = true
+            showAddItemSelector = true
         } label: {
             Image(systemName: "plus")
                 .font(.system(size: 24, weight: .semibold))

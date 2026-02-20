@@ -10,7 +10,6 @@ struct ProjectsListView: View {
         NavigationStack {
             ZStack(alignment: .bottomTrailing) {
                 VStack(spacing: 0) {
-                    filterSection
                     if viewModel.isLoading {
                         ProgressView()
                             .frame(maxHeight: .infinity)
@@ -20,10 +19,14 @@ struct ProjectsListView: View {
                         projectsList
                     }
                 }
+                .safeAreaInset(edge: .top, spacing: 0) {
+                    filterSection
+                }
 
                 floatingAddButton
             }
             .navigationTitle(L("tab.projects"))
+            .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 viewModel.loadProjects()
                 analytics.trackScreen("projects_list")
@@ -63,6 +66,11 @@ struct ProjectsListView: View {
             .padding(.horizontal)
             .padding(.vertical, 8)
         }
+        .frame(height: 52)
+        .background(Color(UIColor.systemBackground))
+        .overlay(alignment: .bottom) {
+            Divider()
+        }
     }
 
     // MARK: - List
@@ -70,7 +78,7 @@ struct ProjectsListView: View {
     private var projectsList: some View {
         List {
             ForEach(viewModel.filteredProjects) { project in
-                ProjectRowView(project: project)
+                ProjectRowView(project: project, stats: viewModel.stats(for: project))
                     .contentShape(Rectangle())
                     .onTapGesture {
                         selectedProject = project
@@ -123,15 +131,15 @@ struct ProjectsListView: View {
             viewModel.showAddSheet = true
         } label: {
             Image(systemName: "plus")
-                .font(.title2)
-                .fontWeight(.semibold)
+                .font(.system(size: 24, weight: .semibold))
                 .foregroundColor(.white)
                 .frame(width: 56, height: 56)
                 .background(Color.accentColor)
                 .clipShape(Circle())
-                .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
+                .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
         }
-        .padding()
+        .padding(.trailing, 20)
+        .padding(.bottom, 20)
     }
 }
 

@@ -35,6 +35,13 @@ struct UserSettingsView: View {
             .navigationTitle(L("settings.title"))
             .onAppear {
                 analytics.trackScreen("settings")
+                viewModel.refreshAutomaticBackupState()
+
+                if viewModel.isiCloudAvailable {
+                    Task {
+                        await viewModel.loadiCloudBackups()
+                    }
+                }
             }
             .sheet(isPresented: $showiCloudBackups) {
                 iCloudBackupListView(viewModel: viewModel)
@@ -159,6 +166,17 @@ struct UserSettingsView: View {
             .onChange(of: viewModel.selectedLanguage) { _, newValue in
                 viewModel.saveLanguage(newValue)
             }
+
+            NavigationLink {
+                TagsListView()
+            } label: {
+                HStack {
+                    Image(systemName: "tag")
+                        .foregroundStyle(.orange)
+                    Text(L("settings.tags"))
+                        .foregroundStyle(.primary)
+                }
+            }
         }
     }
 
@@ -178,6 +196,25 @@ struct UserSettingsView: View {
 
     private var backupSection: some View {
         Section {
+            if !viewModel.isiCloudAvailable {
+                HStack(alignment: .top, spacing: 12) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundStyle(.orange)
+
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(L("backup.icloud.not_available.title"))
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.orange)
+
+                        Text(L("backup.icloud.not_available.message"))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .padding(.vertical, 4)
+            }
+
             Button {
                 Task {
                     await viewModel.exportData()
@@ -187,7 +224,10 @@ struct UserSettingsView: View {
                 }
             } label: {
                 HStack {
-                    Label(L("backup.export"), systemImage: "square.and.arrow.up")
+                    Image(systemName: "square.and.arrow.up")
+                        .foregroundStyle(.orange)
+                    Text(L("backup.export"))
+                        .foregroundColor(.primary)
                     Spacer()
                     if viewModel.isExporting {
                         ProgressView()
@@ -195,12 +235,16 @@ struct UserSettingsView: View {
                 }
             }
             .disabled(viewModel.isExporting)
+            .buttonStyle(.plain)
 
             Button {
                 showImportPicker = true
             } label: {
                 HStack {
-                    Label(L("backup.import"), systemImage: "square.and.arrow.down")
+                    Image(systemName: "square.and.arrow.down")
+                        .foregroundStyle(.indigo)
+                    Text(L("backup.import"))
+                        .foregroundColor(.primary)
                     Spacer()
                     if viewModel.isImporting {
                         ProgressView()
@@ -208,6 +252,7 @@ struct UserSettingsView: View {
                 }
             }
             .disabled(viewModel.isImporting)
+            .buttonStyle(.plain)
 
             if viewModel.isiCloudAvailable {
                 Button {
@@ -216,7 +261,10 @@ struct UserSettingsView: View {
                     }
                 } label: {
                     HStack {
-                        Label(L("backup.icloud.create"), systemImage: "icloud.and.arrow.up")
+                        Image(systemName: "icloud.and.arrow.up")
+                            .foregroundStyle(viewModel.isiCloudAvailable ? .blue : .gray)
+                        Text(L("backup.icloud.create"))
+                            .foregroundColor(viewModel.isiCloudAvailable ? .primary : .secondary)
                         Spacer()
                         if viewModel.isCreatingiCloudBackup {
                             ProgressView()
@@ -224,12 +272,65 @@ struct UserSettingsView: View {
                     }
                 }
                 .disabled(viewModel.isCreatingiCloudBackup)
+                .buttonStyle(.plain)
+
+                if let lastBackupDate = viewModel.lastiCloudBackupDate {
+                    HStack {
+                        Text(L("backup.last"))
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        Text(formatBackupDate(lastBackupDate))
+                            .foregroundStyle(.secondary)
+                    }
+                    .font(.caption)
+                }
 
                 Button {
                     viewModel.backupError = nil
                     showiCloudBackups = true
                 } label: {
-                    Label(L("backup.icloud.manage"), systemImage: "icloud")
+                    HStack {
+                        Image(systemName: "icloud")
+                            .foregroundStyle(viewModel.isiCloudAvailable ? .purple : .gray)
+                        Text(L("backup.icloud.manage"))
+                            .foregroundColor(viewModel.isiCloudAvailable ? .primary : .secondary)
+                    }
+                }
+                .buttonStyle(.plain)
+            }
+
+            Toggle(isOn: Binding(
+                get: { viewModel.isAutomaticBackupEnabled },
+                set: { newValue in
+                    viewModel.toggleAutomaticBackup(newValue)
+                }
+            )) {
+                HStack {
+                    Image(systemName: "clock.arrow.circlepath")
+                        .foregroundStyle(viewModel.isiCloudAvailable ? .green : .gray)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(L("backup.automatic.title"))
+                            .foregroundColor(viewModel.isiCloudAvailable ? .primary : .secondary)
+
+                        if let lastAutoBackupDate = viewModel.lastAutomaticBackupDate {
+                            Text("\(L("backup.automatic.last")) \(formatBackupDate(lastAutoBackupDate))")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                }
+            }
+            .disabled(!viewModel.isiCloudAvailable)
+
+            if viewModel.isiCloudAvailable {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(L("backup.automatic.description"))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text(L("backup.automatic.retention"))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                 }
             }
         } header: {
@@ -237,6 +338,10 @@ struct UserSettingsView: View {
         } footer: {
             Text(L("backup.footer"))
         }
+    }
+
+    private func formatBackupDate(_ date: Date) -> String {
+        date.formatted(date: .abbreviated, time: .shortened)
     }
 
     private var developerSection: some View {

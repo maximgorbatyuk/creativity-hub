@@ -9,6 +9,7 @@ struct PendingDocument: Identifiable {
     let fileName: String
     let fileSize: Int64
     let nameRequired: Bool
+    let originalPath: String
 }
 
 struct DocumentPickerView: View {
@@ -202,7 +203,8 @@ struct DocumentPickerView: View {
                             tempURL: tempURL,
                             fileName: fileName,
                             fileSize: fileSize,
-                            nameRequired: false
+                            nameRequired: false,
+                            originalPath: url.path
                         ))
                     } catch {
                         logger.error("Failed to copy file to temp: \(error)")
@@ -248,7 +250,8 @@ struct DocumentPickerView: View {
                             tempURL: tempURL,
                             fileName: fileName,
                             fileSize: Int64(data.count),
-                            nameRequired: true
+                            nameRequired: true,
+                            originalPath: ""
                         ))
                     } catch {
                         logger.error("Failed to process photo: \(error)")
@@ -291,7 +294,8 @@ struct DocumentPickerView: View {
                         tempURL: tempURL,
                         fileName: fileName,
                         fileSize: Int64(data.count),
-                        nameRequired: true
+                        nameRequired: true,
+                        originalPath: ""
                     )]
                     currentPendingIndex = 0
                     entryName = ""
@@ -314,7 +318,8 @@ struct DocumentPickerView: View {
 
         let pending = pendingDocuments[currentPendingIndex]
         let viewModel = DocumentsListViewModel(projectId: projectId)
-        let wasSaved = viewModel.addDocument(from: pending.tempURL, name: name)
+        let filePath = pending.originalPath.isEmpty ? nil : pending.originalPath
+        let wasSaved = viewModel.addDocument(from: pending.tempURL, name: name, filePath: filePath)
 
         try? FileManager.default.removeItem(at: pending.tempURL)
 

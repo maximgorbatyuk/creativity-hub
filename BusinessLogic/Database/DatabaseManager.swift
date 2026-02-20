@@ -11,7 +11,7 @@ class DatabaseManager {
         category: "DatabaseManager"
     )
 
-    private let latestVersion = 4
+    private let latestVersion = 5
 
     // Repositories
     private(set) var migrationRepository: MigrationsRepository?
@@ -173,6 +173,8 @@ class DatabaseManager {
                     try Migration_20260218_AddDocumentsTable(db: db).execute()
                 case 4:
                     try Migration_20260218_AddRemindersTable(db: db).execute()
+                case 5:
+                    try Migration_20260220_DocumentFilePath(db: db).execute()
                 default:
                     throw RuntimeError("Unknown migration version: \(version)")
                 }
