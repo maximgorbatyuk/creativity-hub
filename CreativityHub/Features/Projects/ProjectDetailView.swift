@@ -26,14 +26,17 @@ struct ProjectDetailView: View {
                 if viewModel.project.hasDateRange {
                     datesCard
                 }
-                if viewModel.checklistProgress.total > 0 {
-                    progressCard
-                }
-                sectionsOverview
+
                 if viewModel.project.hasBudget {
                     budgetCard
                 }
+
+                if viewModel.checklistProgress.total > 0 {
+                    progressCard
+                }
+
                 projectActionsSection
+                sectionsOverview
             }
             .padding()
         }

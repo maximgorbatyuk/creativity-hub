@@ -103,6 +103,7 @@
 "settings.currency.hint" = "Эта валюта будет выбрана по умолчанию при создании нового расхода.";
 "settings.language" = "Язык";
 "settings.color_scheme" = "Тема оформления";
+"settings.update_available" = "Доступно обновление";
 "settings.about_app.button" = "О чем это приложение?";
 "settings.rate_app" = "Оценить приложение";
 "settings.about_app.intro_title" = "Храните все творческие задачи в одном месте.";

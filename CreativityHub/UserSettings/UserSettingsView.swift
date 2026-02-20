@@ -3,6 +3,8 @@ import StoreKit
 import UniformTypeIdentifiers
 
 struct UserSettingsView: View {
+    let showAppUpdateButton: Bool
+
     @State private var viewModel = UserSettingsViewModel()
     @State private var showImportPicker = false
     @State private var showExportSheet = false
@@ -24,9 +26,17 @@ struct UserSettingsView: View {
     @Environment(\.requestReview) private var requestReview
     private let analytics = AnalyticsService.shared
 
+    init(showAppUpdateButton: Bool = false) {
+        self.showAppUpdateButton = showAppUpdateButton
+    }
+
     var body: some View {
         NavigationStack {
             Form {
+                if showAppUpdateButton {
+                    appUpdateSection
+                }
+
                 preferencesSection
                 aboutSection
                 importExportSection
@@ -150,6 +160,36 @@ struct UserSettingsView: View {
     }
 
     // MARK: - Sections
+
+    private var appUpdateSection: some View {
+        Section {
+            HStack(spacing: 12) {
+                Text(L("settings.update_available"))
+                    .fontWeight(.semibold)
+
+                Spacer()
+
+                Button {
+                    analytics.trackEvent("app_update_button_clicked", properties: [
+                        "screen": "settings",
+                        "button_name": "update_app"
+                    ])
+
+                    let appStoreLink = viewModel.appStoreAppLink
+                    if let url = URL(string: appStoreLink), !appStoreLink.isEmpty {
+                        openURL(url)
+                    }
+                } label: {
+                    Image(systemName: "arrow.down.circle.fill")
+                        .foregroundStyle(.orange)
+                        .font(.title2)
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.vertical, 4)
+            .listRowBackground(Color.yellow.opacity(0.2))
+        }
+    }
 
     private var preferencesSection: some View {
         Section(L("settings.section.preferences")) {

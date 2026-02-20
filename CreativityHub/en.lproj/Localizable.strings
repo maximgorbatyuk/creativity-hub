@@ -103,6 +103,7 @@
 "settings.currency.hint" = "This currency is preselected when creating a new expense.";
 "settings.language" = "Language";
 "settings.color_scheme" = "Color Scheme";
+"settings.update_available" = "Update is available";
 "settings.about_app.button" = "What is the app about?";
 "settings.rate_app" = "Rate the app";
 "settings.about_app.intro_title" = "Keep your creativity in one place.";

@@ -45,6 +45,10 @@ final class UserSettingsViewModel {
         environment.getDeveloperTelegramLink()
     }
 
+    var appStoreAppLink: String {
+        environment.getAppStoreAppLink()
+    }
+
     var isiCloudAvailable: Bool {
         backupService.isiCloudAvailable()
     }

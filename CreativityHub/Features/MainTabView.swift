@@ -1,8 +1,13 @@
 import SwiftUI
 
 struct MainTabView: View {
+    private let viewModel = MainTabViewModel(
+        appVersionChecker: AppVersionChecker(environment: EnvironmentService.shared)
+    )
+
     @ObservedObject private var loc = LocalizationManager.shared
     @State private var selectedTab = 0
+    @State private var showAppVersionBadge = false
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -19,10 +24,16 @@ struct MainTabView: View {
             }
 
             Tab(L("tab.settings"), systemImage: "gearshape.fill", value: 3) {
-                UserSettingsView()
+                UserSettingsView(showAppUpdateButton: showAppVersionBadge)
             }
         }
         .id(loc.currentLanguage.rawValue)
+        .onAppear {
+            Task {
+                let appVersionCheckResult = await viewModel.checkAppVersion()
+                showAppVersionBadge = appVersionCheckResult ?? false
+            }
+        }
     }
 }
 

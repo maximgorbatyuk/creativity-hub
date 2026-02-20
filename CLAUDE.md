@@ -134,6 +134,7 @@ The app has a 4-tab layout (`MainTabView`): Today, Active Project, Projects, Set
 | Service | Purpose |
 |---------|---------|
 | `AnalyticsService` | Firebase Analytics (Release only). Persistent `user_id` via `UserSettingsRepository.fetchOrGenerateUserId()`, session ID, global properties on every event. |
+| `AppVersionChecker` | Compares installed app version with App Store version using `APP_STORE_ID`. Returns `true` when update is available. |
 | `BackupService` | iCloud & safety backup orchestration. ZIP files with SQLite + documents. Safety backups in `Documents/creativityhub/safety_backups/` (max 3), iCloud backups (max 5). |
 | `BackgroundTaskManager` | Automatic daily backup scheduling via BGTaskScheduler. State in UserDefaults. |
 | `DeveloperModeManager` | 15-tap unlock on app version row. In-memory state only. |
@@ -143,6 +144,7 @@ The app has a 4-tab layout (`MainTabView`): Today, Active Project, Projects, Set
 
 | Service | Purpose |
 |---------|---------|
+| `EnvironmentService` | Centralized access to Info.plist/build-time environment values (App Store ID/link, version, build environment, developer metadata, app group, bundle id). |
 | `LocalizationManager` | `ObservableObject` managing language selection and string lookups (en, ru, kk) |
 | `DocumentService` | File operations for documents (save, load, delete) |
 
@@ -200,6 +202,16 @@ Xcode Cloud runs `ci_scripts/ci_post_clone.sh` automatically to generate `Google
 - **File system sync**: Xcode auto-compiles source files from `CreativityHub/`, `BusinessLogic/`, and `ShareExtension/` folders — no manual pbxproj edits for source files
 - **Analytics**: Firebase Analytics in Release builds only (`#if DEBUG` guard). A persistent `user_id` (UUID) is generated on first launch via `UserSettingsRepository.fetchOrGenerateUserId()`, stored in SQLite, and included in every event through `AnalyticsService.getGlobalProperties()`.
 - **Color scheme**: `AppColorScheme` enum (system/light/dark) persisted in SQLite via `UserSettingsRepository`, communicated via `NotificationCenter` with `.appColorSchemeDidChange`
+
+## App Update Check Pattern
+
+CreativityHub follows Journey Wallet's settings update prompt approach:
+
+- Use `AppVersionChecker` (`CreativityHub/Services/AppVersionChecker.swift`) to call App Store lookup API (`https://itunes.apple.com/lookup?id=<APP_STORE_ID>`) and compare installed version with App Store version.
+- Trigger the check from `MainTabView` on appear via `MainTabViewModel`, and pass the result into `UserSettingsView(showAppUpdateButton:)`.
+- In `UserSettingsView`, show a highlighted "Update is available" row when the flag is `true`.
+- Update action opens App Store link from `EnvironmentService.getAppStoreAppLink()` and tracks analytics event `app_update_button_clicked`.
+- Keep all App Store metadata (`APP_STORE_ID`) in xcconfig + Info.plist (never hardcode in code).
 
 ## Automatic Backup Pattern
 
