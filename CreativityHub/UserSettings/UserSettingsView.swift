@@ -166,6 +166,17 @@ struct UserSettingsView: View {
             .onChange(of: viewModel.selectedLanguage) { _, newValue in
                 viewModel.saveLanguage(newValue)
             }
+
+            NavigationLink {
+                TagsListView()
+            } label: {
+                HStack {
+                    Image(systemName: "tag")
+                        .foregroundStyle(.orange)
+                    Text(L("settings.tags"))
+                        .foregroundStyle(.primary)
+                }
+            }
         }
     }
 

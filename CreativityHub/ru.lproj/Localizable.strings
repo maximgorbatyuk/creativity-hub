@@ -104,6 +104,19 @@
 "settings.version" = "Версия";
 "settings.developer" = "Разработчик";
 "settings.contact_telegram" = "Связаться с разработчиком в Telegram";
+"settings.tags" = "Теги";
+
+/* Tags */
+"tags.title" = "Теги";
+"tags.empty" = "Тегов пока нет";
+"tags.empty.message" = "Теги помогают организовать идеи между проектами.";
+"tags.add" = "Добавить тег";
+"tags.edit" = "Редактировать тег";
+"tags.delete.title" = "Удалить тег";
+"tags.delete.message" = "Этот тег будет удалён из всех идей. Это действие нельзя отменить.";
+"tags.name" = "Название";
+"tags.color" = "Цвет";
+"tags.name.placeholder" = "Название тега";
 
 /* Tabs */
 "tab.home" = "Главная";

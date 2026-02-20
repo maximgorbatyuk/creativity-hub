@@ -104,6 +104,19 @@
 "settings.version" = "Нұсқа";
 "settings.developer" = "Әзірлеуші";
 "settings.contact_telegram" = "Telegram арқылы әзірлеушімен байланысу";
+"settings.tags" = "Тегтер";
+
+/* Tags */
+"tags.title" = "Тегтер";
+"tags.empty" = "Тегтер әлі жоқ";
+"tags.empty.message" = "Тегтер идеяларды жобалар арасында ұйымдастыруға көмектеседі.";
+"tags.add" = "Тег қосу";
+"tags.edit" = "Тегті өңдеу";
+"tags.delete.title" = "Тегті жою";
+"tags.delete.message" = "Бұл тег барлық идеялардан жойылады. Бұл әрекетті қайтару мүмкін емес.";
+"tags.name" = "Атауы";
+"tags.color" = "Түсі";
+"tags.name.placeholder" = "Тег атауы";
 
 /* Tabs */
 "tab.home" = "Басты бет";

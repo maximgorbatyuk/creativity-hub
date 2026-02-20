@@ -104,6 +104,19 @@
 "settings.version" = "Version";
 "settings.developer" = "Developer";
 "settings.contact_telegram" = "Contact developer via Telegram";
+"settings.tags" = "Tags";
+
+/* Tags */
+"tags.title" = "Tags";
+"tags.empty" = "No tags yet";
+"tags.empty.message" = "Tags help you organize ideas across projects.";
+"tags.add" = "Add Tag";
+"tags.edit" = "Edit Tag";
+"tags.delete.title" = "Delete Tag";
+"tags.delete.message" = "This tag will be removed from all ideas. This action cannot be undone.";
+"tags.name" = "Name";
+"tags.color" = "Color";
+"tags.name.placeholder" = "Tag name";
 
 /* Tabs */
 "tab.home" = "Home";

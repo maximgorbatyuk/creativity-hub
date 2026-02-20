@@ -93,6 +93,7 @@ The app has a 4-tab layout (`MainTabView`): Today, Active Project, Projects, Set
 | **Notes** | 5 files | List, detail, create/edit |
 | **Checklists** | 8 files | List with progress tracking, detail with item management, create/edit checklist and items |
 | **Expenses** | 6 files | List with filtering/sorting, detail, create/edit, expense category management |
+| **Tags** | 4 files | Global tag management (list, add/edit form, row component) accessible from User Settings |
 | **Documents** | 5 files | List with type detection (PDF, JPEG, PNG, HEIC), document picker, in-app preview |
 | **Reminders** | 7 files | List by status, detail, create/edit, upcoming reminders widget |
 | **Search** | `SearchView`, `SearchViewModel` | Global full-text search across all entity types |

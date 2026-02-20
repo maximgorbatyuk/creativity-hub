@@ -10,7 +10,6 @@ struct ProjectsListView: View {
         NavigationStack {
             ZStack(alignment: .bottomTrailing) {
                 VStack(spacing: 0) {
-                    filterSection
                     if viewModel.isLoading {
                         ProgressView()
                             .frame(maxHeight: .infinity)
@@ -19,6 +18,9 @@ struct ProjectsListView: View {
                     } else {
                         projectsList
                     }
+                }
+                .safeAreaInset(edge: .top, spacing: 0) {
+                    filterSection
                 }
 
                 floatingAddButton
@@ -64,7 +66,11 @@ struct ProjectsListView: View {
             .padding(.horizontal)
             .padding(.vertical, 8)
         }
+        .frame(height: 52)
         .background(Color(UIColor.systemBackground))
+        .overlay(alignment: .bottom) {
+            Divider()
+        }
     }
 
     // MARK: - List
