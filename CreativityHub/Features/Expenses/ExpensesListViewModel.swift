@@ -145,7 +145,9 @@ final class ExpensesListViewModel {
         let sorted = totalByCurrency
             .filter { $0.value > 0 }
             .sorted { $0.key.shortName < $1.key.shortName }
-        if sorted.isEmpty { return "" }
+        if sorted.isEmpty {
+            return "\(defaultCurrency.rawValue)\(formatAmount(.zero))"
+        }
         return sorted
             .map { "\($0.key.rawValue)\(formatAmount($0.value))" }
             .joined(separator: " • ")

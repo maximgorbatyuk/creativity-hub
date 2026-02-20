@@ -5,6 +5,7 @@ struct TodayView: View {
     @State private var searchViewModel = SearchViewModel()
     @State private var searchText = ""
     @State private var selectedProject: Project?
+    @State private var showUpcomingReminders = false
 
     private let analytics = AnalyticsService.shared
 
@@ -13,7 +14,9 @@ struct TodayView: View {
     }
 
     private var hasNoHomeSections: Bool {
-        viewModel.activeProjects.isEmpty && !viewModel.hasOverdueItems && !viewModel.hasUpcomingReminders
+        viewModel.activeProjects.isEmpty
+            && !viewModel.hasOverdueItems
+            && viewModel.totalReminderCount == 0
     }
 
     var body: some View {
@@ -42,6 +45,9 @@ struct TodayView: View {
             .navigationDestination(item: $selectedProject) { project in
                 ProjectDetailView(project: project)
             }
+            .navigationDestination(isPresented: $showUpcomingReminders) {
+                UpcomingRemindersView()
+            }
         }
     }
 
@@ -62,9 +68,6 @@ struct TodayView: View {
                     } else {
                         if viewModel.hasOverdueItems {
                             overdueSection
-                        }
-                        if viewModel.hasUpcomingReminders {
-                            remindersSection
                         }
                         if !viewModel.activeProjects.isEmpty {
                             activeProjectsSection
@@ -324,12 +327,17 @@ struct TodayView: View {
                 color: .blue
             )
 
-            statCard(
-                title: L("home.stats.reminders"),
-                value: "\(viewModel.totalReminderCount)",
-                icon: "bell.fill",
-                color: .orange
-            )
+            Button {
+                showUpcomingReminders = true
+            } label: {
+                statCard(
+                    title: L("home.stats.reminders"),
+                    value: "\(viewModel.totalReminderCount)",
+                    icon: "bell.fill",
+                    color: .orange
+                )
+            }
+            .buttonStyle(.plain)
 
             statCard(
                 title: L("home.stats.logged_time"),
@@ -442,56 +450,6 @@ struct TodayView: View {
                 Text(dueDate, style: .date)
                     .font(.caption)
                     .foregroundColor(.red)
-            }
-        }
-        .padding(.vertical, 4)
-    }
-
-    // MARK: - Reminders Section
-
-    private var remindersSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Label(L("home.upcoming_reminders"), systemImage: "bell.fill")
-                .font(.headline)
-
-            VStack(spacing: 0) {
-                ForEach(viewModel.upcomingReminders) { reminder in
-                    upcomingReminderRow(reminder)
-                    if reminder.id != viewModel.upcomingReminders.last?.id {
-                        Divider().padding(.leading, 40)
-                    }
-                }
-            }
-            .padding()
-            .cardBackground()
-        }
-    }
-
-    private func upcomingReminderRow(_ reminder: Reminder) -> some View {
-        HStack(spacing: 10) {
-            Image(systemName: reminder.priority != .none ? reminder.priority.icon : "bell")
-                .font(.caption)
-                .foregroundColor(reminder.priority != .none ? reminder.priority.color : .blue)
-                .frame(width: 24)
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text(reminder.title)
-                    .font(.subheadline)
-                    .lineLimit(1)
-
-                if let projectName = viewModel.projectName(for: reminder) {
-                    Text(projectName)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-            }
-
-            Spacer()
-
-            if let dueDate = reminder.dueDate {
-                Text(dueDate, style: .date)
-                    .font(.caption)
-                    .foregroundColor(reminder.isDueSoon ? .orange : .secondary)
             }
         }
         .padding(.vertical, 4)

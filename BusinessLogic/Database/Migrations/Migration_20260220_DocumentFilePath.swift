@@ -11,7 +11,7 @@ class Migration_20260220_DocumentFilePath {
         self.db = db
     }
 
-    func execute() {
+    func execute() throws {
         let logger = Logger(subsystem: "dev.mgorbatyuk.creativityhub.migrations", category: migrationName)
 
         do {
@@ -19,6 +19,7 @@ class Migration_20260220_DocumentFilePath {
             logger.debug("Migration \(self.migrationName) executed successfully")
         } catch {
             logger.error("Unable to execute migration \(self.migrationName): \(error)")
+            throw error
         }
     }
 

@@ -38,6 +38,7 @@ struct CreativityHubApp: App {
     }
 }
 
+@MainActor
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     private let logger = Logger(
         subsystem: Bundle.main.bundleIdentifier ?? "-",
@@ -56,10 +57,8 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         FirebaseApp.configure()
         #endif
 
-        Task { @MainActor in
-            BackgroundTaskManager.shared.registerBackgroundTasks()
-            BackgroundTaskManager.shared.scheduleNextBackup()
-        }
+        BackgroundTaskManager.shared.registerBackgroundTasks()
+        BackgroundTaskManager.shared.scheduleNextBackup()
 
         return true
     }

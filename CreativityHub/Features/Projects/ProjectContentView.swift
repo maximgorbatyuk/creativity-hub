@@ -12,6 +12,12 @@ struct ProjectContentView: View {
     @State private var showExpensesList = false
     @State private var showRemindersList = false
     @State private var showAddItemSelector = false
+    @State private var showAddChecklistSheet = false
+    @State private var showAddIdeaSheet = false
+    @State private var showAddNoteSheet = false
+    @State private var showAddExpenseSheet = false
+    @State private var showAddReminderSheet = false
+    @State private var showAddDocumentSheet = false
 
     private let analytics = AnalyticsService.shared
 
@@ -85,6 +91,50 @@ struct ProjectContentView: View {
             }
             .sheet(isPresented: $showAddItemSelector) {
                 addItemSelectorSheet
+            }
+            .sheet(isPresented: $showAddChecklistSheet) {
+                ChecklistFormView { name in
+                    viewModel.addChecklist(name: name)
+                }
+            }
+            .sheet(isPresented: $showAddIdeaSheet) {
+                if let projectId = viewModel.selectedProjectId {
+                    IdeaFormView(mode: .add(projectId: projectId)) { idea in
+                        viewModel.addIdea(idea)
+                    }
+                }
+            }
+            .sheet(isPresented: $showAddNoteSheet) {
+                if let projectId = viewModel.selectedProjectId {
+                    NoteFormView(mode: .add(projectId: projectId)) { note in
+                        viewModel.addNote(note)
+                    }
+                }
+            }
+            .sheet(isPresented: $showAddExpenseSheet) {
+                if let projectId = viewModel.selectedProjectId {
+                    ExpenseFormView(
+                        mode: .add(projectId: projectId),
+                        categories: viewModel.expenseCategories,
+                        defaultCurrency: viewModel.defaultCurrency
+                    ) { expense in
+                        viewModel.addExpense(expense)
+                    }
+                }
+            }
+            .sheet(isPresented: $showAddReminderSheet) {
+                if let projectId = viewModel.selectedProjectId {
+                    ReminderFormView(mode: .add(projectId: projectId)) { reminder in
+                        viewModel.addReminder(reminder)
+                    }
+                }
+            }
+            .sheet(isPresented: $showAddDocumentSheet) {
+                if let projectId = viewModel.selectedProjectId {
+                    DocumentPickerView(projectId: projectId) { _ in
+                        viewModel.refreshData()
+                    }
+                }
             }
             .alert(L("project.delete.title"), isPresented: $showDeleteConfirmation) {
                 Button(L("button.cancel"), role: .cancel) {}
@@ -462,7 +512,7 @@ struct ProjectContentView: View {
                         title: L("project.section.checklists")
                     ) {
                         showAddItemSelector = false
-                        showChecklistsList = true
+                        showAddChecklistSheet = true
                     }
 
                     addItemGridButton(
@@ -471,7 +521,7 @@ struct ProjectContentView: View {
                         title: L("project.section.ideas")
                     ) {
                         showAddItemSelector = false
-                        showIdeasList = true
+                        showAddIdeaSheet = true
                     }
 
                     addItemGridButton(
@@ -480,7 +530,7 @@ struct ProjectContentView: View {
                         title: L("project.section.notes")
                     ) {
                         showAddItemSelector = false
-                        showNotesList = true
+                        showAddNoteSheet = true
                     }
 
                     addItemGridButton(
@@ -489,7 +539,7 @@ struct ProjectContentView: View {
                         title: L("project.section.documents")
                     ) {
                         showAddItemSelector = false
-                        showDocumentsList = true
+                        showAddDocumentSheet = true
                     }
 
                     addItemGridButton(
@@ -498,7 +548,7 @@ struct ProjectContentView: View {
                         title: L("project.section.expenses")
                     ) {
                         showAddItemSelector = false
-                        showExpensesList = true
+                        showAddExpenseSheet = true
                     }
 
                     addItemGridButton(
@@ -507,7 +557,7 @@ struct ProjectContentView: View {
                         title: L("project.section.reminders")
                     ) {
                         showAddItemSelector = false
-                        showRemindersList = true
+                        showAddReminderSheet = true
                     }
                 }
                 .padding(24)

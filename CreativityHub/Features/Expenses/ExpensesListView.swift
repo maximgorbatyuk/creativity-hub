@@ -92,7 +92,7 @@ struct ExpensesListView: View {
                     Label(L("expense.list.add_category"), systemImage: "folder.badge.plus")
                 }
             } label: {
-                Image(systemName: "plus")
+                Image(systemName: "plus.circle.fill")
             }
         }
     }
@@ -115,6 +115,15 @@ struct ExpensesListView: View {
                         isSelected: viewModel.selectedFilter == .status(status)
                     ) {
                         viewModel.selectedFilter = .status(status)
+                    }
+                }
+
+                ForEach(viewModel.categories) { category in
+                    FilterChip(
+                        title: category.name,
+                        isSelected: viewModel.selectedFilter == .category(category)
+                    ) {
+                        viewModel.selectedFilter = .category(category)
                     }
                 }
             }

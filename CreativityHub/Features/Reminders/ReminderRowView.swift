@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ReminderRowView: View {
     let reminder: Reminder
+    var projectName: String? = nil
     let onToggle: () -> Void
 
     var body: some View {
@@ -32,6 +33,13 @@ struct ReminderRowView: View {
                 .strikethrough(reminder.isCompleted)
                 .foregroundColor(reminder.isCompleted ? .secondary : .primary)
                 .lineLimit(2)
+
+            if let projectName {
+                Text(projectName)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .lineLimit(1)
+            }
 
             HStack(spacing: 6) {
                 if reminder.priority != .none {

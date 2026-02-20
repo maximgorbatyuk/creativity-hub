@@ -174,7 +174,7 @@ class DatabaseManager {
                 case 4:
                     try Migration_20260218_AddRemindersTable(db: db).execute()
                 case 5:
-                    Migration_20260220_DocumentFilePath(db: db).execute()
+                    try Migration_20260220_DocumentFilePath(db: db).execute()
                 default:
                     throw RuntimeError("Unknown migration version: \(version)")
                 }
