@@ -21,6 +21,7 @@ final class ChecklistsListViewModel {
 
     private let checklistRepository: ChecklistRepository?
     private let checklistItemRepository: ChecklistItemRepository?
+    private let workLogRepository: WorkLogRepository?
     private let projectRepository: ProjectRepository?
     private let logger: Logger
 
@@ -30,6 +31,7 @@ final class ChecklistsListViewModel {
         self.projectId = projectId
         self.checklistRepository = databaseManager.checklistRepository
         self.checklistItemRepository = databaseManager.checklistItemRepository
+        self.workLogRepository = databaseManager.workLogRepository
         self.projectRepository = databaseManager.projectRepository
         self.logger = Logger(
             subsystem: Bundle.main.bundleIdentifier ?? "-",
@@ -75,6 +77,14 @@ final class ChecklistsListViewModel {
     }
 
     func deleteChecklist(_ checklist: Checklist) {
+        let items = checklistItemRepository?.fetchByChecklistId(checklistId: checklist.id) ?? []
+        for item in items {
+            guard workLogRepository?.detachChecklistItem(checklistItemId: item.id) == true else {
+                logger.error("Failed to detach work log links for checklist item \(item.id)")
+                return
+            }
+        }
+
         _ = checklistItemRepository?.deleteByChecklistId(checklistId: checklist.id)
         guard checklistRepository?.delete(id: checklist.id) == true else {
             logger.error("Failed to delete checklist \(checklist.id)")

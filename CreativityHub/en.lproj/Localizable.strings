@@ -92,6 +92,8 @@
 "onboarding.ideas.description" = "Save links from Instagram, Pinterest, YouTube and more";
 "onboarding.budget.title" = "Track Your Budget";
 "onboarding.budget.description" = "Keep expenses under control with category breakdowns";
+"onboarding.worklogs.title" = "Log Your Work Time";
+"onboarding.worklogs.description" = "Track time with day, hour, and minute logs for every project";
 
 /* Settings */
 "settings.title" = "Settings";
@@ -105,6 +107,7 @@
 "settings.color_scheme" = "Color Scheme";
 "settings.update_available" = "Update is available";
 "settings.about_app.button" = "What is the app about?";
+"settings.start_onboarding_again" = "Start onboarding again";
 "settings.rate_app" = "Rate the app";
 "settings.about_app.intro_title" = "Keep your creativity in one place.";
 "settings.about_app.intro_message" = "CreativityHub helps you organize projects, ideas, notes, reminders, checklists, expenses, and documents in one app.";
@@ -560,3 +563,30 @@
 "project.content.empty.subtitle" = "Create your first project to get started";
 "project.content.empty.add_button" = "Create Project";
 "project.content.add_item" = "Add New";
+
+// MARK: - Work Logs
+"project.section.work_logs" = "Work Logs";
+"project.add_new.work_log" = "Work Log";
+"worklog.list.title" = "Work Logs";
+"worklog.list.add" = "Add Work Log";
+"worklog.list.total" = "Total";
+"worklog.form.add_title" = "New Work Log";
+"worklog.form.edit_title" = "Edit Work Log";
+"worklog.form.title" = "Activity";
+"worklog.form.title_placeholder" = "What did you work on?";
+"worklog.form.days" = "Days";
+"worklog.form.hours" = "Hours";
+"worklog.form.minutes" = "Minutes";
+"worklog.form.linked_item" = "Linked Checklist Item";
+"worklog.form.linked_item.none" = "None";
+"worklog.form.error.total_zero" = "Total time must be greater than zero";
+"worklog.form.error.negative_values" = "Values cannot be negative";
+"worklog.delete.title" = "Delete Work Log";
+"worklog.delete.message" = "Are you sure you want to delete this work log?";
+"worklog.duration.unit.day_short" = "d";
+"worklog.duration.unit.hour_short" = "h";
+"worklog.duration.unit.minute_short" = "m";
+"empty.worklogs.title" = "No Work Logs";
+"empty.worklogs.message" = "Track time spent on your project";
+"checklist.item.mark_done" = "Mark Done";
+"checklist.item.mark_done_log_time" = "Mark Done + Log Time";

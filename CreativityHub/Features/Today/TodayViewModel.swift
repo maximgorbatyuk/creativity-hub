@@ -13,6 +13,7 @@ final class TodayViewModel {
     var overdueReminders: [Reminder] = []
     var totalProjectCount = 0
     var totalReminderCount = 0
+    var totalLoggedMinutes = 0
     var isLoading = false
 
     // MARK: - Private
@@ -20,6 +21,7 @@ final class TodayViewModel {
     private let projectRepository: ProjectRepository?
     private let checklistItemRepository: ChecklistItemRepository?
     private let reminderRepository: ReminderRepository?
+    private let workLogRepository: WorkLogRepository?
     private let logger: Logger
 
     // MARK: - Init
@@ -28,6 +30,7 @@ final class TodayViewModel {
         self.projectRepository = databaseManager.projectRepository
         self.checklistItemRepository = databaseManager.checklistItemRepository
         self.reminderRepository = databaseManager.reminderRepository
+        self.workLogRepository = databaseManager.workLogRepository
         self.logger = Logger(
             subsystem: Bundle.main.bundleIdentifier ?? "-",
             category: "TodayViewModel"
@@ -40,6 +43,7 @@ final class TodayViewModel {
         isLoading = true
         totalProjectCount = projectRepository?.fetchAll().count ?? 0
         totalReminderCount = reminderRepository?.fetchAll().count ?? 0
+        totalLoggedMinutes = workLogRepository?.totalMinutesAll() ?? 0
         activeProjects = projectRepository?.fetchByStatus(.active) ?? []
         overdueChecklistItems = checklistItemRepository?.fetchOverdueItems() ?? []
         upcomingReminders = reminderRepository?.fetchUpcoming(limit: 5) ?? []
@@ -52,6 +56,15 @@ final class TodayViewModel {
     var activeProjectCount: Int { activeProjects.count }
     var overdueItemCount: Int { overdueChecklistItems.count }
     var overdueReminderCount: Int { overdueReminders.count }
+
+    var formattedTotalLoggedTime: String {
+        let days = totalLoggedMinutes / 1440
+        let hours = (totalLoggedMinutes % 1440) / 60
+
+        let dayUnit = L("worklog.duration.unit.day_short")
+        let hourUnit = L("worklog.duration.unit.hour_short")
+        return "\(days)\(dayUnit) \(hours)\(hourUnit)"
+    }
 
     var hasOverdueItems: Bool {
         !overdueChecklistItems.isEmpty || !overdueReminders.isEmpty
@@ -72,4 +85,5 @@ final class TodayViewModel {
     func projectName(for reminder: Reminder) -> String? {
         projectRepository?.fetchById(id: reminder.projectId)?.name
     }
+
 }

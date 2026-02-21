@@ -64,6 +64,7 @@ final class BackupService {
     private let noteRepository: NoteRepository?
     private let documentRepository: DocumentRepository?
     private let reminderRepository: ReminderRepository?
+    private let workLogRepository: WorkLogRepository?
     private let databaseManager: DatabaseManager
     private let environment: EnvironmentService
     private let logger: Logger
@@ -83,6 +84,7 @@ final class BackupService {
         self.noteRepository = databaseManager.noteRepository
         self.documentRepository = databaseManager.documentRepository
         self.reminderRepository = databaseManager.reminderRepository
+        self.workLogRepository = databaseManager.workLogRepository
         self.logger = Logger(
             subsystem: environment.getAppBundleId(),
             category: "BackupService"
@@ -122,7 +124,8 @@ final class BackupService {
             expenseCategories: expenseCategoryRepository?.fetchAll(),
             notes: noteRepository?.fetchAll(),
             documents: documentRepository?.fetchAll(),
-            reminders: reminderRepository?.fetchAll()
+            reminders: reminderRepository?.fetchAll(),
+            workLogs: workLogRepository?.fetchAll()
         )
     }
 
@@ -404,6 +407,17 @@ final class BackupService {
                 )
             }
             logger.info("Imported \(reminders.count) reminders")
+        }
+
+        // Import work logs
+        if let workLogs = exportData.workLogs {
+            for workLog in workLogs {
+                try requireSuccessfulImportOperation(
+                    workLogRepository?.insert(workLog),
+                    operation: "insert work log \(workLog.id)"
+                )
+            }
+            logger.info("Imported \(workLogs.count) work logs")
         }
 
         logger.info("Successfully imported all data")

@@ -8,6 +8,7 @@ struct ProjectSectionCounts {
     var documents: Int = 0
     var expenses: Int = 0
     var reminders: Int = 0
+    var workLogs: Int = 0
 }
 
 @MainActor
@@ -32,6 +33,7 @@ final class ProjectDetailViewModel {
     private let documentRepository: DocumentRepository?
     private let expenseRepository: ExpenseRepository?
     private let reminderRepository: ReminderRepository?
+    private let workLogRepository: WorkLogRepository?
     private let logger: Logger
 
     // MARK: - Init
@@ -47,6 +49,7 @@ final class ProjectDetailViewModel {
         self.documentRepository = databaseManager.documentRepository
         self.expenseRepository = databaseManager.expenseRepository
         self.reminderRepository = databaseManager.reminderRepository
+        self.workLogRepository = databaseManager.workLogRepository
         self.logger = Logger(
             subsystem: Bundle.main.bundleIdentifier ?? "-",
             category: "ProjectDetailViewModel"
@@ -115,6 +118,7 @@ final class ProjectDetailViewModel {
         sectionCounts.documents = documentRepository?.countByProjectId(projectId: projectId) ?? 0
         sectionCounts.expenses = expenseRepository?.countByProjectId(projectId: projectId) ?? 0
         sectionCounts.reminders = reminderRepository?.countByProjectId(projectId: projectId) ?? 0
+        sectionCounts.workLogs = workLogRepository?.countByProjectId(projectId: projectId) ?? 0
 
         loadChecklistProgress(projectId: projectId)
         loadTotalExpenses(projectId: projectId)

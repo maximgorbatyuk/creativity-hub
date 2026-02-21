@@ -32,6 +32,10 @@ final class ChecklistDetailViewModel {
 
     var showAddItemSheet = false
     var itemToEdit: ChecklistItem?
+    var showWorkLogSheet = false
+    var pendingWorkLogChecklistItem: ChecklistItem?
+    var showDoneConfirmation = false
+    var itemToConfirmDone: ChecklistItem?
 
     let projectId: UUID
 
@@ -40,6 +44,7 @@ final class ChecklistDetailViewModel {
     private let checklistItemRepository: ChecklistItemRepository?
     private let checklistRepository: ChecklistRepository?
     private let projectRepository: ProjectRepository?
+    private let workLogRepository: WorkLogRepository?
     private let logger: Logger
 
     // MARK: - Init
@@ -50,6 +55,7 @@ final class ChecklistDetailViewModel {
         self.checklistItemRepository = databaseManager.checklistItemRepository
         self.checklistRepository = databaseManager.checklistRepository
         self.projectRepository = databaseManager.projectRepository
+        self.workLogRepository = databaseManager.workLogRepository
         self.logger = Logger(
             subsystem: Bundle.main.bundleIdentifier ?? "-",
             category: "ChecklistDetailViewModel"
@@ -102,6 +108,10 @@ final class ChecklistDetailViewModel {
     }
 
     func deleteItem(_ item: ChecklistItem) {
+        guard workLogRepository?.detachChecklistItem(checklistItemId: item.id) == true else {
+            logger.error("Failed to detach work log links for checklist item \(item.id)")
+            return
+        }
         guard checklistItemRepository?.delete(id: item.id) == true else {
             logger.error("Failed to delete checklist item \(item.id)")
             return
@@ -119,6 +129,27 @@ final class ChecklistDetailViewModel {
         projectRepository?.touchUpdatedAt(id: projectId)
         logger.info("Toggled checklist item \(item.id)")
         loadData()
+    }
+
+    func markDoneAndLogTime(_ item: ChecklistItem) {
+        guard !item.isCompleted else { return }
+        guard checklistItemRepository?.toggleCompletion(id: item.id) == true else {
+            logger.error("Failed to toggle checklist item \(item.id)")
+            return
+        }
+        projectRepository?.touchUpdatedAt(id: projectId)
+        pendingWorkLogChecklistItem = item
+        showWorkLogSheet = true
+        loadData()
+    }
+
+    func addWorkLog(_ workLog: WorkLog) {
+        guard workLogRepository?.insert(workLog) == true else {
+            logger.error("Failed to insert work log")
+            return
+        }
+        projectRepository?.touchUpdatedAt(id: projectId)
+        logger.info("Added work log \(workLog.id) from checklist")
     }
 
     func moveItem(from source: IndexSet, to destination: Int) {

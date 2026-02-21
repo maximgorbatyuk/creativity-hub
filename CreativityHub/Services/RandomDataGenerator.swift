@@ -53,12 +53,16 @@ class RandomDataGenerator {
         let reminders = generateReminders(for: project)
         reminders.forEach { _ = db.reminderRepository?.insert($0) }
 
+        let workLogs = generateWorkLogs(for: project)
+        workLogs.forEach { _ = db.workLogRepository?.insert($0) }
+
         logger.info("Random data generation completed for project: \(project.name)")
     }
 
     // MARK: - Delete Existing Data
 
     private func deleteExistingData(for projectId: UUID) {
+        _ = db.workLogRepository?.deleteByProjectId(projectId: projectId)
         _ = db.reminderRepository?.deleteByProjectId(projectId: projectId)
         _ = db.noteRepository?.deleteByProjectId(projectId: projectId)
         _ = db.expenseRepository?.deleteByProjectId(projectId: projectId)
@@ -274,6 +278,40 @@ class RandomDataGenerator {
         }
 
         return notes
+    }
+
+    // MARK: - Work Logs
+
+    private func generateWorkLogs(for project: Project) -> [WorkLog] {
+        let titles = [
+            "Research and brainstorming",
+            "Design iteration",
+            "Client feedback review",
+            "Material preparation",
+            "Sketching concepts",
+            "Documentation update",
+            nil, nil, nil
+        ]
+        let count = Int.random(in: 3...6)
+
+        return (0..<count).map { _ in
+            let days = Int.random(in: 0...2)
+            let hours = Int.random(in: 0...8)
+            let minutes = [0, 15, 30, 45].randomElement() ?? 0
+            let totalMinutes = days * 1440 + hours * 60 + minutes
+            let validTotal = max(totalMinutes, 15)
+
+            let dayOffset = Int.random(in: -14...0)
+            let createdAt = Calendar.current.date(byAdding: .day, value: dayOffset, to: Date()) ?? Date()
+
+            return WorkLog(
+                projectId: project.id,
+                title: titles.randomElement() ?? nil,
+                totalMinutes: validTotal,
+                createdAt: createdAt,
+                updatedAt: createdAt
+            )
+        }
     }
 
     // MARK: - Reminders

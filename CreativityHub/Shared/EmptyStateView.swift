@@ -46,6 +46,7 @@ enum EmptyStateType {
     case notes
     case documents
     case reminders
+    case workLogs
     case searchResults
 
     var icon: String {
@@ -58,6 +59,7 @@ enum EmptyStateType {
         case .notes: return "note.text"
         case .documents: return "doc.fill"
         case .reminders: return "bell.fill"
+        case .workLogs: return "clock.fill"
         case .searchResults: return "magnifyingglass"
         }
     }
@@ -72,6 +74,7 @@ enum EmptyStateType {
         case .notes: return L("empty.notes.title")
         case .documents: return L("empty.documents.title")
         case .reminders: return L("empty.reminders.title")
+        case .workLogs: return L("empty.worklogs.title")
         case .searchResults: return L("empty.search.title")
         }
     }
@@ -86,6 +89,7 @@ enum EmptyStateType {
         case .notes: return L("empty.notes.message")
         case .documents: return L("empty.documents.message")
         case .reminders: return L("empty.reminders.message")
+        case .workLogs: return L("empty.worklogs.message")
         case .searchResults: return L("empty.search.message")
         }
     }

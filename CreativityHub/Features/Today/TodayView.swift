@@ -341,7 +341,7 @@ struct TodayView: View {
 
             statCard(
                 title: L("home.stats.logged_time"),
-                value: "-",
+                value: viewModel.formattedTotalLoggedTime,
                 icon: "clock.fill",
                 color: .indigo
             )

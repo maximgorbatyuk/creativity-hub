@@ -11,7 +11,7 @@ class DatabaseManager {
         category: "DatabaseManager"
     )
 
-    private let latestVersion = 5
+    private let latestVersion = 6
 
     // Repositories
     private(set) var migrationRepository: MigrationsRepository?
@@ -26,6 +26,7 @@ class DatabaseManager {
     private(set) var noteRepository: NoteRepository?
     private(set) var documentRepository: DocumentRepository?
     private(set) var reminderRepository: ReminderRepository?
+    private(set) var workLogRepository: WorkLogRepository?
 
     private init() {
         setupDatabase()
@@ -36,6 +37,7 @@ class DatabaseManager {
     }
 
     func deleteAllData() {
+        workLogRepository?.deleteAll()
         reminderRepository?.deleteAll()
         documentRepository?.deleteAll()
         noteRepository?.deleteAll()
@@ -51,6 +53,10 @@ class DatabaseManager {
 
     func deleteProjectCascade(projectId: UUID) -> Bool {
         var isSuccess = true
+
+        if let workLogsDeleted = workLogRepository?.deleteByProjectId(projectId: projectId) {
+            isSuccess = workLogsDeleted && isSuccess
+        }
 
         if let remindersDeleted = reminderRepository?.deleteByProjectId(projectId: projectId) {
             isSuccess = remindersDeleted && isSuccess
@@ -134,6 +140,7 @@ class DatabaseManager {
         noteRepository = NoteRepository(db: db)
         documentRepository = DocumentRepository(db: db)
         reminderRepository = ReminderRepository(db: db)
+        workLogRepository = WorkLogRepository(db: db)
     }
 
     private func migrateIfNeeded() {
@@ -175,6 +182,8 @@ class DatabaseManager {
                     try Migration_20260218_AddRemindersTable(db: db).execute()
                 case 5:
                     try Migration_20260220_DocumentFilePath(db: db).execute()
+                case 6:
+                    try Migration_20260220_AddWorkLogsTable(db: db).execute()
                 default:
                     throw RuntimeError("Unknown migration version: \(version)")
                 }

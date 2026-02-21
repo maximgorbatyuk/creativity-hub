@@ -16,6 +16,8 @@ struct ProjectContentView: View {
     @State private var showAddExpenseSheet = false
     @State private var showAddReminderSheet = false
     @State private var showAddDocumentSheet = false
+    @State private var showWorkLogsList = false
+    @State private var showAddWorkLogSheet = false
 
     private let analytics = AnalyticsService.shared
 
@@ -47,12 +49,12 @@ struct ProjectContentView: View {
                         ScrollView {
                             LazyVStack(spacing: 0) {
                                 checklistsSection
-                                ideasSection
-                                notesSection
+                                workLogsSection
                                 documentsSection
                                 expensesSection
                                 remindersSection
-
+                                ideasSection
+                                notesSection
                                 Spacer()
                                     .frame(height: 100)
                             }
@@ -143,6 +145,19 @@ struct ProjectContentView: View {
             }
             .navigationDestination(isPresented: $showRemindersList) {
                 RemindersListView(projectId: viewModel.selectedProjectId ?? UUID())
+            }
+            .navigationDestination(isPresented: $showWorkLogsList) {
+                WorkLogsListView(projectId: viewModel.selectedProjectId ?? UUID())
+            }
+            .sheet(isPresented: $showAddWorkLogSheet) {
+                if let projectId = viewModel.selectedProjectId {
+                    WorkLogFormView(
+                        mode: .add(projectId: projectId),
+                        checklistItems: viewModel.workLogChecklistItems
+                    ) { workLog in
+                        viewModel.addWorkLog(workLog)
+                    }
+                }
             }
         }
     }
@@ -375,6 +390,39 @@ struct ProjectContentView: View {
         )
     }
 
+    private var workLogsSection: some View {
+        sectionContainer(
+            header: SectionHeaderView(
+                title: L("project.section.work_logs"),
+                iconName: "clock.fill",
+                iconColor: .indigo,
+                itemCount: viewModel.sectionCounts.workLogs,
+                onSeeAll: viewModel.selectedProjectId != nil ? {
+                    showWorkLogsList = true
+                } : nil
+            ),
+            content: {
+                if viewModel.previewWorkLogs.isEmpty {
+                    EmptySectionView(
+                        message: L("empty.worklogs.message"),
+                        iconName: "clock"
+                    )
+                } else {
+                    ForEach(viewModel.previewWorkLogs) { workLog in
+                        WorkLogPreviewRow(workLog: workLog)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                showWorkLogsList = true
+                            }
+                        if workLog.id != viewModel.previewWorkLogs.last?.id {
+                            Divider().padding(.leading, 56)
+                        }
+                    }
+                }
+            }
+        )
+    }
+
     // MARK: - Section Container
 
     private func sectionContainer<Content: View>(
@@ -492,6 +540,15 @@ struct ProjectContentView: View {
                     ) {
                         showAddItemSelector = false
                         showAddReminderSheet = true
+                    }
+
+                    addItemGridButton(
+                        icon: "clock.fill",
+                        color: .indigo,
+                        title: L("project.add_new.work_log")
+                    ) {
+                        showAddItemSelector = false
+                        showAddWorkLogSheet = true
                     }
                 }
                 .padding(24)

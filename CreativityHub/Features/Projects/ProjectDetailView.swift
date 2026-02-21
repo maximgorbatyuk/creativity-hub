@@ -12,6 +12,7 @@ struct ProjectDetailView: View {
     @State private var showDocumentsList = false
     @State private var showExpensesList = false
     @State private var showRemindersList = false
+    @State private var showWorkLogsList = false
 
     private let analytics = AnalyticsService.shared
 
@@ -80,6 +81,9 @@ struct ProjectDetailView: View {
         }
         .navigationDestination(isPresented: $showRemindersList) {
             RemindersListView(projectId: viewModel.project.id)
+        }
+        .navigationDestination(isPresented: $showWorkLogsList) {
+            WorkLogsListView(projectId: viewModel.project.id)
         }
     }
 
@@ -246,6 +250,15 @@ struct ProjectDetailView: View {
                 count: viewModel.sectionCounts.reminders
             ) {
                 showRemindersList = true
+            }
+            Divider().padding(.leading, 52)
+            sectionRow(
+                icon: "clock.fill",
+                color: .indigo,
+                title: L("project.section.work_logs"),
+                count: viewModel.sectionCounts.workLogs
+            ) {
+                showWorkLogsList = true
             }
         }
         .cardBackground()

@@ -213,6 +213,26 @@ CreativityHub follows Journey Wallet's settings update prompt approach:
 - Update action opens App Store link from `EnvironmentService.getAppStoreAppLink()` and tracks analytics event `app_update_button_clicked`.
 - Keep all App Store metadata (`APP_STORE_ID`) in xcconfig + Info.plist (never hardcode in code).
 
+## Restart Onboarding Pattern
+
+CreativityHub follows Journey Wallet and EV Charging Tracker's approach for relaunching onboarding from settings:
+
+- Add a dedicated action in `UserSettingsView` About section (same support area as app info/rating).
+- On tap, clear onboarding completion flag with `UserDefaults.standard.removeObject(forKey: OnboardingViewModel.onboardingCompletedKey)`.
+- Track analytics event `start_onboarding_again_button_clicked` with `screen` and `button_name` properties.
+- Use a localized label key for this action (`settings.start_onboarding_again`) in all supported languages.
+- Do not add custom navigation logic: root `ContentView` already reacts to the onboarding completion flag and presents onboarding when it is not set.
+
+## Onboarding Background Visual Pattern
+
+CreativityHub follows Journey Wallet and EV Charging Tracker's onboarding visual style with per-screen tinted backgrounds:
+
+- Build onboarding screen with a `ZStack` and render a full-screen gradient background (`.ignoresSafeArea()`) behind page content.
+- Language selection page uses a blue/cyan gradient (`Color.blue.opacity(0.3)` to `Color.cyan.opacity(0.1)`).
+- Feature pages use each page's own accent color from `OnboardingPageItem.color` with the same opacity pattern (`0.3` and `0.1`).
+- Keep gradient selection page-aware in `OnboardingView` (switch by `currentPage`; page index is `currentPage - 1` for feature pages).
+- This keeps visual parity across all apps in the workspace and gives each onboarding page a distinct atmosphere.
+
 ## Automatic Backup Pattern
 
 CreativityHub follows Journey Wallet's automatic iCloud backup approach:

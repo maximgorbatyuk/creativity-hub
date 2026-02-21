@@ -92,6 +92,8 @@
 "onboarding.ideas.description" = "Instagram, Pinterest, YouTube және басқа сілтемелерді сақтаңыз";
 "onboarding.budget.title" = "Бюджетті бақылаңыз";
 "onboarding.budget.description" = "Санаттар бойынша шығыстарды бақылаңыз";
+"onboarding.worklogs.title" = "Жұмыс уақытын жазыңыз";
+"onboarding.worklogs.description" = "Әр жоба үшін уақытты күн, сағат және минут бойынша бақылаңыз";
 
 /* Settings */
 "settings.title" = "Баптаулар";
@@ -105,6 +107,7 @@
 "settings.color_scheme" = "Түс тақырыбы";
 "settings.update_available" = "Жаңарту қолжетімді";
 "settings.about_app.button" = "Қолданба не туралы?";
+"settings.start_onboarding_again" = "Онбордингті қайта бастау";
 "settings.rate_app" = "Қолданбаны бағалау";
 "settings.about_app.intro_title" = "Шығармашылығыңызды бір жерде сақтаңыз.";
 "settings.about_app.intro_message" = "CreativityHub жобаларды, идеяларды, жазбаларды, еске салғыштарды, тізімдерді, шығыстар мен құжаттарды бір қолданбада ұйымдастыруға көмектеседі.";
@@ -560,3 +563,30 @@
 "project.content.empty.subtitle" = "Бастау үшін бірінші жобаңызды жасаңыз";
 "project.content.empty.add_button" = "Жоба жасау";
 "project.content.add_item" = "Жаңа қосу";
+
+// MARK: - Work Logs
+"project.section.work_logs" = "Жұмыс журналы";
+"project.add_new.work_log" = "Жұмыс жазбасы";
+"worklog.list.title" = "Жұмыс журналы";
+"worklog.list.add" = "Жазба қосу";
+"worklog.list.total" = "Барлығы";
+"worklog.form.add_title" = "Жаңа жазба";
+"worklog.form.edit_title" = "Жазбаны өңдеу";
+"worklog.form.title" = "Іс-әрекет";
+"worklog.form.title_placeholder" = "Не істедіңіз?";
+"worklog.form.days" = "Күндер";
+"worklog.form.hours" = "Сағаттар";
+"worklog.form.minutes" = "Минуттар";
+"worklog.form.linked_item" = "Байланысты элемент";
+"worklog.form.linked_item.none" = "Жоқ";
+"worklog.form.error.total_zero" = "Жалпы уақыт нөлден көп болуы керек";
+"worklog.form.error.negative_values" = "Мәндер теріс болмауы керек";
+"worklog.delete.title" = "Жазбаны жою";
+"worklog.delete.message" = "Бұл жазбаны жойғыңыз келетініне сенімдісіз бе?";
+"worklog.duration.unit.day_short" = "к";
+"worklog.duration.unit.hour_short" = "сағ";
+"worklog.duration.unit.minute_short" = "мин";
+"empty.worklogs.title" = "Жазбалар жоқ";
+"empty.worklogs.message" = "Жобаға жұмсалған уақытты бақылаңыз";
+"checklist.item.mark_done" = "Орындалды";
+"checklist.item.mark_done_log_time" = "Орындалды + Уақыт жазу";

@@ -563,6 +563,22 @@ struct UserSettingsView: View {
             .buttonStyle(.plain)
 
             Button {
+                UserDefaults.standard.removeObject(forKey: OnboardingViewModel.onboardingCompletedKey)
+                analytics.trackEvent("start_onboarding_again_button_clicked", properties: [
+                    "screen": "settings",
+                    "button_name": "start_onboarding_again"
+                ])
+            } label: {
+                HStack {
+                    Image(systemName: "figure.wave")
+                        .foregroundStyle(.green)
+                    Text(L("settings.start_onboarding_again"))
+                        .foregroundStyle(.primary)
+                }
+            }
+            .buttonStyle(.plain)
+
+            Button {
                 analytics.trackEvent("app_rating_review_button_clicked", properties: [
                     "screen": "settings",
                     "button_name": "request_app_rating_review"
