@@ -461,7 +461,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_GROUP_IDENTIFIER = group.dev.mgorbatyuk.creativityhub.dev;
-				APP_STORE_ID = YOUR_APP_STORE_ID;
+				APP_STORE_ID = 6758438833;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDev;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUILD_ENVIRONMENT = dev;
@@ -504,7 +504,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_GROUP_IDENTIFIER = group.dev.mgorbatyuk.creativityhub;
-				APP_STORE_ID = YOUR_APP_STORE_ID;
+				APP_STORE_ID = 6758438833;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUILD_ENVIRONMENT = release;
