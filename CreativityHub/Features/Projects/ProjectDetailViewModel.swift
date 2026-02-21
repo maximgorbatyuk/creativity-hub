@@ -21,7 +21,7 @@ final class ProjectDetailViewModel {
     var sectionCounts = ProjectSectionCounts()
     var checklistProgress: (checked: Int, total: Int) = (0, 0)
     var totalExpenses: Decimal = 0
-    var weeklyActivityPoints: [ActivityChartPoint] = []
+    var biweeklyActivityPoints: [ActivityChartPoint] = []
 
     // MARK: - Private
 
@@ -154,6 +154,6 @@ final class ProjectDetailViewModel {
     }
 
     private func loadActivityChartData() {
-        weeklyActivityPoints = activityAnalyticsService.weeklyActivityCounts(projectId: project.id, months: 6)
+        biweeklyActivityPoints = activityAnalyticsService.biweeklyActivityCounts(projectId: project.id, months: 6)
     }
 }

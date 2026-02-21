@@ -5,6 +5,10 @@ All notable changes to CreativityHub since the initial project setup (`000ad10` 
 ## [Unreleased]
 
 ### Added
+- **Landing page** — `docs/index.html` with soft brutalism design, CreativityHub color palette (`#573A68`, `#D6AAE7`, `#FEE662`, `#5488C2`, `#04C7D6`), hero section, 9-slide screenshot carousel with feature card click-to-slide interaction, value callout, and footer
+- **Landing page CSS** — `docs/brutalism-style.css` with full color token system, responsive layout (860px breakpoint), carousel, card animations, and slide-highlight effect
+- **Privacy policy page** — `docs/privacy-policy/index.html` covering data collection, local storage, iCloud backup, export/import, Share Extension, activity logs, Firebase Analytics, notifications, supported languages, and COPPA compliance
+- Landing page website guidelines added to `CLAUDE.md`
 - Persistent analytics `user_id` — generated on first launch via `UserSettingsRepository.fetchOrGenerateUserId()`, stored in SQLite, included in every event through `AnalyticsService.getGlobalProperties()`
 - Updated `CLAUDE.md` to reflect current project structure and features
 - **Tag management in User Settings** — `TagsListView`, `TagsListViewModel`, `TagFormView`, `TagRowView` for browsing, creating, editing, and deleting global tags from Settings > Preferences
@@ -19,6 +23,7 @@ All notable changes to CreativityHub since the initial project setup (`000ad10` 
 - Launch screen QA preview action in settings and related localization updates
 
 ### Changed
+- `README.md` expanded with full feature list, website/privacy links, and docs section
 - `DatabaseManager` schema upgraded to version `7`; migrations now include document file-path migration, work logs migration, and activity logs migration
 - `RandomDataGenerator` now creates activity logs for the last 6 months with realistic density (150-300 records across different days)
 - Backup/export/import model wiring updated to include work logs and keep activity logs excluded from payloads

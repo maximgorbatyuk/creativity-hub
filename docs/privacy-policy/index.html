@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - CreativityHub</title>
+  <meta name="theme-color" content="#f0e4f6" />
+
+  <meta name="description"
+    content="Privacy Policy for CreativityHub iOS app - Learn how we protect your creative project data and privacy.">
+  <meta name="author" content="Maxim Gorbatyuk">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" href="../assets/app_icon.jpg" />
+
+  <link rel="stylesheet" href="../brutalism-style.css" />
+
+  <style>
+    .privacy-page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 20px 80px;
+    }
+
+    .privacy-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .privacy-header .logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 14px;
+    }
+
+    .privacy-header h1 {
+      margin: 0;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 24px;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .last-updated {
+      display: inline-block;
+      padding: 8px 16px;
+      background: var(--bg-alt);
+      border: 2px solid var(--stroke);
+      border-radius: 8px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.85rem;
+      margin-bottom: 24px;
+    }
+
+    .privacy-content {
+      padding: 32px;
+      border: 2px solid var(--stroke);
+      border-radius: 16px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .privacy-content h2 {
+      margin: 32px 0 16px;
+      font-size: 1.4rem;
+      padding-bottom: 8px;
+      border-bottom: 2px dashed rgba(17, 17, 17, 0.2);
+    }
+
+    .privacy-content h2:first-child {
+      margin-top: 0;
+    }
+
+    .privacy-content h3 {
+      margin: 24px 0 12px;
+      font-size: 1.1rem;
+      color: var(--ink);
+    }
+
+    .privacy-content p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .privacy-content ul {
+      margin: 0 0 16px;
+      padding-left: 24px;
+    }
+
+    .privacy-content li {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .privacy-content li strong {
+      color: var(--ink);
+    }
+
+    .privacy-content a {
+      color: var(--accent-dark);
+      text-decoration: underline;
+    }
+
+    .privacy-content a:hover {
+      color: var(--interactive);
+    }
+
+    .highlight-box {
+      padding: 16px 20px;
+      background: rgba(84, 136, 194, 0.15);
+      border-radius: 12px;
+      border-left: 4px solid var(--shock);
+      margin: 16px 0;
+    }
+
+    .highlight-box p {
+      margin: 0;
+    }
+
+    .contact-box {
+      padding: 20px;
+      background: var(--bg-alt);
+      border-radius: 12px;
+      border: 1px solid rgba(17, 17, 17, 0.1);
+      margin: 16px 0;
+    }
+
+    .contact-box p {
+      margin: 0 0 8px;
+    }
+
+    .contact-box p:last-child {
+      margin: 0;
+    }
+
+    .toc {
+      padding: 20px;
+      background: var(--bg-alt);
+      border-radius: 12px;
+      border: 1px solid rgba(17, 17, 17, 0.1);
+      margin-bottom: 24px;
+    }
+
+    .toc h3 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+    }
+
+    .toc ul {
+      margin: 0;
+      padding-left: 20px;
+      columns: 2;
+      column-gap: 24px;
+    }
+
+    .toc li {
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+    }
+
+    .toc a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      text-decoration: underline;
+      color: var(--accent-dark);
+    }
+
+    @media (max-width: 600px) {
+      .toc ul {
+        columns: 1;
+      }
+
+      .privacy-content {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="privacy-page">
+    <a href="../" class="back-link">&larr; Back to Home</a>
+
+    <div class="privacy-header">
+      <img class="logo" src="../assets/app_icon.jpg" alt="CreativityHub logo" />
+      <h1>Privacy Policy</h1>
+    </div>
+
+    <div class="last-updated">Last Updated: February 21, 2026</div>
+
+    <div class="privacy-content">
+      <nav class="toc">
+        <h3>Table of Contents</h3>
+        <ul>
+          <li><a href="#introduction">Introduction</a></li>
+          <li><a href="#information-collect">Information We Collect</a></li>
+          <li><a href="#how-we-use">How We Use Your Information</a></li>
+          <li><a href="#data-storage">Data Storage</a></li>
+          <li><a href="#icloud-backup">iCloud Backup</a></li>
+          <li><a href="#export-import">Export and Import</a></li>
+          <li><a href="#location-services">Location Services</a></li>
+          <li><a href="#analytics">Analytics</a></li>
+          <li><a href="#notifications">Notifications</a></li>
+          <li><a href="#data-sharing">Data Sharing</a></li>
+          <li><a href="#data-security">Data Security</a></li>
+          <li><a href="#your-rights">Your Rights and Choices</a></li>
+          <li><a href="#languages">Supported Languages</a></li>
+          <li><a href="#children">Children's Privacy</a></li>
+          <li><a href="#changes">Changes to Policy</a></li>
+          <li><a href="#data-retention">Data Retention</a></li>
+          <li><a href="#international">International Users</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="introduction">Introduction</h2>
+      <p>CreativityHub ("we", "our", or "the app") is committed to protecting your privacy. This Privacy Policy
+        explains how we collect, use, and safeguard your information when you use our iOS application.</p>
+
+      <h2 id="information-collect">Information We Collect</h2>
+
+      <h3>Information You Provide</h3>
+      <p>When you use CreativityHub, you may provide the following information:</p>
+      <ul>
+        <li><strong>Projects:</strong> Project names, descriptions, statuses, and organizational metadata</li>
+        <li><strong>Ideas:</strong> Creative ideas with titles, descriptions, source URLs, and source type detection
+          (Instagram, TikTok, Pinterest, YouTube, Website)</li>
+        <li><strong>Notes:</strong> Text notes associated with your projects</li>
+        <li><strong>Checklists:</strong> Checklists with items, completion status, and progress tracking</li>
+        <li><strong>Expenses:</strong> Expense amounts, currencies, categories, dates, and descriptions</li>
+        <li><strong>Documents:</strong> Files you upload (PDF, JPEG, PNG, HEIC) including project-related documents</li>
+        <li><strong>Reminders:</strong> Reminder titles, dates, and associated projects</li>
+        <li><strong>Work Logs:</strong> Time entries with durations, descriptions, and linked checklist items</li>
+        <li><strong>Tags:</strong> Custom tags you create for organizing content</li>
+        <li><strong>Shared Content:</strong> Files and links you share into CreativityHub via the iOS Share Extension
+          from other apps (e.g. Safari, Instagram, Photos)</li>
+      </ul>
+
+      <h3>Automatically Collected Information</h3>
+      <ul>
+        <li><strong>Activity Logs:</strong> The app records in-app actions (creating, editing, deleting items) locally
+          to generate weekly activity charts. These logs are stored only on your device and are automatically deleted
+          after 6 months. Activity logs are not included in backups or exports.</li>
+        <li><strong>Usage Data:</strong> Information about how you use the app, including features accessed and app
+          performance data</li>
+        <li><strong>Device Information:</strong> Device type, operating system version, and app version</li>
+      </ul>
+
+      <h2 id="how-we-use">How We Use Your Information</h2>
+      <p>We use the collected information to:</p>
+      <ul>
+        <li>Provide core app functionality for managing your creative projects, ideas, and tasks</li>
+        <li>Generate activity analytics and progress charts inside the app</li>
+        <li>Calculate expense summaries and budget breakdowns by category</li>
+        <li>Send local notifications for reminders you create</li>
+        <li>Improve app performance and user experience</li>
+      </ul>
+
+      <h2 id="data-storage">Data Storage</h2>
+      <div class="highlight-box">
+        <p>Core app content (projects, ideas, notes, checklists, expenses, documents, reminders, work logs, tags, and
+          activity logs) is stored locally on your device by default. We do not operate our own backend server that
+          stores your project content.</p>
+      </div>
+      <p>Document files (PDFs, images) you upload are stored in the app's local Documents directory on your device.</p>
+      <p>If you enable iCloud backup, your selected data is copied to your personal iCloud account. If analytics is
+        active (Release builds), limited usage metadata is sent to Firebase Analytics as described below.</p>
+
+      <h2 id="icloud-backup">iCloud Backup</h2>
+      <p>CreativityHub offers iCloud backup functionality to help you safeguard your data. When you enable iCloud
+        backup in the app:</p>
+      <ul>
+        <li>Your projects, ideas, notes, checklists, expenses, documents, reminders, work logs, and tags are backed up
+          to your personal iCloud account</li>
+        <li>Document files are included in the backup</li>
+        <li>Backups are encrypted by Apple and protected by your Apple ID</li>
+        <li>Data is accessible only through your iCloud account</li>
+        <li>Backup and sync is subject to <a href="https://www.apple.com/legal/privacy/" target="_blank"
+            rel="noopener noreferrer">Apple's Privacy Policy</a></li>
+      </ul>
+      <p>You can enable or disable iCloud backup at any time in the app settings. If disabled, all data remains stored
+        locally on your device only.</p>
+
+      <h2 id="export-import">Export and Import</h2>
+      <p>CreativityHub allows you to export your data in JSON format and import data from JSON files. When you export:
+      </p>
+      <ul>
+        <li>All project data and related entities are included in the export file</li>
+        <li>The export file is saved to a location you choose</li>
+        <li>You control who has access to the exported file</li>
+      </ul>
+
+      <h2 id="location-services">Location Services</h2>
+      <p>CreativityHub does not use location services.</p>
+
+      <h2 id="analytics">Analytics</h2>
+      <p>We use Firebase Analytics in Release builds to collect usage data that helps us understand how the app is used
+        and improve the user experience. This includes:</p>
+      <ul>
+        <li><strong>App usage patterns:</strong> Which features are used, screen views, and user interactions</li>
+        <li><strong>Device information:</strong> Device type, operating system version, and app version</li>
+        <li><strong>Performance data:</strong> App launch times, crashes, and errors</li>
+        <li><strong>Technical identifiers:</strong> A pseudonymous app user identifier generated on first launch
+          (`user_id`) and a per-session identifier (`session_id`)</li>
+      </ul>
+      <p>Analytics data is:</p>
+      <ul>
+        <li>Pseudonymous and does not include your project content such as notes, document files, checklist text, or
+          expense details</li>
+        <li>Processed by Google/Firebase in accordance with <a href="https://policies.google.com/privacy"
+            target="_blank" rel="noopener noreferrer">Google's Privacy Policy</a></li>
+        <li>Used solely to improve app functionality and user experience</li>
+      </ul>
+      <p>You can limit ad tracking and analytics collection through your device's privacy settings (Settings > Privacy
+        & Security > Tracking).</p>
+
+      <h2 id="notifications">Notifications</h2>
+      <p>CreativityHub uses local notifications for reminders you create. These notifications:</p>
+      <ul>
+        <li>Are processed entirely on your device</li>
+        <li>Do not transmit any data to external servers</li>
+        <li>Can be disabled through iOS Settings or within the app</li>
+      </ul>
+
+      <h2 id="data-sharing">Data Sharing and Third Parties</h2>
+      <div class="highlight-box">
+        <p>We do not sell your personal information. We only share data with third-party providers when needed to
+          provide optional backup and analytics features.</p>
+      </div>
+      <ul>
+        <li><strong>Apple iCloud (optional):</strong> If you enable iCloud backup, backup files are stored in your
+          personal iCloud account and handled by Apple.</li>
+        <li><strong>Google Firebase Analytics:</strong> Usage analytics metadata is sent to Firebase as described in the
+          Analytics section.</li>
+      </ul>
+
+      <h2 id="data-security">Data Security</h2>
+      <p>We implement appropriate technical measures to protect your data:</p>
+      <ul>
+        <li>All data is stored locally on your device using iOS secure storage mechanisms</li>
+        <li>Document files are stored in the app's sandboxed Documents directory</li>
+        <li>When iCloud backup is enabled, backups are protected by your Apple ID and Apple's security controls</li>
+        <li>Analytics transmission uses Firebase's encrypted transport and service protections</li>
+        <li>Data is protected by your device's built-in security features</li>
+      </ul>
+
+      <h2 id="your-rights">Your Rights and Choices</h2>
+      <p>You have the right to:</p>
+      <ul>
+        <li><strong>Access Your Data:</strong> All your data is accessible within the app</li>
+        <li><strong>Delete Your Data:</strong> You can delete individual records or all data through the app settings
+        </li>
+        <li><strong>Export Your Data:</strong> You can export all your project data in JSON format from the app</li>
+        <li><strong>Control Backups:</strong> You can enable or disable iCloud backup at any time</li>
+      </ul>
+
+      <h2 id="languages">Supported Languages</h2>
+      <p>CreativityHub is available in 3 languages: English, Russian, and Kazakh. Your language preference is determined
+        by your device settings or can be set within the app.</p>
+
+      <h2 id="children">Children's Privacy</h2>
+      <p>CreativityHub is not intended for use by children under the age of 13. We do not knowingly collect personal
+        information from children under 13.</p>
+
+      <h2 id="changes">Changes to This Privacy Policy</h2>
+      <p>We may update this Privacy Policy from time to time. We will notify you of any changes by:</p>
+      <ul>
+        <li>Posting the new Privacy Policy in the app</li>
+        <li>Updating the "Last Updated" date at the top of this policy</li>
+      </ul>
+      <p>Your continued use of the app after changes are posted constitutes acceptance of the updated policy.</p>
+
+      <h2 id="data-retention">Data Retention</h2>
+      <p>Your project data (projects, ideas, notes, checklists, expenses, documents, reminders, work logs, tags) is
+        retained on your device until you manually delete it. We do not have access to your data and therefore do not
+        control retention periods.</p>
+      <p>Activity logs used for in-app analytics charts are automatically deleted after 6 months to keep your device
+        storage usage reasonable.</p>
+      <p>If iCloud backup is enabled, the app also applies cleanup rules to backup files (for example limiting the
+        number of stored backups and removing older backup files) to reduce storage usage.</p>
+
+      <h2 id="international">International Users</h2>
+      <p>Your core project data is stored locally on your device. If you use iCloud backup or analytics features, data
+        may be processed in other countries by Apple and Google/Firebase according to their privacy terms.</p>
+
+      <h2 id="contact">Contact Us</h2>
+      <p>If you have questions about this Privacy Policy or our privacy practices, please contact us at:</p>
+      <div class="contact-box">
+        <p><strong>Email:</strong> <a
+            href="mailto:maximgorbatyuk191093@gmail.com">maximgorbatyuk191093@gmail.com</a></p>
+        <p><strong>GitHub:</strong> <a href="https://github.com/maximgorbatyuk/creativity-hub" target="_blank"
+            rel="noopener noreferrer">github.com/maximgorbatyuk/creativity-hub</a></p>
+      </div>
+
+      <h2>Consent</h2>
+      <p>By using CreativityHub, you consent to this Privacy Policy and agree to its terms.</p>
+    </div>
+
+    <section class="footer">
+      <div>
+        <span>CreativityHub</span>
+        <span>&middot;</span>
+        <a href="../">Home</a>
+        <span>&middot;</span>
+        <a href="../privacy-policy/">Privacy Policy</a>
+        <span>&middot;</span>
+        <a href="https://github.com/maximgorbatyuk/creativity-hub" target="_blank"
+          rel="noopener noreferrer">GitHub</a>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; <span id="current-year">2026</span> Maxim Gorbatyuk. Open source project under MIT License.</p>
+      </div>
+    </section>
+  </main>
+</body>
+<script>
+  document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
+
+</html>

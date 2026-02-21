@@ -149,7 +149,7 @@
 "home.stats.reminders" = "Напоминания";
 "home.stats.logged_time" = "Учтённое время";
 "home.activity_chart.title" = "Активность по проектам";
-"home.activity_chart.period" = "Последние 6 месяцев, по неделям";
+"home.activity_chart.period" = "Последние 6 месяцев, по 2 недели";
 "home.empty.title" = "Всё чисто";
 "home.empty.message" = "Нет активных проектов или предстоящих напоминаний. Создайте проект, чтобы начать!";
 
@@ -196,7 +196,7 @@
 "project.detail.progress" = "Прогресс";
 "project.detail.progress_percent" = "%d%% выполнено";
 "project.activity_chart.title" = "Динамика активности";
-"project.activity_chart.period" = "Последние 6 месяцев, по неделям";
+"project.activity_chart.period" = "Последние 6 месяцев, по 2 недели";
 "project.detail.budget" = "Бюджет";
 "project.detail.budget_total" = "Общий бюджет";
 "project.detail.spent" = "Потрачено";

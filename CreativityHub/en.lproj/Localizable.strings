@@ -149,7 +149,7 @@
 "home.stats.reminders" = "Reminders";
 "home.stats.logged_time" = "Logged time";
 "home.activity_chart.title" = "Project Activity";
-"home.activity_chart.period" = "Last 6 months, grouped by week";
+"home.activity_chart.period" = "Last 6 months, grouped by 2 weeks";
 "home.empty.title" = "All Clear";
 "home.empty.message" = "No active projects or upcoming reminders. Create a project to get started!";
 
@@ -196,7 +196,7 @@
 "project.detail.progress" = "Progress";
 "project.detail.progress_percent" = "%d%% complete";
 "project.activity_chart.title" = "Activity Trend";
-"project.activity_chart.period" = "Last 6 months, grouped by week";
+"project.activity_chart.period" = "Last 6 months, grouped by 2 weeks";
 "project.detail.budget" = "Budget";
 "project.detail.budget_total" = "Total Budget";
 "project.detail.spent" = "Spent";
