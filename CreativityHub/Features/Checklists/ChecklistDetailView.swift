@@ -56,6 +56,34 @@ struct ChecklistDetailView: View {
                 viewModel.updateItem(updated)
             }
         }
+        .sheet(isPresented: $viewModel.showWorkLogSheet) {
+            if let item = viewModel.pendingWorkLogChecklistItem {
+                WorkLogFormView(
+                    mode: .add(projectId: viewModel.projectId),
+                    linkedChecklistItemId: item.id,
+                    initialTitle: item.name
+                ) { workLog in
+                    viewModel.addWorkLog(workLog)
+                }
+            }
+        }
+        .confirmationDialog(
+            L("checklist.item.mark_done"),
+            isPresented: $viewModel.showDoneConfirmation,
+            titleVisibility: .visible
+        ) {
+            Button(L("checklist.item.mark_done")) {
+                if let item = viewModel.itemToConfirmDone {
+                    viewModel.toggleItemCompletion(item)
+                }
+            }
+            Button(L("checklist.item.mark_done_log_time")) {
+                if let item = viewModel.itemToConfirmDone {
+                    viewModel.markDoneAndLogTime(item)
+                }
+            }
+            Button(L("button.cancel"), role: .cancel) {}
+        }
     }
 
     // MARK: - Progress Header
@@ -106,7 +134,12 @@ struct ChecklistDetailView: View {
         List {
             ForEach(viewModel.filteredItems) { item in
                 ChecklistItemRowView(item: item) {
-                    viewModel.toggleItemCompletion(item)
+                    if !item.isCompleted {
+                        viewModel.itemToConfirmDone = item
+                        viewModel.showDoneConfirmation = true
+                    } else {
+                        viewModel.toggleItemCompletion(item)
+                    }
                 }
                 .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                     Button(role: .destructive) {

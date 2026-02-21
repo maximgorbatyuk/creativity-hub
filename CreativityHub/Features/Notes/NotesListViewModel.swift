@@ -63,6 +63,7 @@ final class NotesListViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .note, actionType: .created)
         logger.info("Added note \(note.id)")
         loadData()
     }
@@ -73,6 +74,7 @@ final class NotesListViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .note, actionType: .updated)
         logger.info("Updated note \(note.id)")
         loadData()
     }
@@ -83,6 +85,7 @@ final class NotesListViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .note, actionType: .deleted)
         logger.info("Deleted note \(note.id)")
         loadData()
     }
@@ -94,6 +97,7 @@ final class NotesListViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .note, actionType: .updated)
         logger.info("Toggled pin for note \(note.id): \(newPinned)")
         loadData()
     }

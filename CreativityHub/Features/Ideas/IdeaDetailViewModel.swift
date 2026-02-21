@@ -51,6 +51,7 @@ final class IdeaDetailViewModel {
         }
         idea = updated
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .idea, actionType: .updated)
         logger.info("Updated idea \(updated.id)")
     }
 
@@ -61,6 +62,7 @@ final class IdeaDetailViewModel {
             return false
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .idea, actionType: .deleted)
         logger.info("Deleted idea \(self.idea.id)")
         return true
     }
@@ -71,6 +73,7 @@ final class IdeaDetailViewModel {
             return
         }
         tags.append(tag)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .idea, actionType: .linked)
         logger.info("Linked tag \(tag.id) to idea \(self.idea.id)")
     }
 
@@ -80,6 +83,7 @@ final class IdeaDetailViewModel {
             return
         }
         tags.removeAll { $0.id == tag.id }
+        ActivityLogService.shared.log(projectId: projectId, entityType: .idea, actionType: .unlinked)
         logger.info("Unlinked tag \(tag.id) from idea \(self.idea.id)")
     }
 

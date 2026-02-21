@@ -5,11 +5,8 @@ struct LaunchScreenView: View {
     private let developerName: String
 
     init() {
-        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "-"
-        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "-"
-
-        self.appVersion = "\(version) (\(build))"
-        self.developerName = Bundle.main.object(forInfoDictionaryKey: "DeveloperName") as? String ?? ""
+        self.appVersion = EnvironmentService.shared.getAppVisibleVersion()
+        self.developerName = EnvironmentService.shared.getDeveloperName()
     }
 
     var body: some View {

@@ -92,6 +92,7 @@ final class ProjectsListViewModel {
             logger.error("Failed to insert project")
             return
         }
+        ActivityLogService.shared.log(projectId: project.id, entityType: .project, actionType: .created)
         logger.info("Added project \(project.id)")
         loadProjects()
     }
@@ -101,6 +102,7 @@ final class ProjectsListViewModel {
             logger.error("Failed to update project \(project.id)")
             return
         }
+        ActivityLogService.shared.log(projectId: project.id, entityType: .project, actionType: .updated)
         logger.info("Updated project \(project.id)")
         loadProjects()
     }
@@ -120,6 +122,7 @@ final class ProjectsListViewModel {
             logger.error("Failed to toggle pin for project \(project.id)")
             return
         }
+        ActivityLogService.shared.log(projectId: project.id, entityType: .project, actionType: .updated)
         logger.info("Toggled pin for project \(project.id): \(newPinned)")
         loadProjects()
     }

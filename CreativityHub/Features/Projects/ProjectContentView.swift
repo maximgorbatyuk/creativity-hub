@@ -3,8 +3,6 @@ import SwiftUI
 struct ProjectContentView: View {
     @State private var viewModel = ProjectContentViewModel()
     @State private var showAddProjectSheet = false
-    @State private var showEditSheet = false
-    @State private var showDeleteConfirmation = false
     @State private var showChecklistsList = false
     @State private var showIdeasList = false
     @State private var showNotesList = false
@@ -18,6 +16,8 @@ struct ProjectContentView: View {
     @State private var showAddExpenseSheet = false
     @State private var showAddReminderSheet = false
     @State private var showAddDocumentSheet = false
+    @State private var showWorkLogsList = false
+    @State private var showAddWorkLogSheet = false
 
     private let analytics = AnalyticsService.shared
 
@@ -49,12 +49,12 @@ struct ProjectContentView: View {
                         ScrollView {
                             LazyVStack(spacing: 0) {
                                 checklistsSection
-                                ideasSection
-                                notesSection
+                                workLogsSection
                                 documentsSection
                                 expensesSection
                                 remindersSection
-
+                                ideasSection
+                                notesSection
                                 Spacer()
                                     .frame(height: 100)
                             }
@@ -69,7 +69,6 @@ struct ProjectContentView: View {
             }
             .navigationTitle(L("project.content.title"))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar { toolbarContent }
             .onAppear {
                 analytics.trackScreen("project_content")
                 viewModel.loadInitialData()
@@ -80,13 +79,6 @@ struct ProjectContentView: View {
             .sheet(isPresented: $showAddProjectSheet) {
                 ProjectFormView(mode: .add) { project in
                     viewModel.addProject(project)
-                }
-            }
-            .sheet(isPresented: $showEditSheet) {
-                if let project = viewModel.selectedProject {
-                    ProjectFormView(mode: .edit(project)) { updated in
-                        viewModel.updateProject(updated)
-                    }
                 }
             }
             .sheet(isPresented: $showAddItemSelector) {
@@ -136,14 +128,6 @@ struct ProjectContentView: View {
                     }
                 }
             }
-            .alert(L("project.delete.title"), isPresented: $showDeleteConfirmation) {
-                Button(L("button.cancel"), role: .cancel) {}
-                Button(L("button.delete"), role: .destructive) {
-                    _ = viewModel.deleteProject()
-                }
-            } message: {
-                Text(L("project.delete.message"))
-            }
             .navigationDestination(isPresented: $showChecklistsList) {
                 ChecklistsListView(projectId: viewModel.selectedProjectId ?? UUID())
             }
@@ -162,52 +146,17 @@ struct ProjectContentView: View {
             .navigationDestination(isPresented: $showRemindersList) {
                 RemindersListView(projectId: viewModel.selectedProjectId ?? UUID())
             }
-        }
-    }
-
-    // MARK: - Toolbar
-
-    @ToolbarContentBuilder
-    private var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) {
-            if viewModel.selectedProject != nil {
-                Menu {
-                    Button {
-                        showEditSheet = true
-                    } label: {
-                        Label(L("button.edit"), systemImage: "pencil")
+            .navigationDestination(isPresented: $showWorkLogsList) {
+                WorkLogsListView(projectId: viewModel.selectedProjectId ?? UUID())
+            }
+            .sheet(isPresented: $showAddWorkLogSheet) {
+                if let projectId = viewModel.selectedProjectId {
+                    WorkLogFormView(
+                        mode: .add(projectId: projectId),
+                        checklistItems: viewModel.workLogChecklistItems
+                    ) { workLog in
+                        viewModel.addWorkLog(workLog)
                     }
-
-                    Button {
-                        viewModel.togglePin()
-                    } label: {
-                        Label(
-                            viewModel.selectedProject?.isPinned == true
-                                ? L("project.action.unpin") : L("project.action.pin"),
-                            systemImage: viewModel.selectedProject?.isPinned == true ? "pin.slash" : "pin"
-                        )
-                    }
-
-                    Menu(L("project.action.set_status")) {
-                        ForEach(ProjectStatus.allCases) { status in
-                            Button {
-                                viewModel.updateStatus(status)
-                            } label: {
-                                Label(status.displayName, systemImage: status.icon)
-                            }
-                            .disabled(viewModel.selectedProject?.status == status)
-                        }
-                    }
-
-                    Divider()
-
-                    Button(role: .destructive) {
-                        showDeleteConfirmation = true
-                    } label: {
-                        Label(L("button.delete"), systemImage: "trash")
-                    }
-                } label: {
-                    Image(systemName: "ellipsis.circle")
                 }
             }
         }
@@ -441,6 +390,39 @@ struct ProjectContentView: View {
         )
     }
 
+    private var workLogsSection: some View {
+        sectionContainer(
+            header: SectionHeaderView(
+                title: L("project.section.work_logs"),
+                iconName: "clock.fill",
+                iconColor: .indigo,
+                itemCount: viewModel.sectionCounts.workLogs,
+                onSeeAll: viewModel.selectedProjectId != nil ? {
+                    showWorkLogsList = true
+                } : nil
+            ),
+            content: {
+                if viewModel.previewWorkLogs.isEmpty {
+                    EmptySectionView(
+                        message: L("empty.worklogs.message"),
+                        iconName: "clock"
+                    )
+                } else {
+                    ForEach(viewModel.previewWorkLogs) { workLog in
+                        WorkLogPreviewRow(workLog: workLog)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                showWorkLogsList = true
+                            }
+                        if workLog.id != viewModel.previewWorkLogs.last?.id {
+                            Divider().padding(.leading, 56)
+                        }
+                    }
+                }
+            }
+        )
+    }
+
     // MARK: - Section Container
 
     private func sectionContainer<Content: View>(
@@ -558,6 +540,15 @@ struct ProjectContentView: View {
                     ) {
                         showAddItemSelector = false
                         showAddReminderSheet = true
+                    }
+
+                    addItemGridButton(
+                        icon: "clock.fill",
+                        color: .indigo,
+                        title: L("project.add_new.work_log")
+                    ) {
+                        showAddItemSelector = false
+                        showAddWorkLogSheet = true
                     }
                 }
                 .padding(24)

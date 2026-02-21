@@ -11,6 +11,8 @@ class UserSettingsRepository {
 
     private let db: Connection
     private let logger: Logger
+    private let dateFormatterWithFractionalSeconds: ISO8601DateFormatter
+    private let dateFormatter: ISO8601DateFormatter
 
     init(db: Connection, logger: Logger? = nil) {
         self.db = db
@@ -18,6 +20,14 @@ class UserSettingsRepository {
             subsystem: Bundle.main.bundleIdentifier ?? "-",
             category: "UserSettingsRepository"
         )
+
+        let formatterWithFractionalSeconds = ISO8601DateFormatter()
+        formatterWithFractionalSeconds.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        self.dateFormatterWithFractionalSeconds = formatterWithFractionalSeconds
+
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime]
+        self.dateFormatter = formatter
     }
 
     func createTable() {
@@ -60,6 +70,24 @@ class UserSettingsRepository {
             logger.error("Failed to upsert setting '\(key)': \(error)")
             return false
         }
+    }
+
+    func fetchDateValue(for key: String) -> Date? {
+        guard let value = fetchValue(for: key) else {
+            return nil
+        }
+
+        if let parsedWithFractionalSeconds = dateFormatterWithFractionalSeconds.date(from: value) {
+            return parsedWithFractionalSeconds
+        }
+
+        return dateFormatter.date(from: value)
+    }
+
+    @discardableResult
+    func upsertDateValue(key: String, value: Date) -> Bool {
+        let encodedValue = dateFormatterWithFractionalSeconds.string(from: value)
+        return upsertValue(key: key, value: encodedValue)
     }
 
     // MARK: - Currency
@@ -132,5 +160,32 @@ class UserSettingsRepository {
         let newId = UUID().uuidString
         upsertValue(key: UserSettingKey.userId.rawValue, value: newId)
         return newId
+    }
+
+    // MARK: - Activity Log Cleanup Metadata
+
+    func fetchActivityLogCleanupLastRunAt() -> Date? {
+        fetchDateValue(for: UserSettingKey.activityLogCleanupLastRunAt.rawValue)
+    }
+
+    @discardableResult
+    func upsertActivityLogCleanupLastRunAt(_ date: Date) -> Bool {
+        upsertDateValue(key: UserSettingKey.activityLogCleanupLastRunAt.rawValue, value: date)
+    }
+
+    func fetchActivityLogCleanupLastRemovedCount() -> Int? {
+        guard let value = fetchValue(for: UserSettingKey.activityLogCleanupLastRemovedCount.rawValue) else {
+            return nil
+        }
+
+        return Int(value)
+    }
+
+    @discardableResult
+    func upsertActivityLogCleanupLastRemovedCount(_ count: Int) -> Bool {
+        upsertValue(
+            key: UserSettingKey.activityLogCleanupLastRemovedCount.rawValue,
+            value: String(count)
+        )
     }
 }

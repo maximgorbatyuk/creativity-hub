@@ -9,6 +9,25 @@ All notable changes to CreativityHub since the initial project setup (`000ad10` 
 - Updated `CLAUDE.md` to reflect current project structure and features
 - **Tag management in User Settings** — `TagsListView`, `TagsListViewModel`, `TagFormView`, `TagRowView` for browsing, creating, editing, and deleting global tags from Settings > Preferences
 - Tag management localization strings for English, Russian, and Kazakh
+- **Work Logs module** — `WorkLog` model, `work_logs` migration/repository, `WorkLogsListView`, `WorkLogFormView`, preview/row views, and project/checklist integration
+- **Activity Log system** — `ActivityLog` model, repository/migration, centralized `ActivityLogService`, and event tracking across project, checklist/items, idea, note, document, expense/category, reminder, and worklog actions (including Share Extension saves)
+- **Activity analytics and charts** — `ActivityAnalyticsService`, project detail activity trend chart, and home multi-project weekly activity chart (last 6 months)
+- **Activity cleanup background task** — `ActivityLogCleanupTaskManager` with BGTask registration/scheduling and foreground fallback
+- Cleanup metadata in `user_settings` — upserted keys for last cleanup datetime and last removed records count
+- `ActivityLogRepositoryTests` for insert/fetch ordering, daily aggregation, retention cleanup, and project-scoped deletion
+- App update check flow — `AppVersionChecker`, `MainTabViewModel`, and settings update badge wiring
+- Launch screen QA preview action in settings and related localization updates
+
+### Changed
+- `DatabaseManager` schema upgraded to version `7`; migrations now include document file-path migration, work logs migration, and activity logs migration
+- `RandomDataGenerator` now creates activity logs for the last 6 months with realistic density (150-300 records across different days)
+- Backup/export/import model wiring updated to include work logs and keep activity logs excluded from payloads
+- `EnvironmentService` expanded for centralized build/runtime values (bundle ID, app group identifier, developer/app metadata, App Store link)
+- `AppGroupContainer` now resolves group identifier from `EnvironmentService` instead of hardcoded values
+- Home/Today dashboard and project detail screens extended with new activity/worklog signals
+
+### Fixed
+- Test database bootstrap now mirrors production migration order by applying document file-path and work-log migrations before activity-log migration (`TestDatabaseHelper`)
 
 ## 2026-02-20
 

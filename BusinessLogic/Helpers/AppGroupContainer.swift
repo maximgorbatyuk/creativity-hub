@@ -5,7 +5,7 @@ enum AppGroupContainer {
     private static let logger = Logger(subsystem: "AppGroupContainer", category: "Storage")
 
     static var identifier: String {
-        guard let identifier = Bundle.main.object(forInfoDictionaryKey: "AppGroupIdentifier") as? String else {
+        guard let identifier = EnvironmentService.shared.getAppGroupIdentifier(), !identifier.isEmpty else {
             logger.error("AppGroupIdentifier not found in Info.plist")
             fatalError("AppGroupIdentifier not found in Info.plist. Check xcconfig setup.")
         }
@@ -33,7 +33,7 @@ enum AppGroupContainer {
     }
 
     static var isConfigured: Bool {
-        guard let identifier = Bundle.main.object(forInfoDictionaryKey: "AppGroupIdentifier") as? String else {
+        guard let identifier = EnvironmentService.shared.getAppGroupIdentifier(), !identifier.isEmpty else {
             return false
         }
         return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: identifier) != nil

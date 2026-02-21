@@ -80,6 +80,7 @@ final class DocumentsListViewModel {
 
         if documentRepository?.insert(document) == true {
             projectRepository?.touchUpdatedAt(id: projectId)
+            ActivityLogService.shared.log(projectId: projectId, entityType: .document, actionType: .created)
             logger.info("Added document \(document.id)")
             loadData()
             return true
@@ -112,6 +113,7 @@ final class DocumentsListViewModel {
 
         if documentRepository?.insert(document) == true {
             projectRepository?.touchUpdatedAt(id: projectId)
+            ActivityLogService.shared.log(projectId: projectId, entityType: .document, actionType: .created)
             logger.info("Added document \(document.id)")
             loadData()
             return true
@@ -135,6 +137,7 @@ final class DocumentsListViewModel {
         }
 
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .document, actionType: .deleted)
         logger.info("Deleted document \(document.id)")
         loadData()
     }
@@ -148,6 +151,7 @@ final class DocumentsListViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .document, actionType: .updated)
         logger.info("Renamed document \(document.id)")
         loadData()
     }

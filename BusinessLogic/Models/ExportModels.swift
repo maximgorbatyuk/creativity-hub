@@ -14,6 +14,7 @@ struct ExportData: Codable {
     let notes: [Note]?
     let documents: [Document]?
     let reminders: [Reminder]?
+    let workLogs: [WorkLog]?
 
     init(
         metadata: ExportMetadata,
@@ -28,7 +29,8 @@ struct ExportData: Codable {
         expenseCategories: [ExpenseCategory]? = nil,
         notes: [Note]? = nil,
         documents: [Document]? = nil,
-        reminders: [Reminder]? = nil
+        reminders: [Reminder]? = nil,
+        workLogs: [WorkLog]? = nil
     ) {
         self.metadata = metadata
         self.userSettings = userSettings
@@ -43,6 +45,7 @@ struct ExportData: Codable {
         self.notes = notes
         self.documents = documents
         self.reminders = reminders
+        self.workLogs = workLogs
     }
 }
 

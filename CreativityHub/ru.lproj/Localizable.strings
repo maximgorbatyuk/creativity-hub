@@ -92,15 +92,30 @@
 "onboarding.ideas.description" = "Сохраняйте ссылки из Instagram, Pinterest, YouTube и других";
 "onboarding.budget.title" = "Контролируйте бюджет";
 "onboarding.budget.description" = "Следите за расходами с разбивкой по категориям";
+"onboarding.worklogs.title" = "Фиксируйте рабочее время";
+"onboarding.worklogs.description" = "Отслеживайте время по дням, часам и минутам для каждого проекта";
 
 /* Settings */
 "settings.title" = "Настройки";
 "settings.section.preferences" = "Предпочтения";
 "settings.section.appearance" = "Внешний вид";
 "settings.section.about" = "О приложении";
-"settings.currency" = "Валюта";
+"settings.section.import_export" = "Импорт / Экспорт";
+"settings.currency" = "Валюта по умолчанию";
+"settings.currency.hint" = "Эта валюта будет выбрана по умолчанию при создании нового расхода.";
 "settings.language" = "Язык";
 "settings.color_scheme" = "Тема оформления";
+"settings.update_available" = "Доступно обновление";
+"settings.about_app.button" = "О чем это приложение?";
+"settings.start_onboarding_again" = "Пройти онбординг снова";
+"settings.rate_app" = "Оценить приложение";
+"settings.about_app.intro_title" = "Храните все творческие задачи в одном месте.";
+"settings.about_app.intro_message" = "CreativityHub помогает организовывать проекты, идеи, заметки, напоминания, чеклисты, расходы и документы в одном приложении.";
+"settings.about_app.feedback" = "Если у вас есть вопросы или предложения, создайте issue на GitHub:";
+"settings.about_app.github_link_title" = "creativityhub";
+"settings.about_app.version" = "Версия: %@";
+"settings.about_app.developer" = "Разработчик: %@";
+"settings.about_app.build_development" = "Сборка: Development";
 "settings.version" = "Версия";
 "settings.developer" = "Разработчик";
 "settings.contact_telegram" = "Связаться с разработчиком в Telegram";
@@ -133,6 +148,8 @@
 "home.stats.projects" = "Проекты";
 "home.stats.reminders" = "Напоминания";
 "home.stats.logged_time" = "Учтённое время";
+"home.activity_chart.title" = "Активность по проектам";
+"home.activity_chart.period" = "Последние 6 месяцев, по неделям";
 "home.empty.title" = "Всё чисто";
 "home.empty.message" = "Нет активных проектов или предстоящих напоминаний. Создайте проект, чтобы начать!";
 
@@ -178,6 +195,8 @@
 "project.detail.target" = "Цель";
 "project.detail.progress" = "Прогресс";
 "project.detail.progress_percent" = "%d%% выполнено";
+"project.activity_chart.title" = "Динамика активности";
+"project.activity_chart.period" = "Последние 6 месяцев, по неделям";
 "project.detail.budget" = "Бюджет";
 "project.detail.budget_total" = "Общий бюджет";
 "project.detail.spent" = "Потрачено";
@@ -426,6 +445,7 @@
 "settings.section.backup" = "Резервное копирование";
 "backup.export" = "Экспорт данных";
 "backup.import" = "Импорт данных";
+"backup.import.warning" = "Импорт заменит все текущие пользовательские данные.";
 "backup.icloud.create" = "Копировать в iCloud";
 "backup.icloud.manage" = "Управление копиями iCloud";
 "backup.icloud.title" = "Копии iCloud";
@@ -547,3 +567,30 @@
 "project.content.empty.subtitle" = "Создайте свой первый проект";
 "project.content.empty.add_button" = "Создать проект";
 "project.content.add_item" = "Добавить";
+
+// MARK: - Work Logs
+"project.section.work_logs" = "Журнал работ";
+"project.add_new.work_log" = "Запись работы";
+"worklog.list.title" = "Журнал работ";
+"worklog.list.add" = "Добавить запись";
+"worklog.list.total" = "Итого";
+"worklog.form.add_title" = "Новая запись";
+"worklog.form.edit_title" = "Редактировать запись";
+"worklog.form.title" = "Деятельность";
+"worklog.form.title_placeholder" = "Над чем вы работали?";
+"worklog.form.days" = "Дни";
+"worklog.form.hours" = "Часы";
+"worklog.form.minutes" = "Минуты";
+"worklog.form.linked_item" = "Связанный элемент";
+"worklog.form.linked_item.none" = "Нет";
+"worklog.form.error.total_zero" = "Общее время должно быть больше нуля";
+"worklog.form.error.negative_values" = "Значения не могут быть отрицательными";
+"worklog.delete.title" = "Удалить запись";
+"worklog.delete.message" = "Вы уверены, что хотите удалить эту запись?";
+"worklog.duration.unit.day_short" = "д";
+"worklog.duration.unit.hour_short" = "ч";
+"worklog.duration.unit.minute_short" = "м";
+"empty.worklogs.title" = "Нет записей";
+"empty.worklogs.message" = "Отслеживайте время работы над проектом";
+"checklist.item.mark_done" = "Выполнено";
+"checklist.item.mark_done_log_time" = "Выполнено + Записать время";

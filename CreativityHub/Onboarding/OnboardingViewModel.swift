@@ -37,6 +37,13 @@ final class OnboardingViewModel {
             description: "onboarding.budget.description",
             color: .green
         ),
+        OnboardingPageItem(
+            id: 4,
+            icon: "clock.fill",
+            title: "onboarding.worklogs.title",
+            description: "onboarding.worklogs.description",
+            color: .indigo
+        ),
     ]
 
     init() {

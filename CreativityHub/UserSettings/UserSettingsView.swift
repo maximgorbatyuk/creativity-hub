@@ -1,7 +1,10 @@
 import SwiftUI
+import StoreKit
 import UniformTypeIdentifiers
 
 struct UserSettingsView: View {
+    let showAppUpdateButton: Bool
+
     @State private var viewModel = UserSettingsViewModel()
     @State private var showImportPicker = false
     @State private var showExportSheet = false
@@ -17,17 +20,27 @@ struct UserSettingsView: View {
     @State private var showDocumentStorageBrowser = false
     @State private var showResetMigrationConfirmation = false
     @State private var showLaunchScreen = false
+    @State private var showAboutAppSheet = false
 
     @Environment(\.openURL) private var openURL
+    @Environment(\.requestReview) private var requestReview
     private let analytics = AnalyticsService.shared
+
+    init(showAppUpdateButton: Bool = false) {
+        self.showAppUpdateButton = showAppUpdateButton
+    }
 
     var body: some View {
         NavigationStack {
             Form {
+                if showAppUpdateButton {
+                    appUpdateSection
+                }
+
                 preferencesSection
-                appearanceSection
                 aboutSection
-                backupSection
+                importExportSection
+                iCloudBackupSection
                 if viewModel.isDevModeEnabled {
                     developerSection
                 }
@@ -62,6 +75,9 @@ struct UserSettingsView: View {
             }
             .sheet(isPresented: $showLaunchScreen) {
                 LaunchScreenPreviewView()
+            }
+            .sheet(isPresented: $showAboutAppSheet) {
+                AboutAppView()
             }
             .fileImporter(
                 isPresented: $showImportPicker,
@@ -145,6 +161,36 @@ struct UserSettingsView: View {
 
     // MARK: - Sections
 
+    private var appUpdateSection: some View {
+        Section {
+            HStack(spacing: 12) {
+                Text(L("settings.update_available"))
+                    .fontWeight(.semibold)
+
+                Spacer()
+
+                Button {
+                    analytics.trackEvent("app_update_button_clicked", properties: [
+                        "screen": "settings",
+                        "button_name": "update_app"
+                    ])
+
+                    let appStoreLink = viewModel.appStoreAppLink
+                    if let url = URL(string: appStoreLink), !appStoreLink.isEmpty {
+                        openURL(url)
+                    }
+                } label: {
+                    Image(systemName: "arrow.down.circle.fill")
+                        .foregroundStyle(.orange)
+                        .font(.title2)
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.vertical, 4)
+            .listRowBackground(Color.yellow.opacity(0.2))
+        }
+    }
+
     private var preferencesSection: some View {
         Section(L("settings.section.preferences")) {
             Picker(L("settings.currency"), selection: $viewModel.defaultCurrency) {
@@ -157,6 +203,10 @@ struct UserSettingsView: View {
                 viewModel.saveDefaultCurrency(newValue)
             }
 
+            Text(L("settings.currency.hint"))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
             Picker(L("settings.language"), selection: $viewModel.selectedLanguage) {
                 ForEach(AppLanguage.allCases, id: \.rawValue) { language in
                     Text("\(language.flag) \(language.displayName)")
@@ -165,6 +215,16 @@ struct UserSettingsView: View {
             }
             .onChange(of: viewModel.selectedLanguage) { _, newValue in
                 viewModel.saveLanguage(newValue)
+            }
+
+            Picker(L("settings.color_scheme"), selection: $viewModel.selectedColorScheme) {
+                ForEach(AppColorScheme.allCases, id: \.rawValue) { scheme in
+                    Label(scheme.displayName, systemImage: scheme.icon)
+                        .tag(scheme)
+                }
+            }
+            .onChange(of: viewModel.selectedColorScheme) { _, newValue in
+                viewModel.saveColorScheme(newValue)
             }
 
             NavigationLink {
@@ -180,41 +240,8 @@ struct UserSettingsView: View {
         }
     }
 
-    private var appearanceSection: some View {
-        Section(L("settings.section.appearance")) {
-            Picker(L("settings.color_scheme"), selection: $viewModel.selectedColorScheme) {
-                ForEach(AppColorScheme.allCases, id: \.rawValue) { scheme in
-                    Label(scheme.displayName, systemImage: scheme.icon)
-                        .tag(scheme)
-                }
-            }
-            .onChange(of: viewModel.selectedColorScheme) { _, newValue in
-                viewModel.saveColorScheme(newValue)
-            }
-        }
-    }
-
-    private var backupSection: some View {
-        Section {
-            if !viewModel.isiCloudAvailable {
-                HStack(alignment: .top, spacing: 12) {
-                    Image(systemName: "exclamationmark.triangle.fill")
-                        .foregroundStyle(.orange)
-
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(L("backup.icloud.not_available.title"))
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(.orange)
-
-                        Text(L("backup.icloud.not_available.message"))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                .padding(.vertical, 4)
-            }
-
+    private var importExportSection: some View {
+        Section(L("settings.section.import_export")) {
             Button {
                 Task {
                     await viewModel.exportData()
@@ -253,6 +280,33 @@ struct UserSettingsView: View {
             }
             .disabled(viewModel.isImporting)
             .buttonStyle(.plain)
+
+            Text(L("backup.import.warning"))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private var iCloudBackupSection: some View {
+        Section {
+            if !viewModel.isiCloudAvailable {
+                HStack(alignment: .top, spacing: 12) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundStyle(.orange)
+
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(L("backup.icloud.not_available.title"))
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.orange)
+
+                        Text(L("backup.icloud.not_available.message"))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .padding(.vertical, 4)
+            }
 
             if viewModel.isiCloudAvailable {
                 Button {
@@ -335,8 +389,6 @@ struct UserSettingsView: View {
             }
         } header: {
             Text(L("settings.section.backup"))
-        } footer: {
-            Text(L("backup.footer"))
         }
     }
 
@@ -494,6 +546,54 @@ struct UserSettingsView: View {
 
     private var aboutSection: some View {
         Section(L("settings.section.about")) {
+            Button {
+                analytics.trackEvent("about_app_button_clicked", properties: [
+                    "screen": "settings",
+                    "button_name": "what_is_app_about"
+                ])
+                showAboutAppSheet = true
+            } label: {
+                HStack {
+                    Image(systemName: "questionmark.circle.fill")
+                        .foregroundStyle(.cyan)
+                    Text(L("settings.about_app.button"))
+                        .foregroundStyle(.primary)
+                }
+            }
+            .buttonStyle(.plain)
+
+            Button {
+                UserDefaults.standard.removeObject(forKey: OnboardingViewModel.onboardingCompletedKey)
+                analytics.trackEvent("start_onboarding_again_button_clicked", properties: [
+                    "screen": "settings",
+                    "button_name": "start_onboarding_again"
+                ])
+            } label: {
+                HStack {
+                    Image(systemName: "figure.wave")
+                        .foregroundStyle(.green)
+                    Text(L("settings.start_onboarding_again"))
+                        .foregroundStyle(.primary)
+                }
+            }
+            .buttonStyle(.plain)
+
+            Button {
+                analytics.trackEvent("app_rating_review_button_clicked", properties: [
+                    "screen": "settings",
+                    "button_name": "request_app_rating_review"
+                ])
+                requestReview()
+            } label: {
+                HStack {
+                    Image(systemName: "star.fill")
+                        .foregroundStyle(.yellow)
+                    Text(L("settings.rate_app"))
+                        .foregroundStyle(.primary)
+                }
+            }
+            .buttonStyle(.plain)
+
             Button {
                 viewModel.handleVersionTap()
             } label: {

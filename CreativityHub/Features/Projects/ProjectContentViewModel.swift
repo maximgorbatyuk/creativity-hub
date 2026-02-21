@@ -23,6 +23,7 @@ final class ProjectContentViewModel {
     var previewDocuments: [Document] = []
     var previewExpenses: [Expense] = []
     var previewReminders: [Reminder] = []
+    var previewWorkLogs: [WorkLog] = []
 
     // MARK: - Private
 
@@ -36,6 +37,7 @@ final class ProjectContentViewModel {
     private let expenseRepository: ExpenseRepository?
     private let expenseCategoryRepository: ExpenseCategoryRepository?
     private let reminderRepository: ReminderRepository?
+    private let workLogRepository: WorkLogRepository?
     private let userSettingsRepository: UserSettingsRepository?
     private let logger: Logger
 
@@ -54,6 +56,7 @@ final class ProjectContentViewModel {
         expenseRepository = databaseManager.expenseRepository
         expenseCategoryRepository = databaseManager.expenseCategoryRepository
         reminderRepository = databaseManager.reminderRepository
+        workLogRepository = databaseManager.workLogRepository
         userSettingsRepository = databaseManager.userSettingsRepository
         logger = Logger(
             subsystem: Bundle.main.bundleIdentifier ?? "-",
@@ -124,6 +127,7 @@ final class ProjectContentViewModel {
         }
         refreshData()
         selectProject(id: project.id)
+        ActivityLogService.shared.log(projectId: project.id, entityType: .project, actionType: .created)
         logger.info("Added project \(project.id)")
     }
 
@@ -134,6 +138,7 @@ final class ProjectContentViewModel {
         }
         selectedProject = updated
         refreshData()
+        ActivityLogService.shared.log(projectId: updated.id, entityType: .project, actionType: .updated)
         logger.info("Updated project \(updated.id)")
     }
 
@@ -159,6 +164,7 @@ final class ProjectContentViewModel {
         }
         project.isPinned = newPinned
         selectedProject = project
+        ActivityLogService.shared.log(projectId: project.id, entityType: .project, actionType: .updated)
         logger.info("Toggled pin for project \(project.id): \(newPinned)")
     }
 
@@ -170,6 +176,7 @@ final class ProjectContentViewModel {
         }
         project.status = status
         selectedProject = project
+        ActivityLogService.shared.log(projectId: project.id, entityType: .project, actionType: .statusChanged)
         logger.info("Updated status for project \(project.id): \(status.rawValue)")
     }
 
@@ -202,6 +209,7 @@ final class ProjectContentViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .checklist, actionType: .created)
         refreshData()
     }
 
@@ -212,6 +220,7 @@ final class ProjectContentViewModel {
         }
         if let projectId = selectedProjectId {
             projectRepository?.touchUpdatedAt(id: projectId)
+            ActivityLogService.shared.log(projectId: projectId, entityType: .idea, actionType: .created)
         }
         refreshData()
     }
@@ -223,6 +232,7 @@ final class ProjectContentViewModel {
         }
         if let projectId = selectedProjectId {
             projectRepository?.touchUpdatedAt(id: projectId)
+            ActivityLogService.shared.log(projectId: projectId, entityType: .note, actionType: .created)
         }
         refreshData()
     }
@@ -234,6 +244,7 @@ final class ProjectContentViewModel {
         }
         if let projectId = selectedProjectId {
             projectRepository?.touchUpdatedAt(id: projectId)
+            ActivityLogService.shared.log(projectId: projectId, entityType: .expense, actionType: .created)
         }
         refreshData()
     }
@@ -245,8 +256,29 @@ final class ProjectContentViewModel {
         }
         if let projectId = selectedProjectId {
             projectRepository?.touchUpdatedAt(id: projectId)
+            ActivityLogService.shared.log(projectId: projectId, entityType: .reminder, actionType: .created)
         }
         refreshData()
+    }
+
+    func addWorkLog(_ workLog: WorkLog) {
+        guard workLogRepository?.insert(workLog) == true else {
+            logger.error("Failed to insert work log")
+            return
+        }
+        if let projectId = selectedProjectId {
+            projectRepository?.touchUpdatedAt(id: projectId)
+            ActivityLogService.shared.log(projectId: projectId, entityType: .workLog, actionType: .created)
+        }
+        refreshData()
+    }
+
+    var workLogChecklistItems: [ChecklistItem] {
+        guard let projectId = selectedProjectId else { return [] }
+        let checklists = checklistRepository?.fetchByProjectId(projectId: projectId) ?? []
+        return checklists.flatMap { checklist in
+            checklistItemRepository?.fetchByChecklistId(checklistId: checklist.id) ?? []
+        }
     }
 
     // MARK: - Private
@@ -307,6 +339,10 @@ final class ProjectContentViewModel {
         let allReminders = reminderRepository?.fetchByProjectId(projectId: projectId) ?? []
         previewReminders = Array(allReminders.filter { !$0.isCompleted }.prefix(3))
 
+        // Work logs count and preview (3 most recent)
+        sectionCounts.workLogs = workLogRepository?.countByProjectId(projectId: projectId) ?? 0
+        previewWorkLogs = Array((workLogRepository?.fetchByProjectId(projectId: projectId) ?? []).prefix(3))
+
         logger.info("Loaded section data for project \(projectId)")
     }
 
@@ -321,5 +357,6 @@ final class ProjectContentViewModel {
         previewDocuments = []
         previewExpenses = []
         previewReminders = []
+        previewWorkLogs = []
     }
 }

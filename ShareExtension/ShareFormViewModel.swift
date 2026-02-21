@@ -175,6 +175,10 @@ final class ShareFormViewModel: ObservableObject {
             try? FileManager.default.removeItem(at: persistedImageURL)
         }
 
+        if inserted {
+            ActivityLogService.shared.log(projectId: projectId, entityType: .idea, actionType: .created)
+        }
+
         return inserted
     }
 
@@ -262,6 +266,10 @@ final class ShareFormViewModel: ObservableObject {
             _ = documentService.deleteDocument(fileName: fileURL.lastPathComponent, projectId: projectId)
         }
 
+        if inserted {
+            ActivityLogService.shared.log(projectId: projectId, entityType: .document, actionType: .created)
+        }
+
         return inserted
     }
 
@@ -303,6 +311,10 @@ final class ShareFormViewModel: ObservableObject {
         let inserted = repo.insert(note)
         if !inserted, let persistedImageURL {
             try? FileManager.default.removeItem(at: persistedImageURL)
+        }
+
+        if inserted {
+            ActivityLogService.shared.log(projectId: projectId, entityType: .note, actionType: .created)
         }
 
         return inserted

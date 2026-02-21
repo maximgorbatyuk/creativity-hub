@@ -79,6 +79,7 @@ final class IdeasListViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .idea, actionType: .created)
         logger.info("Added idea \(idea.id)")
         loadData()
     }
@@ -89,6 +90,7 @@ final class IdeasListViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .idea, actionType: .updated)
         logger.info("Updated idea \(idea.id)")
         loadData()
     }
@@ -100,6 +102,7 @@ final class IdeasListViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .idea, actionType: .deleted)
         logger.info("Deleted idea \(idea.id)")
         loadData()
     }

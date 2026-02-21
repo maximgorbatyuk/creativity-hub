@@ -13,25 +13,28 @@ struct RemindersListView: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            if viewModel.isLoading {
-                ProgressView()
-                    .frame(maxHeight: .infinity)
-            } else if viewModel.reminders.isEmpty {
-                emptyState
-            } else {
-                filterSection
-                summaryBar
-                if viewModel.filteredReminders.isEmpty {
-                    filterEmptyState
+        ZStack(alignment: .bottomTrailing) {
+            VStack(spacing: 0) {
+                if viewModel.isLoading {
+                    ProgressView()
+                        .frame(maxHeight: .infinity)
+                } else if viewModel.reminders.isEmpty {
+                    emptyState
                 } else {
-                    listContent
+                    filterSection
+                    summaryBar
+                    if viewModel.filteredReminders.isEmpty {
+                        filterEmptyState
+                    } else {
+                        listContent
+                    }
                 }
             }
+
+            floatingAddButton
         }
         .navigationTitle(L("reminder.list.title"))
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar { toolbarContent }
         .onAppear {
             viewModel.loadData()
             analytics.trackScreen("reminders_list")
@@ -54,19 +57,6 @@ struct RemindersListView: View {
                 onDelete: { viewModel.deleteReminder($0) },
                 onToggleCompleted: { viewModel.toggleCompleted($0) }
             )
-        }
-    }
-
-    // MARK: - Toolbar
-
-    @ToolbarContentBuilder
-    private var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) {
-            Button {
-                viewModel.showAddSheet = true
-            } label: {
-                Image(systemName: "plus")
-            }
         }
     }
 
@@ -186,5 +176,21 @@ struct RemindersListView: View {
                 .foregroundColor(.secondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private var floatingAddButton: some View {
+        Button {
+            viewModel.showAddSheet = true
+        } label: {
+            Image(systemName: "plus")
+                .font(.system(size: 24, weight: .semibold))
+                .foregroundColor(.white)
+                .frame(width: 56, height: 56)
+                .background(Color.red)
+                .clipShape(Circle())
+                .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
+        }
+        .padding(.trailing, 20)
+        .padding(.bottom, 20)
     }
 }

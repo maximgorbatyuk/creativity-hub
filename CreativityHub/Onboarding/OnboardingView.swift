@@ -12,54 +12,85 @@ struct OnboardingView: View {
         viewModel.currentPage == totalPages - 1
     }
 
+    private var backgroundGradient: LinearGradient {
+        if viewModel.currentPage == 0 {
+            return LinearGradient(
+                colors: [Color.blue.opacity(0.3), Color.cyan.opacity(0.1)],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        }
+
+        let pageIndex = viewModel.currentPage - 1
+        if pageIndex >= 0 && pageIndex < viewModel.pages.count {
+            let color = viewModel.pages[pageIndex].color
+            return LinearGradient(
+                colors: [color.opacity(0.3), color.opacity(0.1)],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        }
+
+        return LinearGradient(
+            colors: [Color.blue.opacity(0.3), Color.cyan.opacity(0.1)],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+
     var body: some View {
-        VStack {
-            TabView(selection: $viewModel.currentPage) {
-                OnboardingLanguageSelectionView(
-                    selectedLanguage: $viewModel.selectedLanguage,
-                    onLanguageChanged: { viewModel.applyLanguage($0) }
-                )
-                .tag(0)
+        ZStack {
+            backgroundGradient
+                .ignoresSafeArea()
 
-                ForEach(viewModel.pages) { page in
-                    OnboardingPageView(page: page)
-                        .tag(page.id + 1)
-                }
-            }
-            .tabViewStyle(.page(indexDisplayMode: .always))
-            .animation(.easeInOut, value: viewModel.currentPage)
+            VStack {
+                TabView(selection: $viewModel.currentPage) {
+                    OnboardingLanguageSelectionView(
+                        selectedLanguage: $viewModel.selectedLanguage,
+                        onLanguageChanged: { viewModel.applyLanguage($0) }
+                    )
+                    .tag(0)
 
-            HStack(spacing: 16) {
-                if viewModel.currentPage > 0 && !isLastPage {
-                    Button {
-                        finishOnboarding()
-                    } label: {
-                        Text(L("onboarding.skip"))
-                            .font(.body)
-                            .foregroundStyle(.secondary)
+                    ForEach(viewModel.pages) { page in
+                        OnboardingPageView(page: page)
+                            .tag(page.id + 1)
                     }
                 }
+                .tabViewStyle(.page(indexDisplayMode: .always))
+                .animation(.easeInOut, value: viewModel.currentPage)
 
-                Spacer()
-
-                Button {
-                    if isLastPage {
-                        finishOnboarding()
-                    } else {
-                        withAnimation {
-                            viewModel.currentPage += 1
+                HStack(spacing: 16) {
+                    if viewModel.currentPage > 0 && !isLastPage {
+                        Button {
+                            finishOnboarding()
+                        } label: {
+                            Text(L("onboarding.skip"))
+                                .font(.body)
+                                .foregroundStyle(.secondary)
                         }
                     }
-                } label: {
-                    Text(isLastPage ? L("onboarding.get_started") : L("onboarding.next"))
-                        .font(.body)
-                        .fontWeight(.semibold)
-                        .frame(minWidth: 120)
+
+                    Spacer()
+
+                    Button {
+                        if isLastPage {
+                            finishOnboarding()
+                        } else {
+                            withAnimation {
+                                viewModel.currentPage += 1
+                            }
+                        }
+                    } label: {
+                        Text(isLastPage ? L("onboarding.get_started") : L("onboarding.next"))
+                            .font(.body)
+                            .fontWeight(.semibold)
+                            .frame(minWidth: 120)
+                    }
+                    .buttonStyle(.borderedProminent)
                 }
-                .buttonStyle(.borderedProminent)
+                .padding(.horizontal, 24)
+                .padding(.bottom, 24)
             }
-            .padding(.horizontal, 24)
-            .padding(.bottom, 24)
         }
     }
 

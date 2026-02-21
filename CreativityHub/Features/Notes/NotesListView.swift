@@ -13,20 +13,23 @@ struct NotesListView: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            if viewModel.isLoading {
-                ProgressView()
-                    .frame(maxHeight: .infinity)
-            } else if viewModel.notes.isEmpty {
-                emptyState
-            } else {
-                sortSection
-                listContent
+        ZStack(alignment: .bottomTrailing) {
+            VStack(spacing: 0) {
+                if viewModel.isLoading {
+                    ProgressView()
+                        .frame(maxHeight: .infinity)
+                } else if viewModel.notes.isEmpty {
+                    emptyState
+                } else {
+                    sortSection
+                    listContent
+                }
             }
+
+            floatingAddButton
         }
         .navigationTitle(L("note.list.title"))
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar { toolbarContent }
         .onAppear {
             viewModel.loadData()
             analytics.trackScreen("notes_list")
@@ -50,19 +53,6 @@ struct NotesListView: View {
                 onDelete: { viewModel.deleteNote($0) },
                 onTogglePin: { viewModel.togglePin($0) }
             )
-        }
-    }
-
-    // MARK: - Toolbar
-
-    @ToolbarContentBuilder
-    private var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) {
-            Button {
-                viewModel.showAddSheet = true
-            } label: {
-                Image(systemName: "plus")
-            }
         }
     }
 
@@ -135,5 +125,21 @@ struct NotesListView: View {
         ) {
             viewModel.showAddSheet = true
         }
+    }
+
+    private var floatingAddButton: some View {
+        Button {
+            viewModel.showAddSheet = true
+        } label: {
+            Image(systemName: "plus")
+                .font(.system(size: 24, weight: .semibold))
+                .foregroundColor(.white)
+                .frame(width: 56, height: 56)
+                .background(Color.orange)
+                .clipShape(Circle())
+                .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
+        }
+        .padding(.trailing, 20)
+        .padding(.bottom, 20)
     }
 }
