@@ -124,6 +124,8 @@ On Xcode Cloud, `ci_scripts/ci_post_clone.sh` generates `GoogleService-Info.plis
 ## Docs
 
 - Development: [CHANGELOG.md](CHANGELOG.md)
+- Release notes for App Store: [appstore/releases.md](appstore/releases.md)
+- App Store page content: [appstore/appstore_page.md](appstore/appstore_page.md)
 - Privacy policy: [docs/privacy-policy](docs/privacy-policy/index.html)
 
 ## Development references
