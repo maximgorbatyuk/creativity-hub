@@ -21,6 +21,7 @@ final class ProjectDetailViewModel {
     var sectionCounts = ProjectSectionCounts()
     var checklistProgress: (checked: Int, total: Int) = (0, 0)
     var totalExpenses: Decimal = 0
+    var weeklyActivityPoints: [ActivityChartPoint] = []
 
     // MARK: - Private
 
@@ -34,6 +35,7 @@ final class ProjectDetailViewModel {
     private let expenseRepository: ExpenseRepository?
     private let reminderRepository: ReminderRepository?
     private let workLogRepository: WorkLogRepository?
+    private let activityAnalyticsService: ActivityAnalyticsService
     private let logger: Logger
 
     // MARK: - Init
@@ -50,6 +52,7 @@ final class ProjectDetailViewModel {
         self.expenseRepository = databaseManager.expenseRepository
         self.reminderRepository = databaseManager.reminderRepository
         self.workLogRepository = databaseManager.workLogRepository
+        self.activityAnalyticsService = .shared
         self.logger = Logger(
             subsystem: Bundle.main.bundleIdentifier ?? "-",
             category: "ProjectDetailViewModel"
@@ -63,6 +66,7 @@ final class ProjectDetailViewModel {
             project = refreshed
         }
         loadSectionCounts()
+        loadActivityChartData()
     }
 
     func updateProject(_ updated: Project) {
@@ -71,6 +75,7 @@ final class ProjectDetailViewModel {
             return
         }
         project = updated
+        ActivityLogService.shared.log(projectId: updated.id, entityType: .project, actionType: .updated)
         logger.info("Updated project \(updated.id)")
     }
 
@@ -90,6 +95,7 @@ final class ProjectDetailViewModel {
             return
         }
         project.isPinned = newPinned
+        ActivityLogService.shared.log(projectId: project.id, entityType: .project, actionType: .updated)
         logger.info("Toggled pin for project \(self.project.id): \(newPinned)")
     }
 
@@ -99,6 +105,7 @@ final class ProjectDetailViewModel {
             return
         }
         project.status = status
+        ActivityLogService.shared.log(projectId: project.id, entityType: .project, actionType: .statusChanged)
         logger.info("Updated status for project \(self.project.id): \(status.rawValue)")
     }
 
@@ -144,5 +151,9 @@ final class ProjectDetailViewModel {
             .filter { $0.status == .paid }
             .reduce(Decimal.zero) { $0 + $1.amount }
 
+    }
+
+    private func loadActivityChartData() {
+        weeklyActivityPoints = activityAnalyticsService.weeklyActivityCounts(projectId: project.id, months: 6)
     }
 }

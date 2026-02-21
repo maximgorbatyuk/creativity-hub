@@ -47,6 +47,7 @@ final class UpcomingRemindersViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: reminder.projectId)
+        ActivityLogService.shared.log(projectId: reminder.projectId, entityType: .reminder, actionType: .updated)
         loadData()
     }
 
@@ -56,6 +57,7 @@ final class UpcomingRemindersViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: reminder.projectId)
+        ActivityLogService.shared.log(projectId: reminder.projectId, entityType: .reminder, actionType: .deleted)
         loadData()
     }
 
@@ -66,6 +68,7 @@ final class UpcomingRemindersViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: reminder.projectId)
+        ActivityLogService.shared.log(projectId: reminder.projectId, entityType: .reminder, actionType: .statusChanged)
         loadData()
     }
 

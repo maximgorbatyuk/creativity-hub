@@ -1,4 +1,5 @@
 import SwiftUI
+import Charts
 
 struct ProjectDetailView: View {
     @State private var viewModel: ProjectDetailViewModel
@@ -35,6 +36,8 @@ struct ProjectDetailView: View {
                 if viewModel.checklistProgress.total > 0 {
                     progressCard
                 }
+
+                activityChartCard
 
                 projectActionsSection
                 sectionsOverview
@@ -195,6 +198,46 @@ struct ProjectDetailView: View {
     }
 
     // MARK: - Sections Overview
+
+    private var activityChartCard: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(L("project.activity_chart.title"))
+                .font(.headline)
+
+            Text(L("project.activity_chart.period"))
+                .font(.caption)
+                .foregroundColor(.secondary)
+
+            Chart(viewModel.weeklyActivityPoints) { point in
+                LineMark(
+                    x: .value("Week", point.date),
+                    y: .value("Activities", point.count)
+                )
+                .interpolationMethod(.catmullRom)
+                .foregroundStyle(projectColor)
+
+                AreaMark(
+                    x: .value("Week", point.date),
+                    y: .value("Activities", point.count)
+                )
+                .interpolationMethod(.catmullRom)
+                .foregroundStyle(projectColor.opacity(0.12))
+            }
+            .chartXAxis {
+                AxisMarks(values: .stride(by: .month)) { _ in
+                    AxisGridLine()
+                    AxisTick()
+                    AxisValueLabel(format: .dateTime.month(.abbreviated))
+                }
+            }
+            .chartYAxis {
+                AxisMarks(position: .leading)
+            }
+            .frame(height: 200)
+        }
+        .padding()
+        .cardBackground()
+    }
 
     private var sectionsOverview: some View {
         VStack(spacing: 0) {

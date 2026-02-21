@@ -60,6 +60,7 @@ final class ChecklistsListViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .checklist, actionType: .created)
         logger.info("Added checklist \(checklist.id)")
         loadData()
     }
@@ -72,6 +73,7 @@ final class ChecklistsListViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .checklist, actionType: .updated)
         logger.info("Updated checklist \(id)")
         loadData()
     }
@@ -91,6 +93,7 @@ final class ChecklistsListViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .checklist, actionType: .deleted)
         logger.info("Deleted checklist \(checklist.id)")
         loadData()
     }

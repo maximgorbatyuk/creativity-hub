@@ -93,6 +93,7 @@ final class ChecklistDetailViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .checklistItem, actionType: .created)
         logger.info("Added checklist item \(item.id)")
         loadData()
     }
@@ -103,6 +104,7 @@ final class ChecklistDetailViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .checklistItem, actionType: .updated)
         logger.info("Updated checklist item \(item.id)")
         loadData()
     }
@@ -117,6 +119,7 @@ final class ChecklistDetailViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .checklistItem, actionType: .deleted)
         logger.info("Deleted checklist item \(item.id)")
         loadData()
     }
@@ -127,6 +130,7 @@ final class ChecklistDetailViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .checklistItem, actionType: .statusChanged)
         logger.info("Toggled checklist item \(item.id)")
         loadData()
     }
@@ -138,6 +142,7 @@ final class ChecklistDetailViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .checklistItem, actionType: .statusChanged)
         pendingWorkLogChecklistItem = item
         showWorkLogSheet = true
         loadData()
@@ -149,6 +154,7 @@ final class ChecklistDetailViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .workLog, actionType: .created)
         logger.info("Added work log \(workLog.id) from checklist")
     }
 

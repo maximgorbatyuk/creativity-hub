@@ -56,12 +56,25 @@ class RandomDataGenerator {
         let workLogs = generateWorkLogs(for: project)
         workLogs.forEach { _ = db.workLogRepository?.insert($0) }
 
+        let activityLogs = generateActivityLogs(
+            for: project,
+            checklists: checklists,
+            ideas: ideas,
+            notes: notes,
+            expenses: expenses,
+            categories: categories,
+            reminders: reminders,
+            workLogs: workLogs
+        )
+        activityLogs.forEach { _ = db.activityLogRepository?.insert($0) }
+
         logger.info("Random data generation completed for project: \(project.name)")
     }
 
     // MARK: - Delete Existing Data
 
     private func deleteExistingData(for projectId: UUID) {
+        _ = db.activityLogRepository?.deleteByProjectId(projectId: projectId)
         _ = db.workLogRepository?.deleteByProjectId(projectId: projectId)
         _ = db.reminderRepository?.deleteByProjectId(projectId: projectId)
         _ = db.noteRepository?.deleteByProjectId(projectId: projectId)
@@ -355,5 +368,133 @@ class RandomDataGenerator {
         }
 
         return reminders
+    }
+
+    private func generateActivityLogs(
+        for project: Project,
+        checklists: [(checklist: Checklist, items: [ChecklistItem])],
+        ideas: [Idea],
+        notes: [Note],
+        expenses: [Expense],
+        categories: [ExpenseCategory],
+        reminders: [Reminder],
+        workLogs: [WorkLog]
+    ) -> [ActivityLog] {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        guard let sixMonthsAgo = calendar.date(byAdding: .month, value: -6, to: today) else {
+            return []
+        }
+
+        let dayStarts = generateDayStarts(from: sixMonthsAgo, to: today, calendar: calendar)
+        guard !dayStarts.isEmpty else {
+            return []
+        }
+
+        let targetCount = Int.random(in: 150...300)
+        let maxDistinctDays = min(dayStarts.count, targetCount)
+        let minDistinctDays = min(maxDistinctDays, 60)
+        let distinctDaysCount = Int.random(in: minDistinctDays...maxDistinctDays)
+        let selectedDays = Array(dayStarts.shuffled().prefix(distinctDaysCount))
+
+        var logs: [ActivityLog] = []
+        logs.reserveCapacity(targetCount)
+
+        var baselineEntities: [ActivityEntityType] = [.project]
+        baselineEntities.append(contentsOf: Array(repeating: .checklist, count: checklists.count))
+        baselineEntities.append(contentsOf: Array(repeating: .checklistItem, count: checklists.reduce(0) { $0 + $1.items.count }))
+        baselineEntities.append(contentsOf: Array(repeating: .idea, count: ideas.count))
+        baselineEntities.append(contentsOf: Array(repeating: .note, count: notes.count))
+        baselineEntities.append(contentsOf: Array(repeating: .expense, count: expenses.count))
+        baselineEntities.append(contentsOf: Array(repeating: .expenseCategory, count: categories.count))
+        baselineEntities.append(contentsOf: Array(repeating: .reminder, count: reminders.count))
+        baselineEntities.append(contentsOf: Array(repeating: .workLog, count: workLogs.count))
+
+        for day in selectedDays {
+            let entity = baselineEntities.randomElement() ?? .project
+            logs.append(ActivityLog(
+                projectId: project.id,
+                entityType: entity,
+                actionType: .updated,
+                createdAt: randomDate(on: day, calendar: calendar)
+            ))
+        }
+
+        for entity in baselineEntities {
+            guard logs.count < targetCount else {
+                break
+            }
+
+            let day = selectedDays.randomElement() ?? today
+            logs.append(ActivityLog(
+                projectId: project.id,
+                entityType: entity,
+                actionType: .created,
+                createdAt: randomDate(on: day, calendar: calendar)
+            ))
+        }
+
+        let entities: [ActivityEntityType] = [
+            .project,
+            .checklist,
+            .checklistItem,
+            .idea,
+            .document,
+            .note,
+            .expense,
+            .expenseCategory,
+            .reminder,
+            .workLog
+        ]
+
+        while logs.count < targetCount {
+            let entity = entities.randomElement() ?? .project
+            let day = selectedDays.randomElement() ?? today
+            let actions: [ActivityActionType]
+
+            switch entity {
+            case .project, .checklist, .checklistItem, .reminder:
+                actions = [.created, .updated, .deleted, .statusChanged]
+            case .idea:
+                actions = [.created, .updated, .deleted, .linked, .unlinked]
+            default:
+                actions = [.created, .updated, .deleted]
+            }
+
+            logs.append(ActivityLog(
+                projectId: project.id,
+                entityType: entity,
+                actionType: actions.randomElement() ?? .updated,
+                createdAt: randomDate(on: day, calendar: calendar)
+            ))
+        }
+
+        return logs.sorted { $0.createdAt < $1.createdAt }
+    }
+
+    private func generateDayStarts(from startDate: Date, to endDate: Date, calendar: Calendar) -> [Date] {
+        let startDay = calendar.startOfDay(for: startDate)
+        let endDay = calendar.startOfDay(for: endDate)
+        guard startDay <= endDay else {
+            return []
+        }
+
+        var days: [Date] = []
+        var current = startDay
+
+        while current <= endDay {
+            days.append(current)
+            guard let nextDay = calendar.date(byAdding: .day, value: 1, to: current) else {
+                break
+            }
+            current = nextDay
+        }
+
+        return days
+    }
+
+    private func randomDate(on day: Date, calendar: Calendar) -> Date {
+        let minuteOffset = Int.random(in: 0..<(24 * 60))
+        return calendar.date(byAdding: .minute, value: minuteOffset, to: day) ?? day
     }
 }

@@ -148,6 +148,8 @@
 "home.stats.projects" = "Жобалар";
 "home.stats.reminders" = "Еске салулар";
 "home.stats.logged_time" = "Тіркелген уақыт";
+"home.activity_chart.title" = "Жобалар белсенділігі";
+"home.activity_chart.period" = "Соңғы 6 ай, апталар бойынша";
 "home.empty.title" = "Бәрі таза";
 "home.empty.message" = "Белсенді жобалар немесе алдағы еске салулар жоқ. Бастау үшін жоба жасаңыз!";
 
@@ -193,6 +195,8 @@
 "project.detail.target" = "Мақсат";
 "project.detail.progress" = "Барыс";
 "project.detail.progress_percent" = "%d%% аяқталды";
+"project.activity_chart.title" = "Белсенділік динамикасы";
+"project.activity_chart.period" = "Соңғы 6 ай, апталар бойынша";
 "project.detail.budget" = "Бюджет";
 "project.detail.budget_total" = "Жалпы бюджет";
 "project.detail.spent" = "Жұмсалған";

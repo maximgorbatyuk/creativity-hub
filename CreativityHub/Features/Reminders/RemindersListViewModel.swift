@@ -85,6 +85,7 @@ final class RemindersListViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .reminder, actionType: .created)
         logger.info("Added reminder \(reminder.id)")
         loadData()
     }
@@ -95,6 +96,7 @@ final class RemindersListViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .reminder, actionType: .updated)
         logger.info("Updated reminder \(reminder.id)")
         loadData()
     }
@@ -105,6 +107,7 @@ final class RemindersListViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .reminder, actionType: .deleted)
         logger.info("Deleted reminder \(reminder.id)")
         loadData()
     }
@@ -116,6 +119,7 @@ final class RemindersListViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .reminder, actionType: .statusChanged)
         logger.info("Toggled completed for reminder \(reminder.id): \(newCompleted)")
         loadData()
     }

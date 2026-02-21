@@ -49,6 +49,7 @@
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>dev.mgorbatyuk.CreativityHub.backup</string>
+		<string>dev.mgorbatyuk.CreativityHub.activitylogcleanup</string>
 	</array>
 </dict>
 </plist>

@@ -127,6 +127,7 @@ final class ProjectContentViewModel {
         }
         refreshData()
         selectProject(id: project.id)
+        ActivityLogService.shared.log(projectId: project.id, entityType: .project, actionType: .created)
         logger.info("Added project \(project.id)")
     }
 
@@ -137,6 +138,7 @@ final class ProjectContentViewModel {
         }
         selectedProject = updated
         refreshData()
+        ActivityLogService.shared.log(projectId: updated.id, entityType: .project, actionType: .updated)
         logger.info("Updated project \(updated.id)")
     }
 
@@ -162,6 +164,7 @@ final class ProjectContentViewModel {
         }
         project.isPinned = newPinned
         selectedProject = project
+        ActivityLogService.shared.log(projectId: project.id, entityType: .project, actionType: .updated)
         logger.info("Toggled pin for project \(project.id): \(newPinned)")
     }
 
@@ -173,6 +176,7 @@ final class ProjectContentViewModel {
         }
         project.status = status
         selectedProject = project
+        ActivityLogService.shared.log(projectId: project.id, entityType: .project, actionType: .statusChanged)
         logger.info("Updated status for project \(project.id): \(status.rawValue)")
     }
 
@@ -205,6 +209,7 @@ final class ProjectContentViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .checklist, actionType: .created)
         refreshData()
     }
 
@@ -215,6 +220,7 @@ final class ProjectContentViewModel {
         }
         if let projectId = selectedProjectId {
             projectRepository?.touchUpdatedAt(id: projectId)
+            ActivityLogService.shared.log(projectId: projectId, entityType: .idea, actionType: .created)
         }
         refreshData()
     }
@@ -226,6 +232,7 @@ final class ProjectContentViewModel {
         }
         if let projectId = selectedProjectId {
             projectRepository?.touchUpdatedAt(id: projectId)
+            ActivityLogService.shared.log(projectId: projectId, entityType: .note, actionType: .created)
         }
         refreshData()
     }
@@ -237,6 +244,7 @@ final class ProjectContentViewModel {
         }
         if let projectId = selectedProjectId {
             projectRepository?.touchUpdatedAt(id: projectId)
+            ActivityLogService.shared.log(projectId: projectId, entityType: .expense, actionType: .created)
         }
         refreshData()
     }
@@ -248,6 +256,7 @@ final class ProjectContentViewModel {
         }
         if let projectId = selectedProjectId {
             projectRepository?.touchUpdatedAt(id: projectId)
+            ActivityLogService.shared.log(projectId: projectId, entityType: .reminder, actionType: .created)
         }
         refreshData()
     }
@@ -259,6 +268,7 @@ final class ProjectContentViewModel {
         }
         if let projectId = selectedProjectId {
             projectRepository?.touchUpdatedAt(id: projectId)
+            ActivityLogService.shared.log(projectId: projectId, entityType: .workLog, actionType: .created)
         }
         refreshData()
     }

@@ -1,4 +1,5 @@
 import SwiftUI
+import Charts
 
 struct TodayView: View {
     @State private var viewModel = TodayViewModel()
@@ -62,6 +63,10 @@ struct TodayView: View {
             } else {
                 VStack(spacing: 16) {
                     statsSection
+
+                    if !viewModel.weeklyActivitySeries.isEmpty {
+                        activityChartSection
+                    }
 
                     if hasNoHomeSections {
                         emptyState
@@ -370,6 +375,63 @@ struct TodayView: View {
     }
 
     // MARK: - Overdue Section
+
+    private var activityChartSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(L("home.activity_chart.title"))
+                .font(.headline)
+
+            Text(L("home.activity_chart.period"))
+                .font(.caption)
+                .foregroundColor(.secondary)
+
+            Chart(viewModel.weeklyActivitySeries) { series in
+                ForEach(series.points) { point in
+                    LineMark(
+                        x: .value("Week", point.date),
+                        y: .value("Activities", point.count),
+                        series: .value("Project", series.project.id.uuidString)
+                    )
+                    .interpolationMethod(.catmullRom)
+                }
+            }
+            .chartForegroundStyleScale(
+                domain: viewModel.weeklyActivitySeries.map { $0.project.id.uuidString },
+                range: viewModel.weeklyActivitySeries.map { projectColor($0.project) }
+            )
+            .chartLegend(.hidden)
+            .chartXAxis {
+                AxisMarks(values: .stride(by: .month)) { _ in
+                    AxisGridLine()
+                    AxisTick()
+                    AxisValueLabel(format: .dateTime.month(.abbreviated))
+                }
+            }
+            .chartYAxis {
+                AxisMarks(position: .leading)
+            }
+            .frame(height: 220)
+
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 8) {
+                ForEach(viewModel.weeklyActivitySeries) { series in
+                    HStack(spacing: 6) {
+                        Circle()
+                            .fill(projectColor(series.project))
+                            .frame(width: 8, height: 8)
+
+                        Text(series.project.name)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .lineLimit(1)
+
+                        Spacer(minLength: 0)
+                    }
+                }
+            }
+        }
+        .padding()
+        .cardBackground()
+    }
 
     private var overdueSection: some View {
         VStack(alignment: .leading, spacing: 8) {

@@ -51,6 +51,7 @@ final class WorkLogsListViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .workLog, actionType: .created)
         logger.info("Added work log \(workLog.id)")
         loadData()
     }
@@ -61,6 +62,7 @@ final class WorkLogsListViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .workLog, actionType: .deleted)
         logger.info("Deleted work log \(workLog.id)")
         loadData()
     }

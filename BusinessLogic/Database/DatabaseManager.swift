@@ -11,7 +11,7 @@ class DatabaseManager {
         category: "DatabaseManager"
     )
 
-    private let latestVersion = 6
+    private let latestVersion = 7
 
     // Repositories
     private(set) var migrationRepository: MigrationsRepository?
@@ -27,6 +27,7 @@ class DatabaseManager {
     private(set) var documentRepository: DocumentRepository?
     private(set) var reminderRepository: ReminderRepository?
     private(set) var workLogRepository: WorkLogRepository?
+    private(set) var activityLogRepository: ActivityLogRepository?
 
     private init() {
         setupDatabase()
@@ -37,6 +38,7 @@ class DatabaseManager {
     }
 
     func deleteAllData() {
+        activityLogRepository?.deleteAll()
         workLogRepository?.deleteAll()
         reminderRepository?.deleteAll()
         documentRepository?.deleteAll()
@@ -103,6 +105,12 @@ class DatabaseManager {
         let projectDeleted = projectRepository?.delete(id: projectId) ?? false
         isSuccess = projectDeleted && isSuccess
 
+        if projectDeleted,
+           let activityLogsDeleted = activityLogRepository?.deleteByProjectId(projectId: projectId)
+        {
+            isSuccess = activityLogsDeleted && isSuccess
+        }
+
         if isSuccess {
             logger.info("Deleted project and related data: \(projectId)")
         } else {
@@ -141,6 +149,7 @@ class DatabaseManager {
         documentRepository = DocumentRepository(db: db)
         reminderRepository = ReminderRepository(db: db)
         workLogRepository = WorkLogRepository(db: db)
+        activityLogRepository = ActivityLogRepository(db: db)
     }
 
     private func migrateIfNeeded() {
@@ -184,6 +193,8 @@ class DatabaseManager {
                     try Migration_20260220_DocumentFilePath(db: db).execute()
                 case 6:
                     try Migration_20260220_AddWorkLogsTable(db: db).execute()
+                case 7:
+                    try Migration_20260221_AddActivityLogsTable(db: db).execute()
                 default:
                     throw RuntimeError("Unknown migration version: \(version)")
                 }

@@ -14,6 +14,7 @@ struct TestDatabaseHelper {
     let noteRepository: NoteRepository
     let documentRepository: DocumentRepository
     let reminderRepository: ReminderRepository
+    let activityLogRepository: ActivityLogRepository
     let userSettingsRepository: UserSettingsRepository
 
     init() throws {
@@ -33,6 +34,9 @@ struct TestDatabaseHelper {
         // Migration v4: reminders table
         try Migration_20260218_AddRemindersTable(db: db).execute()
 
+        // Migration v5: activity logs table
+        try Migration_20260221_AddActivityLogsTable(db: db).execute()
+
         // Initialize repositories
         projectRepository = ProjectRepository(db: db)
         checklistRepository = ChecklistRepository(db: db)
@@ -44,5 +48,6 @@ struct TestDatabaseHelper {
         noteRepository = NoteRepository(db: db)
         documentRepository = DocumentRepository(db: db)
         reminderRepository = ReminderRepository(db: db)
+        activityLogRepository = ActivityLogRepository(db: db)
     }
 }

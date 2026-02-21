@@ -77,6 +77,7 @@ final class ExpensesListViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .expense, actionType: .created)
         logger.info("Added expense \(expense.id)")
         loadData()
     }
@@ -87,6 +88,7 @@ final class ExpensesListViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .expense, actionType: .updated)
         logger.info("Updated expense \(expense.id)")
         loadData()
     }
@@ -97,6 +99,7 @@ final class ExpensesListViewModel {
             return
         }
         projectRepository?.touchUpdatedAt(id: projectId)
+        ActivityLogService.shared.log(projectId: projectId, entityType: .expense, actionType: .deleted)
         logger.info("Deleted expense \(expense.id)")
         loadData()
     }
@@ -108,6 +111,7 @@ final class ExpensesListViewModel {
             logger.error("Failed to insert category")
             return
         }
+        ActivityLogService.shared.log(projectId: projectId, entityType: .expenseCategory, actionType: .created)
         logger.info("Added category \(category.id)")
         loadData()
     }
@@ -117,6 +121,7 @@ final class ExpensesListViewModel {
             logger.error("Failed to update category \(category.id)")
             return
         }
+        ActivityLogService.shared.log(projectId: projectId, entityType: .expenseCategory, actionType: .updated)
         logger.info("Updated category \(category.id)")
         loadData()
     }
@@ -126,6 +131,7 @@ final class ExpensesListViewModel {
             logger.error("Failed to delete category \(category.id)")
             return
         }
+        ActivityLogService.shared.log(projectId: projectId, entityType: .expenseCategory, actionType: .deleted)
         logger.info("Deleted category \(category.id)")
         loadData()
     }

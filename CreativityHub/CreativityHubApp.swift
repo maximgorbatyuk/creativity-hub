@@ -59,6 +59,9 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
 
         BackgroundTaskManager.shared.registerBackgroundTasks()
         BackgroundTaskManager.shared.scheduleNextBackup()
+        ActivityLogCleanupTaskManager.shared.registerBackgroundTasks()
+        ActivityLogCleanupTaskManager.shared.scheduleNextCleanup()
+        ActivityLogCleanupTaskManager.shared.runForegroundCleanupIfNeeded()
 
         return true
     }
@@ -66,6 +69,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     func applicationWillEnterForeground(_ application: UIApplication) {
         Task { @MainActor in
             await BackgroundTaskManager.shared.retryIfNeeded()
+            ActivityLogCleanupTaskManager.shared.runForegroundCleanupIfNeeded()
         }
     }
 

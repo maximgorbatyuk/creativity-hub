@@ -6,6 +6,8 @@ enum UserSettingKey: String {
     case language = "language"
     case colorScheme = "color_scheme"
     case userId = "user_id"
+    case activityLogCleanupLastRunAt = "activity_log_cleanup_last_run_at"
+    case activityLogCleanupLastRemovedCount = "activity_log_cleanup_last_removed_count"
 }
 
 enum AppLanguage: String, CaseIterable, Codable {
