@@ -46,7 +46,7 @@ CreativityHub/
 │   ├── Developer/              # Developer-mode-only tools (file browser, settings table, launch screen preview)
 │   ├── Features/               # Feature modules (see Features section below)
 │   ├── Onboarding/             # Onboarding flow (language selection, intro pages)
-│   ├── Services/               # AnalyticsService, BackupService, BackgroundTaskManager, DeveloperModeManager, RandomDataGenerator
+│   ├── Services/               # AnalyticsService, BackupService, BackgroundTaskManager, ActivityLogCleanupTaskManager, AppVersionChecker, DeveloperModeManager, RandomDataGenerator
 │   ├── Shared/                 # Reusable UI components (EmptyState, ErrorState, Loading, CardBackground, FilterChip, etc.)
 │   ├── UserSettings/           # Settings view, view model, iCloud backup list
 │   ├── ContentView.swift       # Root view (LaunchScreen → Onboarding → MainTabView)
@@ -58,14 +58,15 @@ CreativityHub/
 │   ├── Errors/                 # AppError, RuntimeError
 │   ├── Helpers/                # L(), AppGroupContainer, AppLogger, AppNotifications
 │   ├── Models/                 # Domain models (Project, Idea, Note, Checklist, Expense, Document, Reminder, Tag, etc.)
-│   └── Services/               # LocalizationManager, DocumentService
+│   └── Services/               # LocalizationManager, DocumentService, ActivityLogService, ActivityAnalyticsService, EnvironmentService
 ├── CreativityHubTests/         # Unit tests
 │   ├── Utils/                  # TestDatabaseHelper, TestHelpers
 │   ├── ProjectRepositoryTests.swift
 │   ├── NoteRepositoryTests.swift
 │   ├── ReminderRepositoryTests.swift
 │   ├── DeveloperModeManagerTests.swift
-│   └── ExportModelsTests.swift
+│   ├── ExportModelsTests.swift
+│   └── ActivityLogRepositoryTests.swift
 ├── ShareExtension/             # Share Extension target
 │   ├── ShareViewController.swift
 │   ├── ShareFormView.swift
@@ -96,7 +97,9 @@ The app has a 4-tab layout (`MainTabView`): Today, Active Project, Projects, Set
 | **Tags** | 4 files | Global tag management (list, add/edit form, row component) accessible from User Settings |
 | **Documents** | 5 files | List with type detection (PDF, JPEG, PNG, HEIC), document picker, in-app preview |
 | **Reminders** | 7 files | List by status, detail, create/edit, upcoming reminders widget |
+| **Work Logs** | 5 files | List, create/edit, checklist-item linkage, duration summaries |
 | **Search** | `SearchView`, `SearchViewModel` | Global full-text search across all entity types |
+| **Activity Analytics** | Integrated in `TodayView` + `ProjectDetailView` | Weekly charts (last 6 months) sourced from activity logs |
 
 ## Database
 
@@ -114,7 +117,9 @@ The app has a 4-tab layout (`MainTabView`): Today, Active Project, Projects, Set
 | `TagRepository` | CRUD for tags |
 | `ReminderRepository` | CRUD for reminders with project filtering |
 | `DocumentRepository` | CRUD for documents with file path management |
-| `UserSettingsRepository` | User prefs (language, color scheme, backup toggle, user ID) |
+| `WorkLogRepository` | CRUD for work logs, project totals, checklist-item detaching |
+| `ActivityLogRepository` | Insert/fetch activity logs, daily aggregations, retention cleanup |
+| `UserSettingsRepository` | User prefs (language, color scheme, user ID, cleanup metadata) |
 
 ### Migrations (`BusinessLogic/Database/Migrations/`)
 
@@ -122,10 +127,12 @@ The app has a 4-tab layout (`MainTabView`): Today, Active Project, Projects, Set
 2. `Migration_20260218_AddDocumentsTable` — Documents table with type & file path
 3. `Migration_20260218_AddRemindersTable` — Reminders table with date & status
 4. `Migration_20260220_DocumentFilePath` — Document file path refinements
+5. `Migration_20260220_AddWorkLogsTable` — Work logs table with checklist item linkage and duration fields
+6. `Migration_20260221_AddActivityLogsTable` — Activity logs table for per-project action tracking + analytics source
 
 ### Models (`BusinessLogic/Models/`)
 
-`Project`, `Idea`, `Note`, `Checklist`, `ChecklistItem`, `Expense`, `ExpenseCategory`, `Document`, `Reminder`, `Tag`, `Currency`, `UserSettings`, `ExportModels`
+`Project`, `Idea`, `Note`, `Checklist`, `ChecklistItem`, `Expense`, `ExpenseCategory`, `Document`, `Reminder`, `WorkLog`, `ActivityLog`, `Tag`, `Currency`, `UserSettings`, `ExportModels`
 
 ## Services
 
@@ -135,8 +142,9 @@ The app has a 4-tab layout (`MainTabView`): Today, Active Project, Projects, Set
 |---------|---------|
 | `AnalyticsService` | Firebase Analytics (Release only). Persistent `user_id` via `UserSettingsRepository.fetchOrGenerateUserId()`, session ID, global properties on every event. |
 | `AppVersionChecker` | Compares installed app version with App Store version using `APP_STORE_ID`. Returns `true` when update is available. |
-| `BackupService` | iCloud & safety backup orchestration. ZIP files with SQLite + documents. Safety backups in `Documents/creativityhub/safety_backups/` (max 3), iCloud backups (max 5). |
+| `BackupService` | iCloud & safety backup orchestration using JSON export payloads. Safety backups in `Documents/creativityhub/safety_backups/` (max 3), iCloud backups (max 5). |
 | `BackgroundTaskManager` | Automatic daily backup scheduling via BGTaskScheduler. State in UserDefaults. |
+| `ActivityLogCleanupTaskManager` | Daily cleanup task for removing activity logs older than 6 months; stores last run date and deleted count in `user_settings`. |
 | `DeveloperModeManager` | 15-tap unlock on app version row. In-memory state only. |
 | `RandomDataGenerator` | Test data generation for development |
 
@@ -147,6 +155,8 @@ The app has a 4-tab layout (`MainTabView`): Today, Active Project, Projects, Set
 | `EnvironmentService` | Centralized access to Info.plist/build-time environment values (App Store ID/link, version, build environment, developer metadata, app group, bundle id). |
 | `LocalizationManager` | `ObservableObject` managing language selection and string lookups (en, ru, kk) |
 | `DocumentService` | File operations for documents (save, load, delete) |
+| `ActivityLogService` | Centralized write API for project activity events from ViewModels and Share Extension saves |
+| `ActivityAnalyticsService` | Aggregates activity logs into daily/weekly chart points (used in Home and Project Detail) |
 
 ## Config Files (xcconfig)
 
@@ -202,6 +212,9 @@ Xcode Cloud runs `ci_scripts/ci_post_clone.sh` automatically to generate `Google
 - **File system sync**: Xcode auto-compiles source files from `CreativityHub/`, `BusinessLogic/`, and `ShareExtension/` folders — no manual pbxproj edits for source files
 - **Analytics**: Firebase Analytics in Release builds only (`#if DEBUG` guard). A persistent `user_id` (UUID) is generated on first launch via `UserSettingsRepository.fetchOrGenerateUserId()`, stored in SQLite, and included in every event through `AnalyticsService.getGlobalProperties()`.
 - **Color scheme**: `AppColorScheme` enum (system/light/dark) persisted in SQLite via `UserSettingsRepository`, communicated via `NotificationCenter` with `.appColorSchemeDidChange`
+- **Activity logs**: User actions are logged through `ActivityLogService` into `activity_logs`; analytics charts read weekly aggregates from `ActivityAnalyticsService`.
+- **Activity log retention**: `ActivityLogCleanupTaskManager` runs once per day, deletes logs older than 6 months, and upserts cleanup metadata in `user_settings` (`activity_log_cleanup_last_run_at`, `activity_log_cleanup_last_removed_count`).
+- **Backup scope**: Activity logs are intentionally excluded from export/import/iCloud backup payloads.
 
 ## App Update Check Pattern
 
@@ -245,3 +258,13 @@ CreativityHub follows Journey Wallet's automatic iCloud backup approach:
 - Keep task identifier synchronized with Info.plist:
   - `BackgroundTaskManager.dailyBackupTaskIdentifier`
   - `BGTaskSchedulerPermittedIdentifiers` entry in `CreativityHub/Info.plist`
+
+## Activity Log Cleanup Pattern
+
+- Use `ActivityLogCleanupTaskManager` (`CreativityHub/Services/ActivityLogCleanupTaskManager.swift`) as the single owner of cleanup scheduling and execution.
+- Register task at app launch and schedule next run daily via BGTaskScheduler identifier `dev.mgorbatyuk.CreativityHub.activitylogcleanup`.
+- Run foreground fallback on app foreground entry (`runForegroundCleanupIfNeeded`) to guarantee cleanup even when background execution is delayed.
+- Enforce max retention of 6 months via `ActivityLogService.cleanupOlderThanSixMonths(...)`.
+- Persist cleanup observability in `user_settings` by upserting:
+  - `activity_log_cleanup_last_run_at`
+  - `activity_log_cleanup_last_removed_count`
