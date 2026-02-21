@@ -2,7 +2,7 @@
 
 All notable changes to CreativityHub since the initial project setup (`000ad10` — Phase 1 + Firebase).
 
-## [Unreleased]
+## [2026.1.1] (2026-02-21)
 
 ### Added
 - **Landing page** — `docs/index.html` with soft brutalism design, CreativityHub color palette (`#573A68`, `#D6AAE7`, `#FEE662`, `#5488C2`, `#04C7D6`), hero section, 9-slide screenshot carousel with feature card click-to-slide interaction, value callout, and footer

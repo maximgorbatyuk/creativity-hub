@@ -183,6 +183,33 @@ Languages: English (`en`), Russian (`ru`), Kazakh (`kk`)
 
 All user-facing strings use the global `L()` function which reads from `*.lproj/Localizable.strings` bundles via `LocalizationManager`.
 
+## App Store Metadata Docs
+
+CreativityHub keeps App Store Connect text in repo under `appstore/`:
+
+- `appstore/appstore_page.md` — listing copy by language (Promotional Text, Description, Keywords)
+- `appstore/releases.md` — "What's New" release notes by version (newest version first)
+
+Current first release version is `2026.1.1`.
+
+App Store language coverage must match current app localization: English, Russian, Kazakh.
+
+### Tone for App Store Texts
+
+- Write in a clear, warm, human tone from a small team perspective (`we` talking to `you`)
+- Focus on user value and practical outcomes, not implementation details
+- Avoid technical jargon (migrations, repositories, architecture terms)
+- Avoid hype language and exclamation marks; keep wording calm and confident
+- Keep translations natural per language, not word-for-word literal copies
+- Respect App Store length limits: Promotional Text `170`, Description `4000`, Keywords `100`
+
+### Release Notes Writing Rules
+
+- Add new versions at the top of `appstore/releases.md`
+- Keep one short paragraph per language (usually 2-3 sentences)
+- Mention 1-2 user-visible updates, optionally plus a brief stability/fixes note
+- Use `CHANGELOG.md` as the source of truth for what changed
+
 ## Scripts
 
 ```bash
