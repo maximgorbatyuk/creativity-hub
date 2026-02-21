@@ -259,6 +259,73 @@ CreativityHub follows Journey Wallet's automatic iCloud backup approach:
   - `BackgroundTaskManager.dailyBackupTaskIdentifier`
   - `BGTaskSchedulerPermittedIdentifiers` entry in `CreativityHub/Info.plist`
 
+## Landing Page & Website
+
+The landing page lives in `docs/` and follows the same "soft brutalism" style used by EVChargingTracker and Journey Wallet.
+
+### File Structure
+
+```
+docs/
+├── index.html                 # Landing page
+├── brutalism-style.css        # Shared brutalism stylesheet
+├── privacy-policy/
+│   └── index.html             # Privacy policy page
+└── assets/
+    └── app_icon.jpg           # App icon (512px)
+```
+
+### Design Language
+
+- **Style:** Soft brutalism — strong borders, offset shadows (`8px 8px 0`), rounded cards, bold CTA buttons.
+- **Fonts:** "Space Grotesk" (body) + "IBM Plex Mono" (monospace elements) via Google Fonts.
+- **Layout:** `.page` wrapper (max-width 1100px), CSS Grid for hero and showcase, mobile-first with 860px breakpoint.
+
+### Color Palette (CSS Variables)
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--bg` | `#f0e4f6` | Page background (light lavender) |
+| `--bg-alt` | `#f7f0fb` | Card/badge backgrounds |
+| `--call-to-action` | `#FEE662` | CTA buttons (yellow) |
+| `--call-to-action-dark` | `#c9a800` | CTA hover/link states |
+| `--accent` | `#D6AAE7` | Soft purple accent |
+| `--accent-dark` | `#573A68` | Deep brand purple |
+| `--accent-very-dark` | `#2a1d33` | Darkest purple |
+| `--shock` | `#5488C2` | Callout section background (blue) |
+| `--interactive` | `#04C7D6` | Active dots, hover states (teal) |
+
+### Page Sections
+
+1. **Hero** — App icon, headline, feature badges, GitHub CTA (App Store CTA to add when published)
+2. **Showcase** — Two-column: screenshot carousel (9 slides) + feature cards with `card-title-link` + `data-screen` click-to-slide interaction
+3. **Value Callout** — Impact statement + GitHub CTA
+4. **Legal** — Privacy summary + link to privacy policy
+5. **Footer** — App links, dynamic year, author attribution
+
+### Carousel Pattern
+
+- JavaScript IIFE with `translateX`-based sliding, dynamic dot creation, `screenToIndex` mapping
+- Feature card titles (`h3.card-title-link[data-screen]`) click to jump carousel with `slide-highlight` flash animation
+- Prev/next buttons and dot navigation
+
+### Screenshot Assets
+
+Carousel expects these files in `docs/assets/`:
+`projects_dashboard.PNG`, `ideas.PNG`, `notes.PNG`, `checklists.PNG`, `expenses.PNG`, `documents.PNG`, `reminders.PNG`, `work_logs.PNG`, `search.PNG`
+
+### Privacy Policy Page
+
+- Uses `../brutalism-style.css` + inline `<style>` for privacy-specific components
+- Components: `.toc` (two-column table of contents), `.highlight-box` (blue callout), `.contact-box` (gray contact info)
+- Covers: data collection, local storage, iCloud backup, export/import, Share Extension, activity logs, Firebase Analytics, notifications, supported languages, COPPA compliance
+
+### SEO & Metadata
+
+- Open Graph + Twitter Card meta tags
+- JSON-LD `SoftwareApplication` structured data
+- Favicon from `assets/app_icon.jpg`
+
 ## Activity Log Cleanup Pattern
 
 - Use `ActivityLogCleanupTaskManager` (`CreativityHub/Services/ActivityLogCleanupTaskManager.swift`) as the single owner of cleanup scheduling and execution.

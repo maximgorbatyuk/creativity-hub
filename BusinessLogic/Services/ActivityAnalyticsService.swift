@@ -63,6 +63,47 @@ final class ActivityAnalyticsService {
         return points
     }
 
+    func biweeklyActivityCounts(projectId: UUID, months: Int = 6, referenceDate: Date = Date()) -> [ActivityChartPoint] {
+        guard months > 0 else { return [] }
+
+        let calendar = Calendar.current
+        let endPeriodStart = startOfWeek(for: referenceDate)
+        guard let periodStart = calendar.date(byAdding: .month, value: -months, to: referenceDate) else {
+            return []
+        }
+
+        let startPeriodStart = startOfWeek(for: periodStart)
+
+        guard startPeriodStart <= endPeriodStart,
+              let dayAfterEnd = calendar.date(byAdding: .day, value: 14, to: endPeriodStart)
+        else {
+            return []
+        }
+
+        let dailyCounts = repository?.fetchDailyCountsByProjectId(
+            projectId: projectId,
+            since: startPeriodStart,
+            until: dayAfterEnd
+        ) ?? [:]
+
+        // Build biweekly buckets starting from startPeriodStart
+        var buckets: [(date: Date, count: Int)] = []
+        var bucketStart = startPeriodStart
+
+        while bucketStart <= endPeriodStart {
+            var bucketCount = 0
+            for dayOffset in 0..<14 {
+                guard let day = calendar.date(byAdding: .day, value: dayOffset, to: bucketStart) else { continue }
+                bucketCount += dailyCounts[day, default: 0]
+            }
+            buckets.append((date: bucketStart, count: bucketCount))
+            guard let nextBucket = calendar.date(byAdding: .day, value: 14, to: bucketStart) else { break }
+            bucketStart = nextBucket
+        }
+
+        return buckets.map { ActivityChartPoint(date: $0.date, count: $0.count) }
+    }
+
     func dailyActivityCounts(projectId: UUID, days: Int = 30, referenceDate: Date = Date()) -> [ActivityChartPoint] {
         guard days > 0 else { return [] }
 

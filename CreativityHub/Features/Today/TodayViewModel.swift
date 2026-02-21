@@ -1,7 +1,7 @@
 import Foundation
 import os
 
-struct ProjectWeeklyActivitySeries: Identifiable {
+struct ProjectBiweeklyActivitySeries: Identifiable {
     let project: Project
     let points: [ActivityChartPoint]
 
@@ -21,7 +21,7 @@ final class TodayViewModel {
     var totalProjectCount = 0
     var totalReminderCount = 0
     var totalLoggedMinutes = 0
-    var weeklyActivitySeries: [ProjectWeeklyActivitySeries] = []
+    var biweeklyActivitySeries: [ProjectBiweeklyActivitySeries] = []
     var isLoading = false
 
     // MARK: - Private
@@ -55,10 +55,10 @@ final class TodayViewModel {
         totalReminderCount = reminderRepository?.fetchAll().count ?? 0
         totalLoggedMinutes = workLogRepository?.totalMinutesAll() ?? 0
         let allProjects = projectRepository?.fetchAll() ?? []
-        weeklyActivitySeries = allProjects.map { project in
-            ProjectWeeklyActivitySeries(
+        biweeklyActivitySeries = allProjects.map { project in
+            ProjectBiweeklyActivitySeries(
                 project: project,
-                points: activityAnalyticsService.weeklyActivityCounts(projectId: project.id, months: 6)
+                points: activityAnalyticsService.biweeklyActivityCounts(projectId: project.id, months: 6)
             )
         }
         activeProjects = allProjects.filter { $0.status == .active }

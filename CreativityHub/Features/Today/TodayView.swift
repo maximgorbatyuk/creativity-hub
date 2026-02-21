@@ -64,7 +64,7 @@ struct TodayView: View {
                 VStack(spacing: 16) {
                     statsSection
 
-                    if !viewModel.weeklyActivitySeries.isEmpty {
+                    if !viewModel.biweeklyActivitySeries.isEmpty {
                         activityChartSection
                     }
 
@@ -385,10 +385,10 @@ struct TodayView: View {
                 .font(.caption)
                 .foregroundColor(.secondary)
 
-            Chart(viewModel.weeklyActivitySeries) { series in
+            Chart(viewModel.biweeklyActivitySeries) { series in
                 ForEach(series.points) { point in
                     LineMark(
-                        x: .value("Week", point.date),
+                        x: .value("Period", point.date),
                         y: .value("Activities", point.count),
                         series: .value("Project", series.project.id.uuidString)
                     )
@@ -396,8 +396,8 @@ struct TodayView: View {
                 }
             }
             .chartForegroundStyleScale(
-                domain: viewModel.weeklyActivitySeries.map { $0.project.id.uuidString },
-                range: viewModel.weeklyActivitySeries.map { projectColor($0.project) }
+                domain: viewModel.biweeklyActivitySeries.map { $0.project.id.uuidString },
+                range: viewModel.biweeklyActivitySeries.map { projectColor($0.project) }
             )
             .chartLegend(.hidden)
             .chartXAxis {
@@ -413,7 +413,7 @@ struct TodayView: View {
             .frame(height: 220)
 
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 8) {
-                ForEach(viewModel.weeklyActivitySeries) { series in
+                ForEach(viewModel.biweeklyActivitySeries) { series in
                     HStack(spacing: 6) {
                         Circle()
                             .fill(projectColor(series.project))

@@ -208,16 +208,16 @@ struct ProjectDetailView: View {
                 .font(.caption)
                 .foregroundColor(.secondary)
 
-            Chart(viewModel.weeklyActivityPoints) { point in
+            Chart(viewModel.biweeklyActivityPoints) { point in
                 LineMark(
-                    x: .value("Week", point.date),
+                    x: .value("Period", point.date),
                     y: .value("Activities", point.count)
                 )
                 .interpolationMethod(.catmullRom)
                 .foregroundStyle(projectColor)
 
                 AreaMark(
-                    x: .value("Week", point.date),
+                    x: .value("Period", point.date),
                     y: .value("Activities", point.count)
                 )
                 .interpolationMethod(.catmullRom)

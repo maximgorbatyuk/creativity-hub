@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CreativityHub - Organize your creative projects</title>
+  <meta name="theme-color" content="#f0e4f6" />
+
+  <meta name="description"
+    content="Organize creative projects with ideas, notes, checklists, expenses, documents, reminders, and work logs. All in one iOS app built for creators.">
+  <meta name="author" content="Maxim Gorbatyuk">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mgorbatyuk.dev/creativityhub/">
+  <meta property="og:title" content="CreativityHub - Organize your creative projects">
+  <meta property="og:description"
+    content="Organize creative projects with ideas, notes, checklists, expenses, documents, reminders, and work logs. All in one iOS app built for creators.">
+  <meta property="og:image" content="https://mgorbatyuk.dev/creativityhub/assets/app_icon.jpg">
+  <meta property="og:site_name" content="CreativityHub">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://mgorbatyuk.dev/creativityhub/">
+  <meta name="twitter:title" content="CreativityHub - Organize your creative projects">
+  <meta name="twitter:description"
+    content="Organize creative projects with ideas, notes, checklists, expenses, documents, reminders, and work logs. All in one iOS app built for creators.">
+  <meta name="twitter:image" content="https://mgorbatyuk.dev/creativityhub/assets/app_icon.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" href="./assets/app_icon.jpg" />
+
+  <link rel="stylesheet" href="./brutalism-style.css" />
+
+  <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "CreativityHub",
+        "operatingSystem": "iOS 18+",
+        "applicationCategory": "ProductivityApplication",
+        "description": "Organize creative projects with ideas, notes, checklists, expenses, documents, reminders, and work logs. All in one iOS app built for creators.",
+        "url": "https://mgorbatyuk.dev/creativityhub/",
+        "author": {
+          "@type": "Person",
+          "name": "maximgorbatyuk"
+        }
+      }
+    </script>
+</head>
+
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-media">
+        <img class="logo" src="./assets/app_icon.jpg" alt="CreativityHub app icon" />
+        <span class="app-name">CreativityHub</span>
+      </div>
+      <div>
+        <h1>Organize your creative projects from idea to finish</h1>
+        <p>
+          Capture ideas, plan with checklists, track expenses, store documents,
+          set reminders, and log your work. Everything a creator needs to turn inspiration into reality.
+        </p>
+        <div class="badge-row">
+          <span class="badge">iOS 18+</span>
+          <span class="badge">Projects</span>
+          <span class="badge">Ideas</span>
+          <span class="badge">Notes</span>
+          <span class="badge">Checklists</span>
+          <span class="badge">Expenses</span>
+          <span class="badge">Reminders</span>
+          <span class="badge">Work Logs</span>
+        </div>
+        <div class="cta">
+          <a class="button" href="https://github.com/maximgorbatyuk/creativityhub" target="_blank"
+            rel="noopener noreferrer">View on GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="showcase">
+      <div class="carousel">
+        <div class="carousel-container">
+          <div class="carousel-slides">
+            <div class="carousel-slide">
+              <img class="carousel-image" src="./assets/projects_dashboard.PNG" alt="Projects dashboard screenshot"
+                id="projects-screen" />
+            </div>
+            <div class="carousel-slide">
+              <img class="carousel-image" src="./assets/ideas.PNG" alt="Ideas capture screenshot" id="ideas-screen" />
+            </div>
+            <div class="carousel-slide">
+              <img class="carousel-image" src="./assets/notes.PNG" alt="Notes screenshot" id="notes-screen" />
+            </div>
+            <div class="carousel-slide">
+              <img class="carousel-image" src="./assets/checklists.PNG" alt="Checklists screenshot"
+                id="checklists-screen" />
+            </div>
+            <div class="carousel-slide">
+              <img class="carousel-image" src="./assets/expenses.PNG" alt="Expenses and budget screenshot"
+                id="expenses-screen" />
+            </div>
+            <div class="carousel-slide">
+              <img class="carousel-image" src="./assets/documents.PNG" alt="Documents screenshot"
+                id="documents-screen" />
+            </div>
+            <div class="carousel-slide">
+              <img class="carousel-image" src="./assets/reminders.PNG" alt="Reminders screenshot"
+                id="reminders-screen" />
+            </div>
+            <div class="carousel-slide">
+              <img class="carousel-image" src="./assets/work_logs.PNG" alt="Work logs screenshot"
+                id="work-logs-screen" />
+            </div>
+            <div class="carousel-slide">
+              <img class="carousel-image" src="./assets/search.PNG" alt="Global search screenshot"
+                id="search-screen" />
+            </div>
+          </div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn carousel-btn-prev" aria-label="Previous slide">&larr;</button>
+          <div class="carousel-dots"></div>
+          <button class="carousel-btn carousel-btn-next" aria-label="Next slide">&rarr;</button>
+        </div>
+      </div>
+
+      <div class="showcase-features">
+        <article class="card" style="animation-delay: 0.05s">
+          <h3 class="card-title-link" data-screen="projects-screen">Projects Dashboard</h3>
+          <p>
+            Manage all your creative projects in one place. Filter by status, track progress,
+            and switch between active, completed, and archived projects at a glance.
+          </p>
+        </article>
+
+        <article class="card" style="animation-delay: 0.1s">
+          <h3 class="card-title-link" data-screen="ideas-screen">Ideas Capture</h3>
+          <p>
+            Save ideas with automatic source detection for Instagram, TikTok, Pinterest, YouTube,
+            and websites. Never lose inspiration again.
+          </p>
+        </article>
+
+        <article class="card" style="animation-delay: 0.15s">
+          <h3 class="card-title-link" data-screen="notes-screen">Notes</h3>
+          <p>
+            Write and organize notes for each project. Keep context, references,
+            and thoughts close to the work they belong to.
+          </p>
+        </article>
+
+        <article class="card" style="animation-delay: 0.2s">
+          <h3 class="card-title-link" data-screen="checklists-screen">Checklists</h3>
+          <p>
+            Break projects into actionable steps with checklists. Track progress
+            with completion indicators and link items to work logs.
+          </p>
+        </article>
+
+        <article class="card" style="animation-delay: 0.25s">
+          <h3 class="card-title-link" data-screen="expenses-screen">Expenses &amp; Budget</h3>
+          <p>
+            Track project expenses by category. Monitor budgets with filtering, sorting,
+            and multi-currency support to keep spending under control.
+          </p>
+        </article>
+
+        <article class="card" style="animation-delay: 0.3s">
+          <h3 class="card-title-link" data-screen="documents-screen">Documents</h3>
+          <p>
+            Store project files including PDFs, images, and documents.
+            Preview files in-app and keep everything organized per project.
+          </p>
+        </article>
+
+        <article class="card" style="animation-delay: 0.35s">
+          <h3 class="card-title-link" data-screen="reminders-screen">Reminders</h3>
+          <p>
+            Set reminders for deadlines, follow-ups, and important dates.
+            View upcoming reminders on the Today dashboard so nothing slips through.
+          </p>
+        </article>
+
+        <article class="card" style="animation-delay: 0.4s">
+          <h3 class="card-title-link" data-screen="work-logs-screen">Work Logs</h3>
+          <p>
+            Log time spent on project tasks. Link work entries to checklist items
+            and see duration summaries to understand where your time goes.
+          </p>
+        </article>
+
+        <article class="card" style="animation-delay: 0.45s">
+          <h3 class="card-title-link" data-screen="search-screen">Global Search</h3>
+          <p>
+            Search across all projects, ideas, notes, checklists, and expenses.
+            Find anything instantly with full-text search and quick navigation.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="callout">
+      <div class="callout-text">
+        Built for creators who want to organize ideas, plan projects, and track progress all in one place.
+      </div>
+      <a class="button" href="https://github.com/maximgorbatyuk/creativityhub" target="_blank"
+        rel="noopener noreferrer">View on GitHub</a>
+    </section>
+
+    <section class="legal">
+      <p>
+        All your data is stored locally on your device. We do not collect, transfer, or share your personal information
+        with any third parties.
+        Use CreativityHub in accordance with Apple's Terms of Service and applicable laws.
+        Read our full <a href="./privacy-policy/">Privacy Policy</a>.
+      </p>
+    </section>
+
+    <section class="footer">
+      <div>
+        <span>CreativityHub</span>
+        <span>&middot;</span>
+        <a href="./privacy-policy/">Privacy Policy</a>
+        <span>&middot;</span>
+        <a href="https://github.com/maximgorbatyuk/creativityhub" target="_blank"
+          rel="noopener noreferrer">GitHub</a>
+        <span>&middot;</span>
+        <a href="https://github.com/maximgorbatyuk/creativityhub/issues" target="_blank"
+          rel="noopener noreferrer">Feedback</a>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; <span id="current-year">2026</span> <a
+            href="https://mgorbatyuk.dev?utm_source=creativityhub&utm_medium=referral&utm_campaign=footer"
+            target="_blank" rel="noopener noreferrer">Maxim
+            Gorbatyuk</a>. Open source project under MIT License.</p>
+      </div>
+    </section>
+  </main>
+</body>
+<script>
+  document.getElementById('current-year').textContent = new Date().getFullYear();
+
+  (function () {
+    const slides = document.querySelectorAll('.carousel-slide');
+    const slidesContainer = document.querySelector('.carousel-slides');
+    const dotsContainer = document.querySelector('.carousel-dots');
+    const prevBtn = document.querySelector('.carousel-btn-prev');
+    const nextBtn = document.querySelector('.carousel-btn-next');
+
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+
+    const screenToIndex = {};
+    slides.forEach((slide, index) => {
+      const img = slide.querySelector('img[id]');
+      if (img && img.id) {
+        screenToIndex[img.id] = index;
+      }
+    });
+
+    slides.forEach((_, index) => {
+      const dot = document.createElement('button');
+      dot.classList.add('carousel-dot');
+      if (index === 0) dot.classList.add('active');
+      dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+      dot.addEventListener('click', () => goToSlide(index));
+      dotsContainer.appendChild(dot);
+    });
+
+    const dots = document.querySelectorAll('.carousel-dot');
+
+    function updateCarousel() {
+      slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+      });
+    }
+
+    function goToSlide(index) {
+      currentIndex = index;
+      updateCarousel();
+    }
+
+    function goToSlideWithHighlight(index) {
+      goToSlide(index);
+      const slide = slides[index];
+      slide.classList.remove('highlight');
+      void slide.offsetWidth;
+      slide.classList.add('highlight');
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      updateCarousel();
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      updateCarousel();
+    }
+
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+
+    document.querySelectorAll('.card-title-link[data-screen]').forEach(title => {
+      title.addEventListener('click', () => {
+        const screenId = title.dataset.screen;
+        const slideIndex = screenToIndex[screenId];
+        if (slideIndex !== undefined) {
+          goToSlideWithHighlight(slideIndex);
+        }
+      });
+    });
+  })();
+</script>
+
+</html>
