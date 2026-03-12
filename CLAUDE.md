@@ -44,13 +44,12 @@ CreativityHub/
 ├── CreativityHub/              # Main app target
 │   ├── Config/                 # xcconfig files (Base, Debug, Release)
 │   ├── Developer/              # Developer-mode-only tools (file browser, settings table, launch screen preview)
-│   ├── Features/               # Feature modules (see Features section below)
+│   ├── Features/               # Feature modules + MainTabView/MainTabViewModel (see Features section below)
 │   ├── Onboarding/             # Onboarding flow (language selection, intro pages)
 │   ├── Services/               # AnalyticsService, BackupService, BackgroundTaskManager, ActivityLogCleanupTaskManager, AppVersionChecker, DeveloperModeManager, RandomDataGenerator
 │   ├── Shared/                 # Reusable UI components (EmptyState, ErrorState, Loading, CardBackground, FilterChip, etc.)
 │   ├── UserSettings/           # Settings view, view model, iCloud backup list
 │   ├── ContentView.swift       # Root view (LaunchScreen → Onboarding → MainTabView)
-│   ├── MainTabView.swift       # Bottom tab bar (Today, Active Project, Projects, Settings)
 │   ├── CreativityHubApp.swift  # App entry point with AppDelegate, Firebase config
 │   └── Info.plist
 ├── BusinessLogic/              # Shared between main app and ShareExtension
@@ -339,7 +338,7 @@ docs/
 ### Screenshot Assets
 
 Carousel expects these files in `docs/assets/`:
-`projects_dashboard.PNG`, `ideas.PNG`, `notes.PNG`, `checklists.PNG`, `expenses.PNG`, `documents.PNG`, `reminders.PNG`, `work_logs.PNG`, `search.PNG`
+`home.PNG`, `ideas.PNG`, `notes.PNG`, `checklists.PNG`, `expenses.PNG`, `documents.PNG`, `reminders.PNG`, `work_logs.PNG`, `search.PNG`
 
 ### Privacy Policy Page
 
