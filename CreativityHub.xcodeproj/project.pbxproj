@@ -485,7 +485,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2026.1.1;
+				MARKETING_VERSION = 2026.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mgorbatyuk.CreativityHub.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -528,7 +528,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2026.1.1;
+				MARKETING_VERSION = 2026.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.mgorbatyuk.CreativityHub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -562,7 +562,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2026.1.1;
+				MARKETING_VERSION = 2026.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(SHARE_EXTENSION_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -595,7 +595,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2026.1.1;
+				MARKETING_VERSION = 2026.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(SHARE_EXTENSION_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

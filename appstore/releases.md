@@ -2,6 +2,26 @@
 
 Use this file for App Store Connect "What's New" text.
 
+## 2026.1.2
+
+### English
+
+```
+We improved document management — you can now take photos of your documents directly from the camera, and the app keeps track of where each document came from. We also made small stability improvements under the hood.
+```
+
+### Russian
+
+```
+Мы улучшили работу с документами — теперь можно фотографировать документы прямо из камеры, а приложение запоминает, откуда добавлен каждый документ. Также внесли небольшие улучшения стабильности.
+```
+
+### Kazakh
+
+```
+Құжаттармен жұмысты жақсарттық — енді құжаттарды тікелей камерадан түсіруге болады, ал қолданба әр құжаттың қайдан қосылғанын есте сақтайды. Сондай-ақ тұрақтылықты аздап жақсарттық.
+```
+
 ## 2026.1.1
 
 ### English
