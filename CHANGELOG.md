@@ -2,6 +2,20 @@
 
 All notable changes to CreativityHub since the initial project setup (`000ad10` — Phase 1 + Firebase).
 
+## [2026.1.2] (2026-03-21)
+
+### Added
+- **Shared CameraView component** — extracted `CameraView` from `DocumentPickerView` into `CreativityHub/Shared/CameraView.swift` as a reusable `UIViewControllerRepresentable` wrapper
+- **Document source tracking** — added `source` field to `PendingDocument` to track origin (`camera`, `photo_library`, `files`)
+- **Document analytics** — added `document_added` event with `screen` and `source` properties fired on successful document save
+- **Camera permission localization** — added `NSCameraUsageDescription` to `Info.plist` and localized descriptions in `InfoPlist.strings` for English, Russian, and Kazakh
+
+### Changed
+- Removed inline `CameraView` implementation from `DocumentPickerView`, now imports from shared location
+- Camera dismiss now explicitly sets `showCamera = false` before handling the captured image
+
+---
+
 ## [2026.1.1] (2026-02-21)
 
 ### Added
