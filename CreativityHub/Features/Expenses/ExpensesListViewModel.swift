@@ -71,6 +71,11 @@ final class ExpensesListViewModel {
         userSettingsRepository?.fetchCurrency() ?? .usd
     }
 
+    var expenseDefaultCurrency: Currency {
+        let fallback = defaultCurrency
+        return projectRepository?.fetchById(id: projectId)?.resolvedExpenseCurrency(fallback: fallback) ?? fallback
+    }
+
     func addExpense(_ expense: Expense) {
         guard expenseRepository?.insert(expense) == true else {
             logger.error("Failed to insert expense")

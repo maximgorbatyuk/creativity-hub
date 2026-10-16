@@ -2,6 +2,26 @@
 
 Use this file for App Store Connect "What's New" text.
 
+## 2026.1.3
+
+### English
+
+```
+We added a default currency for each project — new expenses automatically use your chosen currency. We also separated expense titles from optional vendor details, so your expense list is easier to read, with your previous vendor entries preserved as expense titles.
+```
+
+### Russian
+
+```
+Мы добавили валюту по умолчанию для каждого проекта — теперь она выбирается автоматически при добавлении новых расходов. Ещё разделили название расхода и необязательное поле поставщика, чтобы вам было проще видеть, на что идут деньги, а всё, что вы раньше указывали в поле продавца, сохранили в названиях расходов.
+```
+
+### Kazakh
+
+```
+Біз әр жобаға әдепкі валютаны таңдау мүмкіндігін қостық — жаңа шығыс қосқанда сіз таңдаған валюта автоматты түрде қойылады. Сондай-ақ шығыстың атауы мен жеткізуші туралы мәліметті бөлек енгізуге болады, сондықтан шығындар тізімін қарап шығу ыңғайлырақ, ал бұрын сатушы өрісіне енгізген мәліметтеріңіз шығыс атауы ретінде сақталды.
+```
+
 ## 2026.1.2
 
 ### English

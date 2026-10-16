@@ -96,6 +96,9 @@ struct ExpenseDetailView: View {
 
     private var headerCard: some View {
         VStack(alignment: .leading, spacing: 12) {
+            Text(expense.displayTitle)
+                .font(.headline)
+
             HStack(spacing: 12) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)

@@ -30,11 +30,9 @@ struct ExpenseRowView: View {
 
     private var expenseInfo: some View {
         VStack(alignment: .leading, spacing: 3) {
-            if let vendor = expense.vendor, !vendor.isEmpty {
-                Text(vendor)
-                    .font(.body)
-                    .lineLimit(1)
-            }
+            Text(expense.displayTitle)
+                .font(.body)
+                .lineLimit(1)
 
             HStack(spacing: 6) {
                 Text(expense.status.displayName)

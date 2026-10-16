@@ -186,6 +186,9 @@
 "project.form.target_date" = "Целевая дата";
 "project.form.set_budget" = "Установить бюджет";
 "project.form.budget_amount" = "Сумма";
+"project.form.default_expense_currency" = "Валюта по умолчанию";
+"project.form.currency_from_app_settings" = "Из настроек приложения";
+"project.form.default_expense_currency_hint" = "Выбирается при добавлении нового расхода. В самом расходе валюту можно изменить.";
 "project.form.error.name_required" = "Название проекта обязательно";
 "project.form.error.invalid_dates" = "Целевая дата должна быть позже даты начала";
 
@@ -361,8 +364,11 @@
 "expense.form.section.amount" = "Сумма";
 "expense.form.amount_placeholder" = "0.00";
 "expense.form.currency" = "Валюта";
-"expense.form.section.vendor" = "Продавец";
-"expense.form.vendor_placeholder" = "Название магазина или продавца";
+"expense.form.section.vendor" = "Поставщик";
+"expense.form.vendor_placeholder" = "Имя или название поставщика (необязательно)";
+"expense.form.section.title" = "Название";
+"expense.form.title_placeholder" = "Название расхода";
+"expense.form.error.title_required" = "Введите название расхода";
 "expense.form.section.status" = "Статус";
 "expense.form.status" = "Статус";
 "expense.form.section.category" = "Категория";

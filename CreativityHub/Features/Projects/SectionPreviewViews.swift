@@ -181,12 +181,10 @@ struct ExpensePreviewRow: View {
                 .frame(width: 32, height: 32)
 
             VStack(alignment: .leading, spacing: 4) {
-                if let vendor = expense.vendor, !vendor.isEmpty {
-                    Text(vendor)
-                        .font(.subheadline)
-                        .fontWeight(.medium)
-                        .lineLimit(1)
-                }
+                Text(expense.displayTitle)
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .lineLimit(1)
 
                 HStack(spacing: 4) {
                     Text(expense.status.displayName)

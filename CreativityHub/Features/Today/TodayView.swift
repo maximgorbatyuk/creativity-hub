@@ -250,11 +250,9 @@ struct TodayView: View {
                 .frame(width: 24)
 
             VStack(alignment: .leading, spacing: 2) {
-                if let vendor = expense.vendor, !vendor.isEmpty {
-                    Text(vendor)
-                        .font(.subheadline)
-                        .lineLimit(1)
-                }
+                Text(expense.displayTitle)
+                    .font(.subheadline)
+                    .lineLimit(1)
 
                 Text(expense.status.displayName)
                     .font(.caption)

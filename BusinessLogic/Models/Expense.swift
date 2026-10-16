@@ -44,6 +44,7 @@ struct Expense: Codable, Identifiable, Equatable, Hashable {
     var amount: Decimal
     var currency: Currency
     var date: Date
+    var title: String?
     var vendor: String?
     var status: ExpenseStatus
     var receiptImagePath: String?
@@ -59,6 +60,7 @@ struct Expense: Codable, Identifiable, Equatable, Hashable {
         amount: Decimal,
         currency: Currency,
         date: Date = Date(),
+        title: String? = nil,
         vendor: String? = nil,
         status: ExpenseStatus = .planned,
         receiptImagePath: String? = nil,
@@ -73,6 +75,7 @@ struct Expense: Codable, Identifiable, Equatable, Hashable {
         self.amount = amount
         self.currency = currency
         self.date = date
+        self.title = title
         self.vendor = vendor
         self.status = status
         self.receiptImagePath = receiptImagePath
@@ -84,6 +87,13 @@ struct Expense: Codable, Identifiable, Equatable, Hashable {
 
     var formattedAmount: String {
         currency.format(amount)
+    }
+
+    var displayTitle: String {
+        guard let title, !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return L("expense.detail.title")
+        }
+        return title
     }
 
     var isPaid: Bool { status == .paid }

@@ -22,6 +22,7 @@ struct ExpenseFormView: View {
 
     @State private var amountString = ""
     @State private var currency: Currency
+    @State private var title = ""
     @State private var vendor = ""
     @State private var status: ExpenseStatus = .planned
     @State private var date = Date()
@@ -50,6 +51,7 @@ struct ExpenseFormView: View {
         if case .edit(let expense) = mode {
             _amountString = State(initialValue: "\(expense.amount)")
             _currency = State(initialValue: expense.currency)
+            _title = State(initialValue: expense.title ?? "")
             _vendor = State(initialValue: expense.vendor ?? "")
             _status = State(initialValue: expense.status)
             _date = State(initialValue: expense.date)
@@ -64,6 +66,7 @@ struct ExpenseFormView: View {
         NavigationStack {
             Form {
                 amountSection
+                titleSection
                 vendorSection
                 statusSection
                 categorySection
@@ -105,6 +108,12 @@ struct ExpenseFormView: View {
                 .labelsHidden()
                 .frame(width: 100)
             }
+        }
+    }
+
+    private var titleSection: some View {
+        Section(L("expense.form.section.title")) {
+            TextField(L("expense.form.title_placeholder"), text: $title)
         }
     }
 
@@ -158,6 +167,13 @@ struct ExpenseFormView: View {
     // MARK: - Save
 
     private func saveExpense() {
+        let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedTitle.isEmpty else {
+            validationMessage = L("expense.form.error.title_required")
+            showValidationError = true
+            return
+        }
+
         let cleanedAmount = amountString.replacingOccurrences(of: ",", with: ".")
         guard let amount = Decimal(string: cleanedAmount), amount > 0 else {
             validationMessage = L("expense.form.error.amount_required")
@@ -177,6 +193,7 @@ struct ExpenseFormView: View {
                 amount: amount,
                 currency: currency,
                 date: date,
+                title: trimmedTitle,
                 vendor: trimmedVendor.isEmpty ? nil : trimmedVendor,
                 status: status,
                 receiptImagePath: existing.receiptImagePath,
@@ -192,6 +209,7 @@ struct ExpenseFormView: View {
                 amount: amount,
                 currency: currency,
                 date: date,
+                title: trimmedTitle,
                 vendor: trimmedVendor.isEmpty ? nil : trimmedVendor,
                 status: status,
                 notes: trimmedNotes.isEmpty ? nil : trimmedNotes

@@ -186,6 +186,9 @@
 "project.form.target_date" = "Мақсатты күн";
 "project.form.set_budget" = "Бюджетті белгілеу";
 "project.form.budget_amount" = "Сома";
+"project.form.default_expense_currency" = "Әдепкі валюта";
+"project.form.currency_from_app_settings" = "Қолданба баптауларынан";
+"project.form.default_expense_currency_hint" = "Жаңа шығыс қосқанда осы валюта таңдалады. Әр шығыс үшін валютаны өзгертуге болады.";
 "project.form.error.name_required" = "Жоба атауы міндетті";
 "project.form.error.invalid_dates" = "Мақсатты күн басталу күнінен кейін болуы тиіс";
 
@@ -361,8 +364,11 @@
 "expense.form.section.amount" = "Сома";
 "expense.form.amount_placeholder" = "0.00";
 "expense.form.currency" = "Валюта";
-"expense.form.section.vendor" = "Сатушы";
-"expense.form.vendor_placeholder" = "Дүкен немесе сатушы атауы";
+"expense.form.section.vendor" = "Жеткізуші";
+"expense.form.vendor_placeholder" = "Жеткізушінің атауы (міндетті емес)";
+"expense.form.section.title" = "Атауы";
+"expense.form.title_placeholder" = "Шығыс атауы";
+"expense.form.error.title_required" = "Шығыс атауын енгізіңіз";
 "expense.form.section.status" = "Мәртебе";
 "expense.form.status" = "Мәртебе";
 "expense.form.section.category" = "Санат";

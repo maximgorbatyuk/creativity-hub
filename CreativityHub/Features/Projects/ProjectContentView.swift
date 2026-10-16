@@ -108,7 +108,7 @@ struct ProjectContentView: View {
                     ExpenseFormView(
                         mode: .add(projectId: projectId),
                         categories: viewModel.expenseCategories,
-                        defaultCurrency: viewModel.defaultCurrency
+                        defaultCurrency: viewModel.expenseDefaultCurrency
                     ) { expense in
                         viewModel.addExpense(expense)
                     }

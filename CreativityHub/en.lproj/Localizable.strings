@@ -186,6 +186,9 @@
 "project.form.target_date" = "Target Date";
 "project.form.set_budget" = "Set Budget";
 "project.form.budget_amount" = "Amount";
+"project.form.default_expense_currency" = "Default Currency";
+"project.form.currency_from_app_settings" = "Use App Settings";
+"project.form.default_expense_currency_hint" = "Preselected for new expenses. You can change it for each expense.";
 "project.form.error.name_required" = "Project name is required";
 "project.form.error.invalid_dates" = "Target date must be after start date";
 
@@ -362,7 +365,10 @@
 "expense.form.amount_placeholder" = "0.00";
 "expense.form.currency" = "Currency";
 "expense.form.section.vendor" = "Vendor";
-"expense.form.vendor_placeholder" = "Store or vendor name";
+"expense.form.vendor_placeholder" = "Vendor name (optional)";
+"expense.form.section.title" = "Title";
+"expense.form.title_placeholder" = "Expense title";
+"expense.form.error.title_required" = "Enter an expense title";
 "expense.form.section.status" = "Status";
 "expense.form.status" = "Status";
 "expense.form.section.category" = "Category";

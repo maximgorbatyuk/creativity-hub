@@ -15,6 +15,7 @@ class ProjectRepository {
     private let targetDateColumn = Expression<Date?>("target_date")
     private let budgetColumn = Expression<String?>("budget")
     private let budgetCurrencyColumn = Expression<String?>("budget_currency")
+    private let defaultExpenseCurrencyColumn = Expression<String?>("default_expense_currency")
     private let isPinnedColumn = Expression<Bool>("is_pinned")
     private let sortOrderColumn = Expression<Int>("sort_order")
     private let createdAtColumn = Expression<Date>("created_at")
@@ -95,6 +96,7 @@ class ProjectRepository {
                 targetDateColumn <- project.targetDate,
                 budgetColumn <- project.budget.map { "\($0)" },
                 budgetCurrencyColumn <- project.budgetCurrency?.rawValue,
+                defaultExpenseCurrencyColumn <- project.defaultExpenseCurrency?.rawValue,
                 isPinnedColumn <- project.isPinned,
                 sortOrderColumn <- project.sortOrder,
                 createdAtColumn <- project.createdAt,
@@ -121,6 +123,7 @@ class ProjectRepository {
                 targetDateColumn <- project.targetDate,
                 budgetColumn <- project.budget.map { "\($0)" },
                 budgetCurrencyColumn <- project.budgetCurrency?.rawValue,
+                defaultExpenseCurrencyColumn <- project.defaultExpenseCurrency?.rawValue,
                 isPinnedColumn <- project.isPinned,
                 sortOrderColumn <- project.sortOrder,
                 updatedAtColumn <- Date()
@@ -231,6 +234,7 @@ class ProjectRepository {
             targetDate: row[targetDateColumn],
             budget: budget,
             budgetCurrency: budgetCurrency,
+            defaultExpenseCurrency: row[defaultExpenseCurrencyColumn].flatMap { Currency(rawValue: $0) },
             isPinned: row[isPinnedColumn],
             sortOrder: row[sortOrderColumn],
             createdAt: row[createdAtColumn],
