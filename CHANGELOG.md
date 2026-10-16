@@ -2,6 +2,12 @@
 
 All notable changes to CreativityHub since the initial project setup (`000ad10` — Phase 1 + Firebase).
 
+## 2026.1.3
+
+- Choose a default currency for each project so new expenses automatically start with the right currency.
+- Give expenses a title and add vendor details separately when needed, with previous vendor entries preserved as expense titles.
+- Find expenses by either their title or vendor.
+
 ## [2026.1.2] (2026-03-21)
 
 ### Added
