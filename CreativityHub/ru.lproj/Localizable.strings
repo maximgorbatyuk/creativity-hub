@@ -364,8 +364,11 @@
 "expense.form.section.amount" = "Сумма";
 "expense.form.amount_placeholder" = "0.00";
 "expense.form.currency" = "Валюта";
-"expense.form.section.vendor" = "Продавец";
-"expense.form.vendor_placeholder" = "Название магазина или продавца";
+"expense.form.section.vendor" = "Поставщик";
+"expense.form.vendor_placeholder" = "Имя или название поставщика (необязательно)";
+"expense.form.section.title" = "Название";
+"expense.form.title_placeholder" = "Название расхода";
+"expense.form.error.title_required" = "Введите название расхода";
 "expense.form.section.status" = "Статус";
 "expense.form.status" = "Статус";
 "expense.form.section.category" = "Категория";

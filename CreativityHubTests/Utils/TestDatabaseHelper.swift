@@ -45,6 +45,7 @@ struct TestDatabaseHelper {
         try Migration_20260221_AddActivityLogsTable(db: db).execute()
 
         try Migration20261016ProjectCurrency(db: db).execute()
+        try Migration20261016ExpenseTitle(db: db).execute()
 
         // Initialize repositories
         projectRepository = ProjectRepository(db: db)

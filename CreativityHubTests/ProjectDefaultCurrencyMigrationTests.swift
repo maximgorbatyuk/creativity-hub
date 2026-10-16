@@ -17,8 +17,15 @@ struct ProjectDefaultCurrencyMigrationTests {
             SQLite.Expression<Date>("updated_at") <- date
         ))
         let expense = Expense(projectId: projectId, amount: Decimal(25), currency: .rub)
-        let expenses = ExpenseRepository(db: database)
-        #expect(expenses.insert(expense))
+        try database.run(Table("expenses").insert(
+            SQLite.Expression<String>("id") <- expense.id.uuidString,
+            SQLite.Expression<String>("project_id") <- projectId.uuidString,
+            SQLite.Expression<String>("amount") <- "\(expense.amount)",
+            SQLite.Expression<String>("currency") <- expense.currency.rawValue,
+            SQLite.Expression<Date>("date") <- expense.date,
+            SQLite.Expression<Date>("created_at") <- expense.createdAt,
+            SQLite.Expression<Date>("updated_at") <- expense.updatedAt
+        ))
 
         try Migration20261016ProjectCurrency(db: database).execute()
 
@@ -29,9 +36,12 @@ struct ProjectDefaultCurrencyMigrationTests {
         #expect(project.createdAt == date)
         #expect(project.updatedAt == date)
         #expect(project.resolvedExpenseCurrency(fallback: .kzt) == .kzt)
-        let savedExpense = try #require(expenses.fetchById(id: expense.id))
-        #expect(savedExpense.amount == expense.amount)
-        #expect(savedExpense.currency == .rub)
+        let expenseRow = try database.pluck(
+            Table("expenses").filter(SQLite.Expression<String>("id") == expense.id.uuidString)
+        )
+        let savedExpense = try #require(expenseRow)
+        #expect(savedExpense[SQLite.Expression<String>("amount")] == "\(expense.amount)")
+        #expect(savedExpense[SQLite.Expression<String>("currency")] == Currency.rub.rawValue)
     }
 
     @Test func migrationCanBeRetriedWithoutDataLoss() throws {

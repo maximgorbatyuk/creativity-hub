@@ -11,7 +11,7 @@ class DatabaseManager {
         category: "DatabaseManager"
     )
 
-    private let latestVersion = 8
+    private let latestVersion = 9
 
     // Repositories
     private(set) var migrationRepository: MigrationsRepository?
@@ -197,6 +197,8 @@ class DatabaseManager {
                     try Migration_20260221_AddActivityLogsTable(db: db).execute()
                 case 8:
                     try Migration20261016ProjectCurrency(db: db).execute()
+                case 9:
+                    try Migration20261016ExpenseTitle(db: db).execute()
                 default:
                     throw RuntimeError("Unknown migration version: \(version)")
                 }

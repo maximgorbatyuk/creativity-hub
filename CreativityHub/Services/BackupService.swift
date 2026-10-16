@@ -366,7 +366,7 @@ final class BackupService {
         }
 
         // Import expenses
-        if let expenses = exportData.expenses {
+        if let expenses = exportData.expensesForImport {
             for expense in expenses {
                 try requireSuccessfulImportOperation(
                     expenseRepository?.insert(expense),

@@ -365,7 +365,10 @@
 "expense.form.amount_placeholder" = "0.00";
 "expense.form.currency" = "Currency";
 "expense.form.section.vendor" = "Vendor";
-"expense.form.vendor_placeholder" = "Store or vendor name";
+"expense.form.vendor_placeholder" = "Vendor name (optional)";
+"expense.form.section.title" = "Title";
+"expense.form.title_placeholder" = "Expense title";
+"expense.form.error.title_required" = "Enter an expense title";
 "expense.form.section.status" = "Status";
 "expense.form.status" = "Status";
 "expense.form.section.category" = "Category";

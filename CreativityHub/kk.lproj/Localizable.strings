@@ -364,8 +364,11 @@
 "expense.form.section.amount" = "Сома";
 "expense.form.amount_placeholder" = "0.00";
 "expense.form.currency" = "Валюта";
-"expense.form.section.vendor" = "Сатушы";
-"expense.form.vendor_placeholder" = "Дүкен немесе сатушы атауы";
+"expense.form.section.vendor" = "Жеткізуші";
+"expense.form.vendor_placeholder" = "Жеткізушінің атауы (міндетті емес)";
+"expense.form.section.title" = "Атауы";
+"expense.form.title_placeholder" = "Шығыс атауы";
+"expense.form.error.title_required" = "Шығыс атауын енгізіңіз";
 "expense.form.section.status" = "Мәртебе";
 "expense.form.status" = "Мәртебе";
 "expense.form.section.category" = "Санат";

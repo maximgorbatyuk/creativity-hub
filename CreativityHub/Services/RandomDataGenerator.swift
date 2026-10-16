@@ -240,6 +240,7 @@ class RandomDataGenerator {
 
     private func generateExpenses(for project: Project, categories: [ExpenseCategory]) -> [Expense] {
         let vendors = ["Amazon", "Adobe", "Canva", "Shutterstock", "Figma", "Local Supply Store", "Freelancer.com", "Etsy"]
+        let titles = ["Project materials", "Design software", "Stock images", "Printing", "Creative supplies"]
         let count = Int.random(in: 5...8)
 
         return (0..<count).map { _ in
@@ -251,6 +252,7 @@ class RandomDataGenerator {
                 amount: Decimal(Int.random(in: 10...300)),
                 currency: .usd,
                 date: Calendar.current.date(byAdding: .day, value: Int.random(in: -30...0), to: Date()) ?? Date(),
+                title: titles.randomElement(),
                 vendor: vendors.randomElement(),
                 status: statuses.randomElement() ?? .planned
             )

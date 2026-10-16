@@ -11,6 +11,7 @@ class ExpenseRepository {
     private let amountColumn = Expression<String>("amount")
     private let currencyColumn = Expression<String>("currency")
     private let dateColumn = Expression<Date>("date")
+    private let titleColumn = Expression<String?>("title")
     private let vendorColumn = Expression<String?>("vendor")
     private let statusColumn = Expression<String>("status")
     private let receiptImagePathColumn = Expression<String?>("receipt_image_path")
@@ -105,6 +106,7 @@ class ExpenseRepository {
                 amountColumn <- "\(expense.amount)",
                 currencyColumn <- expense.currency.rawValue,
                 dateColumn <- expense.date,
+                titleColumn <- expense.title,
                 vendorColumn <- expense.vendor,
                 statusColumn <- expense.status.rawValue,
                 receiptImagePathColumn <- expense.receiptImagePath,
@@ -129,6 +131,7 @@ class ExpenseRepository {
                 amountColumn <- "\(expense.amount)",
                 currencyColumn <- expense.currency.rawValue,
                 dateColumn <- expense.date,
+                titleColumn <- expense.title,
                 vendorColumn <- expense.vendor,
                 statusColumn <- expense.status.rawValue,
                 receiptImagePathColumn <- expense.receiptImagePath,
@@ -219,7 +222,7 @@ class ExpenseRepository {
         let pattern = "%\(searchQuery)%"
         do {
             let query = table.filter(
-                vendorColumn.like(pattern) || notesColumn.like(pattern)
+                titleColumn.like(pattern) || vendorColumn.like(pattern) || notesColumn.like(pattern)
             ).order(dateColumn.desc)
             for row in try db.prepare(query) {
                 if let expense = mapRow(row) {
@@ -252,6 +255,7 @@ class ExpenseRepository {
             amount: amount,
             currency: currency,
             date: row[dateColumn],
+            title: row[titleColumn],
             vendor: row[vendorColumn],
             status: status,
             receiptImagePath: row[receiptImagePathColumn],

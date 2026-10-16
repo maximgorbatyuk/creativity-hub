@@ -47,6 +47,17 @@ struct ExportData: Codable {
         self.reminders = reminders
         self.workLogs = workLogs
     }
+
+    var expensesForImport: [Expense]? {
+        // The vendor key changed meaning in schema 9, so missing titles cannot identify legacy data.
+        guard metadata.databaseSchemaVersion < 9 else { return expenses }
+        return expenses?.map { expense in
+            var imported = expense
+            imported.title = expense.vendor
+            imported.vendor = nil
+            return imported
+        }
+    }
 }
 
 struct ExportMetadata: Codable {
