@@ -186,6 +186,9 @@
 "project.form.target_date" = "Мақсатты күн";
 "project.form.set_budget" = "Бюджетті белгілеу";
 "project.form.budget_amount" = "Сома";
+"project.form.default_expense_currency" = "Әдепкі валюта";
+"project.form.currency_from_app_settings" = "Қолданба баптауларынан";
+"project.form.default_expense_currency_hint" = "Жаңа шығыс қосқанда осы валюта таңдалады. Әр шығыс үшін валютаны өзгертуге болады.";
 "project.form.error.name_required" = "Жоба атауы міндетті";
 "project.form.error.invalid_dates" = "Мақсатты күн басталу күнінен кейін болуы тиіс";
 

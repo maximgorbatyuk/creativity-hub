@@ -1,7 +1,73 @@
+import Foundation
+import SQLite
 import Testing
 @testable import CreativityHub
 
 struct ProjectRepositoryTests {
+    @Test func currencySurvivesAllProjectQueries() throws {
+        let helper = try TestDatabaseHelper()
+        let project = Project(name: "Currency Project", defaultExpenseCurrency: .kzt)
+        let other = Project(name: "Other Project", defaultExpenseCurrency: .eur)
+        #expect(helper.projectRepository.insert(project))
+        #expect(helper.projectRepository.insert(other))
+
+        #expect(helper.projectRepository.fetchById(id: project.id)?.defaultExpenseCurrency == .kzt)
+        #expect(helper.projectRepository.fetchById(id: other.id)?.defaultExpenseCurrency == .eur)
+        #expect(helper.projectRepository.fetchAll().first { $0.id == project.id }?.defaultExpenseCurrency == .kzt)
+        let active = helper.projectRepository.fetchByStatus(.active)
+        #expect(active.first { $0.id == project.id }?.defaultExpenseCurrency == .kzt)
+        #expect(helper.projectRepository.search(query: "Currency").first?.defaultExpenseCurrency == .kzt)
+    }
+
+    @Test func currencyCanBeChangedAndReset() throws {
+        let helper = try TestDatabaseHelper()
+        var project = Project(
+            name: "Currency Project",
+            budget: Decimal(100),
+            budgetCurrency: .eur,
+            defaultExpenseCurrency: .kzt
+        )
+        #expect(helper.projectRepository.insert(project))
+        let expense = Expense(projectId: project.id, amount: Decimal(25), currency: .rub)
+        #expect(helper.expenseRepository.insert(expense))
+
+        project.defaultExpenseCurrency = .gbp
+        #expect(helper.projectRepository.update(project))
+        #expect(helper.projectRepository.fetchById(id: project.id)?.defaultExpenseCurrency == .gbp)
+
+        project.defaultExpenseCurrency = nil
+        #expect(helper.projectRepository.update(project))
+        let fetched = try #require(helper.projectRepository.fetchById(id: project.id))
+        #expect(fetched.defaultExpenseCurrency == nil)
+        #expect(fetched.budget == Decimal(100))
+        #expect(fetched.budgetCurrency == .eur)
+        #expect(helper.expenseRepository.fetchById(id: expense.id)?.currency == .rub)
+    }
+
+    @Test func projectWithoutCurrencyUsesAppSetting() throws {
+        let helper = try TestDatabaseHelper()
+        let project = createTestProject()
+        #expect(helper.projectRepository.insert(project))
+
+        let fetched = try #require(helper.projectRepository.fetchById(id: project.id))
+        #expect(fetched.defaultExpenseCurrency == nil)
+        #expect(fetched.resolvedExpenseCurrency(fallback: .eur) == .eur)
+    }
+
+    @Test func unknownStoredCurrencyUsesAppSetting() throws {
+        let helper = try TestDatabaseHelper()
+        let project = createTestProject()
+        #expect(helper.projectRepository.insert(project))
+        try helper.db.run(
+            "UPDATE projects SET default_expense_currency = ? WHERE id = ?",
+            "unknown", project.id.uuidString
+        )
+
+        let fetched = try #require(helper.projectRepository.fetchById(id: project.id))
+        #expect(fetched.defaultExpenseCurrency == nil)
+        #expect(fetched.resolvedExpenseCurrency(fallback: .kzt) == .kzt)
+    }
+
     @Test func insert_andFetchById_returnsProject() throws {
         let helper = try TestDatabaseHelper()
         let project = createTestProject(name: "My Creative Project")

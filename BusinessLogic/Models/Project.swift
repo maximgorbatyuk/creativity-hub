@@ -48,6 +48,7 @@ struct Project: Codable, Identifiable, Equatable, Hashable {
     var targetDate: Date?
     var budget: Decimal?
     var budgetCurrency: Currency?
+    var defaultExpenseCurrency: Currency?
     var isPinned: Bool
     var sortOrder: Int
     let createdAt: Date
@@ -64,6 +65,7 @@ struct Project: Codable, Identifiable, Equatable, Hashable {
         targetDate: Date? = nil,
         budget: Decimal? = nil,
         budgetCurrency: Currency? = nil,
+        defaultExpenseCurrency: Currency? = nil,
         isPinned: Bool = false,
         sortOrder: Int = 0,
         createdAt: Date = Date(),
@@ -79,6 +81,7 @@ struct Project: Codable, Identifiable, Equatable, Hashable {
         self.targetDate = targetDate
         self.budget = budget
         self.budgetCurrency = budgetCurrency
+        self.defaultExpenseCurrency = defaultExpenseCurrency
         self.isPinned = isPinned
         self.sortOrder = sortOrder
         self.createdAt = createdAt
@@ -88,6 +91,10 @@ struct Project: Codable, Identifiable, Equatable, Hashable {
     var isActive: Bool { status == .active }
     var isCompleted: Bool { status == .completed }
     var isArchived: Bool { status == .archived }
+
+    func resolvedExpenseCurrency(fallback: Currency) -> Currency {
+        defaultExpenseCurrency ?? fallback
+    }
 
     var hasBudget: Bool {
         budget != nil && budgetCurrency != nil

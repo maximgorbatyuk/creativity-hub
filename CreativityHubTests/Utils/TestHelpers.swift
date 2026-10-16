@@ -7,6 +7,7 @@ func createTestProject(
     status: ProjectStatus = .active,
     budget: Decimal? = nil,
     budgetCurrency: Currency? = nil,
+    defaultExpenseCurrency: Currency? = nil,
     isPinned: Bool = false
 ) -> Project {
     Project(
@@ -15,6 +16,7 @@ func createTestProject(
         status: status,
         budget: budget,
         budgetCurrency: budgetCurrency,
+        defaultExpenseCurrency: defaultExpenseCurrency,
         isPinned: isPinned
     )
 }

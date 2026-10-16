@@ -186,6 +186,9 @@
 "project.form.target_date" = "Target Date";
 "project.form.set_budget" = "Set Budget";
 "project.form.budget_amount" = "Amount";
+"project.form.default_expense_currency" = "Default Currency";
+"project.form.currency_from_app_settings" = "Use App Settings";
+"project.form.default_expense_currency_hint" = "Preselected for new expenses. You can change it for each expense.";
 "project.form.error.name_required" = "Project name is required";
 "project.form.error.invalid_dates" = "Target date must be after start date";
 

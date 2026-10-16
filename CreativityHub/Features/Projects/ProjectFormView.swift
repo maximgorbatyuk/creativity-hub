@@ -28,6 +28,7 @@ struct ProjectFormView: View {
     @State private var hasBudget = false
     @State private var budgetText = ""
     @State private var budgetCurrency: Currency = .usd
+    @State private var defaultExpenseCurrency: Currency?
 
     @State private var showValidationError = false
     @State private var validationMessage = ""
@@ -52,6 +53,7 @@ struct ProjectFormView: View {
             _hasBudget = State(initialValue: project.hasBudget)
             _budgetText = State(initialValue: project.budget.map { "\($0)" } ?? "")
             _budgetCurrency = State(initialValue: project.budgetCurrency ?? defaultCurrency)
+            _defaultExpenseCurrency = State(initialValue: project.defaultExpenseCurrency)
         } else {
             _budgetCurrency = State(initialValue: defaultCurrency)
         }
@@ -64,6 +66,7 @@ struct ProjectFormView: View {
                 colorSection
                 statusSection
                 datesSection
+                expenseCurrencySection
                 budgetSection
             }
             .navigationTitle(isEditing ? L("project.form.edit_title") : L("project.form.add_title"))
@@ -142,6 +145,20 @@ struct ProjectFormView: View {
         }
     }
 
+    private var expenseCurrencySection: some View {
+        Section {
+            Picker(L("project.form.default_expense_currency"), selection: $defaultExpenseCurrency) {
+                Text(L("project.form.currency_from_app_settings")).tag(nil as Currency?)
+                ForEach(Currency.allCases) { currency in
+                    Text("\(currency.shortName) (\(currency.rawValue))")
+                        .tag(currency as Currency?)
+                }
+            }
+        } footer: {
+            Text(L("project.form.default_expense_currency_hint"))
+        }
+    }
+
     private var budgetSection: some View {
         Section(L("project.form.section.budget")) {
             Toggle(L("project.form.set_budget"), isOn: $hasBudget)
@@ -215,6 +232,7 @@ struct ProjectFormView: View {
                 targetDate: hasDates ? targetDate : nil,
                 budget: budget,
                 budgetCurrency: currency,
+                defaultExpenseCurrency: defaultExpenseCurrency,
                 isPinned: existing.isPinned,
                 sortOrder: existing.sortOrder,
                 createdAt: existing.createdAt,
@@ -229,7 +247,8 @@ struct ProjectFormView: View {
                 startDate: hasDates ? startDate : nil,
                 targetDate: hasDates ? targetDate : nil,
                 budget: budget,
-                budgetCurrency: currency
+                budgetCurrency: currency,
+                defaultExpenseCurrency: defaultExpenseCurrency
             )
         }
 

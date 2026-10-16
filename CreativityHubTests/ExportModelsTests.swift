@@ -3,6 +3,82 @@ import Foundation
 @testable import CreativityHub
 
 struct ExportModelsTests {
+    @Test func projectCurrencySurvivesJSONRoundTrip() throws {
+        let project = createTestProject(name: "Project Currency")
+        let data = try JSONEncoder().encode(project)
+        var json = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+        json["defaultExpenseCurrency"] = Currency.kzt.rawValue
+
+        let decoded = try JSONDecoder().decode(
+            Project.self,
+            from: JSONSerialization.data(withJSONObject: json)
+        )
+        let encoded = try JSONEncoder().encode(decoded)
+        let result = try #require(JSONSerialization.jsonObject(with: encoded) as? [String: Any])
+
+        #expect(result["defaultExpenseCurrency"] as? String == Currency.kzt.rawValue)
+    }
+
+    @Test func legacyProjectInheritsAppCurrency() throws {
+        let original = Project(name: "Legacy Project", defaultExpenseCurrency: .eur)
+        let data = try JSONEncoder().encode(original)
+        var json = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+        json.removeValue(forKey: "defaultExpenseCurrency")
+
+        let decoded = try JSONDecoder().decode(
+            Project.self,
+            from: JSONSerialization.data(withJSONObject: json)
+        )
+
+        #expect(decoded.defaultExpenseCurrency == nil)
+        #expect(decoded.resolvedExpenseCurrency(fallback: .kzt) == .kzt)
+    }
+
+    @Test(arguments: [Currency.kzt, Currency.eur, nil])
+    func optionalProjectCurrencyRoundTrips(currency: Currency?) throws {
+        let project = Project(name: "Currency Project", defaultExpenseCurrency: currency)
+
+        let decoded = try JSONDecoder().decode(Project.self, from: JSONEncoder().encode(project))
+
+        #expect(decoded.defaultExpenseCurrency == currency)
+    }
+
+    @Test func exportRestoresProjectCurrencies() throws {
+        let projects = [
+            Project(name: "Tenge", budget: Decimal(100), budgetCurrency: .eur, defaultExpenseCurrency: .kzt),
+            Project(name: "Euro", defaultExpenseCurrency: .eur),
+            Project(name: "Inherited")
+        ]
+        let expense = Expense(projectId: projects[0].id, amount: Decimal(25), currency: .rub)
+        let export = ExportData(
+            metadata: ExportMetadata(appVersion: "2026.1.2", deviceName: "Test", databaseSchemaVersion: 8),
+            userSettings: ExportUserSettings(currency: .gbp, language: .en, colorScheme: .system),
+            projects: projects,
+            expenses: [expense]
+        )
+        let decoded = try JSONDecoder().decode(ExportData.self, from: JSONEncoder().encode(export))
+        let helper = try TestDatabaseHelper()
+        #expect(helper.userSettingsRepository.upsertCurrency(decoded.userSettings.preferredCurrency))
+        for project in try #require(decoded.projects) {
+            #expect(helper.projectRepository.insert(project))
+        }
+        for expense in try #require(decoded.expenses) {
+            #expect(helper.expenseRepository.insert(expense))
+        }
+
+        let restored = try #require(helper.projectRepository.fetchById(id: projects[0].id))
+        #expect(restored.defaultExpenseCurrency == .kzt)
+        #expect(restored.budget == Decimal(100))
+        #expect(restored.budgetCurrency == .eur)
+        #expect(helper.projectRepository.fetchById(id: projects[1].id)?.defaultExpenseCurrency == .eur)
+        let inherited = try #require(helper.projectRepository.fetchById(id: projects[2].id))
+        #expect(inherited.defaultExpenseCurrency == nil)
+        #expect(inherited.resolvedExpenseCurrency(fallback: helper.userSettingsRepository.fetchCurrency()) == .gbp)
+        let savedExpense = try #require(helper.expenseRepository.fetchById(id: expense.id))
+        #expect(savedExpense.amount == expense.amount)
+        #expect(savedExpense.currency == .rub)
+    }
+
     @Test func exportData_encodesAndDecodes() throws {
         let project = createTestProject(name: "Export Test")
         let note = createTestNote(projectId: project.id, title: "Test Note")

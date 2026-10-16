@@ -44,6 +44,8 @@ struct TestDatabaseHelper {
         // Migration v7: activity logs table
         try Migration_20260221_AddActivityLogsTable(db: db).execute()
 
+        try Migration20261016ProjectCurrency(db: db).execute()
+
         // Initialize repositories
         projectRepository = ProjectRepository(db: db)
         checklistRepository = ChecklistRepository(db: db)

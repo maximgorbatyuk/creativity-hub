@@ -191,6 +191,12 @@ final class ProjectContentViewModel {
         userSettingsRepository?.fetchCurrency() ?? .usd
     }
 
+    var expenseDefaultCurrency: Currency {
+        let fallback = defaultCurrency
+        guard let projectId = selectedProjectId else { return fallback }
+        return projectRepository?.fetchById(id: projectId)?.resolvedExpenseCurrency(fallback: fallback) ?? fallback
+    }
+
     var expenseCategories: [ExpenseCategory] {
         guard let projectId = selectedProjectId else { return [] }
         return expenseCategoryRepository?.fetchByProjectId(projectId: projectId) ?? []
