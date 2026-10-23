@@ -2,6 +2,26 @@
 
 Use this file for App Store Connect "What's New" text.
 
+## 2026.1.4
+
+### English
+
+```
+We made CreativityHub ready for iPhone Duo, so you can unfold your phone and keep working on your projects with more room. We also improved the introduction for larger text, keeping every description and button within reach.
+```
+
+### Russian
+
+```
+Мы адаптировали CreativityHub для iPhone Duo — раскрывайте телефон и продолжайте работать над проектами на большом экране. Ещё улучшили первые экраны с крупным текстом: описания можно прочитать целиком, а кнопки подстраиваются под доступное место.
+```
+
+### Kazakh
+
+```
+CreativityHub қолданбасын iPhone Duo құрылғысына бейімдедік — телефоныңызды ашып, жобаларыңызбен кеңірек экранда жұмыс істей беріңіз. Сондай-ақ алғашқы экрандарды ірі мәтінге ыңғайладық: сипаттамалар толық оқылады, ал түймелер қолжетімді орынға бейімделеді.
+```
+
 ## 2026.1.3
 
 ### English
