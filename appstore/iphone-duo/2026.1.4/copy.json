@@ -1,0 +1,20 @@
+{
+  "app": "CreativityHub",
+  "version": "2026.1.4",
+  "background": "#F0E4F6",
+  "accent": "#573A68",
+  "locales": {
+    "en": {
+      "headline": "Ready for iPhone Duo",
+      "subtitle": "More room for your creative projects"
+    },
+    "ru": {
+      "headline": "Поддержка iPhone Duo",
+      "subtitle": "Больше места для творческих проектов"
+    }
+  },
+  "featured_capture": {
+    "closed": "03-detail-closed.png",
+    "open": "04-detail-open.png"
+  }
+}

@@ -2,6 +2,11 @@
 
 All notable changes to CreativityHub since the initial project setup (`000ad10` — Phase 1 + Firebase).
 
+## 2026.1.4
+
+- Unfold iPhone Duo and keep working on your projects with more room.
+- Read the full introduction with larger text, with buttons that adapt to the available space.
+
 ## 2026.1.3
 
 - Choose a default currency for each project so new expenses automatically start with the right currency.

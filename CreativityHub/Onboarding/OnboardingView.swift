@@ -59,39 +59,54 @@ struct OnboardingView: View {
                 .tabViewStyle(.page(indexDisplayMode: .always))
                 .animation(.easeInOut, value: viewModel.currentPage)
 
-                HStack(spacing: 16) {
-                    if viewModel.currentPage > 0 && !isLastPage {
-                        Button {
-                            finishOnboarding()
-                        } label: {
-                            Text(L("onboarding.skip"))
-                                .font(.body)
-                                .foregroundStyle(.secondary)
-                        }
+                ViewThatFits(in: .horizontal) {
+                    HStack(spacing: 16) {
+                        skipButton
+                        Spacer()
+                        continueButton
                     }
 
-                    Spacer()
-
-                    Button {
-                        if isLastPage {
-                            finishOnboarding()
-                        } else {
-                            withAnimation {
-                                viewModel.currentPage += 1
-                            }
-                        }
-                    } label: {
-                        Text(isLastPage ? L("onboarding.get_started") : L("onboarding.next"))
-                            .font(.body)
-                            .fontWeight(.semibold)
-                            .frame(minWidth: 120)
+                    VStack(spacing: 16) {
+                        continueButton
+                        skipButton
                     }
-                    .buttonStyle(.borderedProminent)
                 }
+                .frame(maxWidth: .infinity)
                 .padding(.horizontal, 24)
                 .padding(.bottom, 24)
             }
         }
+    }
+
+    @ViewBuilder
+    private var skipButton: some View {
+        if viewModel.currentPage > 0 && !isLastPage {
+            Button {
+                finishOnboarding()
+            } label: {
+                Text(L("onboarding.skip"))
+                    .font(.body)
+                    .foregroundStyle(.secondary)
+            }
+        }
+    }
+
+    private var continueButton: some View {
+        Button {
+            if isLastPage {
+                finishOnboarding()
+            } else {
+                withAnimation {
+                    viewModel.currentPage += 1
+                }
+            }
+        } label: {
+            Text(isLastPage ? L("onboarding.get_started") : L("onboarding.next"))
+                .font(.body)
+                .fontWeight(.semibold)
+                .frame(minWidth: 120)
+        }
+        .buttonStyle(.borderedProminent)
     }
 
     private func finishOnboarding() {

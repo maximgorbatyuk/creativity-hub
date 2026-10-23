@@ -1,0 +1,125 @@
+{
+  "app": "CreativityHub",
+  "version": "2026.1.4",
+  "captured_on": "2026-10-23",
+  "device": "iPhone Duo",
+  "runtime": "iOS 27.1",
+  "appearance": "light",
+  "text_size": "large (default)",
+  "data": "Fictional demonstration records in an isolated simulator",
+  "status": "Prepared locally; not uploaded or published",
+  "assets": [
+    {
+      "file": "en/raw/01-overview-closed.png",
+      "locale": "en",
+      "width": 1398,
+      "height": 2034,
+      "channels": 3,
+      "sha256": "821f96abadc617c57712dd398b9aa32249a8af4188a66558dd2c7b7bd72e86bd"
+    },
+    {
+      "file": "en/raw/02-overview-open.png",
+      "locale": "en",
+      "width": 2853,
+      "height": 2007,
+      "channels": 3,
+      "sha256": "f0f5c0605bbc1ff8eb9f6c88a679371d133688ceac5cbfe54fd125fdf167c5a9"
+    },
+    {
+      "file": "en/raw/03-detail-closed.png",
+      "locale": "en",
+      "width": 1398,
+      "height": 2034,
+      "channels": 3,
+      "sha256": "b1bbf7a5cc322a169383999f88b4f7d10a5a769a3f48e47db49941b5b8c52c89"
+    },
+    {
+      "file": "en/raw/04-detail-open.png",
+      "locale": "en",
+      "width": 2853,
+      "height": 2007,
+      "channels": 3,
+      "sha256": "d730850f3f1425c62dc86e71d06cc9ff7b6daaf5e0d5d1fb334855eef48cb889"
+    },
+    {
+      "file": "en/appstore/01-duo-closed.png",
+      "locale": "en",
+      "width": 1398,
+      "height": 2034,
+      "channels": 3,
+      "sha256": "f195aea30daa6041f7be0adaf5c27ddf7835eb80d36394ee70ec69104d464b3e"
+    },
+    {
+      "file": "en/appstore/02-duo-open.png",
+      "locale": "en",
+      "width": 2853,
+      "height": 2007,
+      "channels": 3,
+      "sha256": "e8893c1f15ef5169fb49b64f5e61782cfa4f5bda5ebcad60d8562625187fa0ce"
+    },
+    {
+      "file": "en/announcement.png",
+      "locale": "en",
+      "width": 1080,
+      "height": 1350,
+      "channels": 3,
+      "sha256": "2aaa4eafa908186f85e522836ab6737ad0a68e1587659f1278e00b6576173444"
+    },
+    {
+      "file": "ru/raw/01-overview-closed.png",
+      "locale": "ru",
+      "width": 1398,
+      "height": 2034,
+      "channels": 3,
+      "sha256": "57255e0b01d31ea82e4c66aba7d59e3f8a749cac2e35b7c6f68e59e9a76b28f3"
+    },
+    {
+      "file": "ru/raw/02-overview-open.png",
+      "locale": "ru",
+      "width": 2853,
+      "height": 2007,
+      "channels": 3,
+      "sha256": "ccff75a1b57afafce7605f8b22354d3ffb9c69dd4e47a2bf85a391456b5e14d7"
+    },
+    {
+      "file": "ru/raw/03-detail-closed.png",
+      "locale": "ru",
+      "width": 1398,
+      "height": 2034,
+      "channels": 3,
+      "sha256": "44243525d47dc43efdf6ff762b70bd1eff90577a6af43cac8ca21ce3422d488f"
+    },
+    {
+      "file": "ru/raw/04-detail-open.png",
+      "locale": "ru",
+      "width": 2853,
+      "height": 2007,
+      "channels": 3,
+      "sha256": "1b79acd488cd65d093c4a61aabbb27cb30bd538bda1dee8f88e3faa303db91ad"
+    },
+    {
+      "file": "ru/appstore/01-duo-closed.png",
+      "locale": "ru",
+      "width": 1398,
+      "height": 2034,
+      "channels": 3,
+      "sha256": "301044442c3bba23dd6227caf4c9c060370b075a25fead285790258f8c32584e"
+    },
+    {
+      "file": "ru/appstore/02-duo-open.png",
+      "locale": "ru",
+      "width": 2853,
+      "height": 2007,
+      "channels": 3,
+      "sha256": "3e604a24916ab168e9c1ea48e0ea16e0d8fba4599bcd10cfd0b1fb5bd8278ae0"
+    },
+    {
+      "file": "ru/announcement.png",
+      "locale": "ru",
+      "width": 1080,
+      "height": 1350,
+      "channels": 3,
+      "sha256": "33b2218f06bc9ab3f64d36f820a8dbc678588afce78826dfc57975acfe88a860"
+    }
+  ]
+}
